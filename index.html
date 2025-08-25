@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NORI-PEL - Productos de Limpieza y Bazar</title>
+  <style>
+    :root {
+      --primary: #e91e63;
+      --primary-light: #f8bbd0;
+      --primary-dark: #c2185b;
+      --white: #ffffff;
+      --gray: #f5f5f5;
+      --text: #333;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      background-color: var(--gray);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: var(--primary);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      font-size: 28px;
+      margin-bottom: 5px;
+    }
+
+    header p {
+      font-size: 16px;
+      opacity: 0.9;
+    }
+
+    .contact-info {
+      background-color: var(--primary-dark);
+      padding: 12px;
+      font-size: 15px;
+      border-radius: 8px;
+      margin: 15px auto;
+      max-width: 90%;
+    }
+
+    .whatsapp-btn {
+      display: block;
+      background-color: #25D366;
+      color: white;
+      text-align: center;
+      padding: 14px;
+      margin: 15px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .search-box {
+      padding: 20px;
+      text-align: center;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    #search {
+      width: 90%;
+      max-width: 500px;
+      padding: 12px;
+      border: 2px solid var(--primary-light);
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .category-tabs {
+      display: flex;
+      overflow-x: auto;
+      background-color: white;
+      padding: 10px 0;
+      gap: 10px;
+      justify-content: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .tab {
+      padding: 10px 16px;
+      background-color: var(--primary-light);
+      color: white;
+      border-radius: 20px;
+      font-size: 14px;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .tab.active {
+      background-color: var(--primary);
+      font-weight: bold;
+    }
+
+    /* Carrusel de ofertas */
+    .offers {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .offers h2 {
+      color: var(--primary-dark);
+      margin-bottom: 15px;
+      font-size: 20px;
+    }
+
+    .carousel-container {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      background-color: white;
+    }
+
+    .carousel-slide {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+
+    .carousel-item {
+      min-width: 100%;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .carousel-icon {
+      font-size: 60px;
+      margin-bottom: 15px;
+    }
+
+    .carousel-name {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--primary-dark);
+    }
+
+    .carousel-nav {
+      display: flex;
+      justify-content: space-between;
+      position: absolute;
+      width: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 0 15px;
+      pointer-events: none;
+    }
+
+    .carousel-btn {
+      background-color: rgba(255,255,255,0.8);
+      border: none;
+      color: var(--primary);
+      font-size: 24px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      pointer-events: auto;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      padding: 15px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .product {
+      background-color: white;
+      padding: 12px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: var(--primary);
+      color: white;
+      margin-top: 30px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🧻 NORI-PEL</h1>
+    <p>Productos de limpieza, bazar y más</p>
+    <div class="contact-info">
+      📍 Av. Juan Domingo Perón 217, Villa de Mayo, Provincia de Buenos Aires<br>
+      🕒 <strong>Lunes a viernes:</strong> 08:00 a 17:00<br>
+      <strong>Sábado:</strong> 08:00 a 13:00
+    </div>
+    <a href="https://wa.me/5491164233586" class="whatsapp-btn">💬 Contactar por WhatsApp</a>
+  </header>
+
+  <div class="search-box">
+    <input type="text" id="search" placeholder="🔍 Buscar productos..." />
+  </div>
+
+  <section class="offers">
+    <h2>🎉 OFERTAS DE LA SEMANA (siempre con nuestros TOP 4)</h2>
+    <div class="carousel-container">
+      <div class="carousel-slide" id="carousel-slide">
+        <!-- Ofertas se cargarán aquí -->
+      </div>
+      <div class="carousel-nav">
+        <button class="carousel-btn" id="prev">‹</button>
+        <button class="carousel-btn" id="next">›</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="category-tabs">
+    <div class="tab active" data-category="all">Todos</div>
+    <div class="tab" data-category="papel">🧻 Papel Higiénico</div>
+    <div class="tab" data-category="cocina">🍽️ Rollo Cocina</div>
+    <div class="tab" data-category="bazar">🏪 Bazar / Cocina</div>
+    <div class="tab" data-category="limpieza">🧽 Limpieza</div>
+    <div class="tab" data-category="aromatizantes">🌸 Aromatizantes</div>
+    <div class="tab" data-category="otros">📦 Otros</div>
+  </div>
+
+  <section class="products" id="products">
+    <!-- Productos cargados aquí -->
+  </section>
+
+  <footer>
+    NORI-PEL © 2025 | Av. Perón 217, Villa de Mayo | WhatsApp: +54 9 11 6423-3586
+  </footer>
+
+  <script>
+    // Lista completa de productos (sin los eliminados)
+    const productos = [
+      "DETERG MAGNUS X1LT",
+      "OFF AERO X170",
+      "P.H. NORIPEL X1X60mtx48",
+      "DETERG. SUELTO X5LTS",
+      "PALA PLASTICA CON CABO ECO",
+      "P.H. NORIPEL X4X240mtx12",
+      "DISPENSER DUO MAKE",
+      "PALITAS PLAST. ECO",
+      "P.H. NORIPEL X6X360mtx12",
+      "ENCENDEDORES X50",
+      "PALITAS PLAST.C/CABO",
+      "P.H. NORIPEL X4BCO PURO D/HOJA X30MTS X12U",
+      "ENCENDEDORES X25",
+      "PALITAS PLAST.C/GOMA",
+      "P.H. NORIPEL X4BCO PURO X30MTS X12U",
+      "ESCOBA 5 HILOS",
+      "PALITOS BROCHETTES",
+      "P.H. NORIPEL X1BCOX50mtx48",
+      "ESCOBA 6 HILOS",
+      "PAÑO COCINA AMARILLO",
+      "P.H. NORIPEL X4BCOX120mtx12",
+      "ESCOBA GUINEA NENA",
+      "PAÑO COCINA ESCOCES",
+      "P.H. NORIPEL X4BCOX320mtx12",
+      "ESCOBA JARDINERA",
+      "PAÑO PISO AMARILLO",
+      "P.H. NORIPEL X6BCOx180mtX12",
+      "ESCOBA PLAST.S/CABO EUROPA",
+      "PAÑUELOS DESC. X6 ELEGANTE",
+      "P.H. NORIPEL X50mtsBCO X24",
+      "ESCOBILLA BAÑO PRIMAVERA SAMANTHA",
+      "PASACERA BASE PLASTICA",
+      "P.H. ZENIN X4 BCO X60MTS X12U",
+      "ESCOBILLA BAÑO WC C/DEPOS",
+      "PAST.LISY CLORO CANASTA X15 GRS",
+      "P.H. INSTITUCIONAL X2KG X30UNID BCO",
+      "ESCOBILLA BAÑO WC S/DEPOS",
+      "PAST.LISY CLORO MOCHILA X50GRS",
+      "P.H. NORIPEL X30MTS BCO X12UX4",
+      "ESCOBILLON ANDEN 100 CM",
+      "PAST.SNUGGY BLOQUE CANASTA 32G",
+      "P.H. NORIPEL X30MTS X12UX4",
+      "POLVO LIMPIADOR X400 CAMPANOL",
+      "PAÑUELOS DESC. X6 MAXISEC",
+      "P.H. ZENIN X4 BCO X12U",
+      "ESCOBILLON ANDEN 50 CM",
+      "PAÑUELOS DESC BOX X75UNID",
+      "P.H. ZENIN X 6 BCO X12U",
+      "ESCOBILLON ANDEN 60 CM",
+      "PLUMERO DE LANA",
+      "P.H. INST DOBLE HOJA X30U",
+      "ESCOBILLON ANDEN 80 CM",
+      "PLUMERO ECO Nº 20 chico",
+      "P.H INST XL X50mtsX30U",
+      "ESCOBILLON BABILONIA SUPER S/C",
+      "PLUMERO ECO Nº 26 mediano",
+      "P.H. INST X90mtsX30U N1",
+      "ESCOBILLON GONDOLA LAQUEADO S/C",
+      "PLUMERO ECO Nº 34 grande",
+      "P.H. INST X80mtsX30U N2 3,5kg",
+      "ESCOBILLON GONDOLA MARFIL S/C",
+      "POLVO LIMPIADOR ODEX X400X18",
+      "P.H. INST X60mtsX30U N3 2,5kg",
+      "ESCOBILLON GONDOLA SUPER S/C",
+      "QUITAESMALTE ALGABO X100ML",
+      "P.H. INST X30U N4 1,5kg",
+      "ESCOBILLON GONDOLA/MASTRO S/C",
+      "QUITAESMALTE ALGABO X50ML",
+      "P.H. ALTO METRAJE X8",
+      "ESCOBILLON LISBOA S/C",
+      "RATICIDA SACHET X60GR ULTRA",
+      "BOB TOALLA ALTO METRAJE X4",
+      "ESCOBILLON PANDA BCO/NEGRO S/C",
+      "REJILLA AMERICANA TD",
+      "BOB TALLER ALTO METRAJE X2UNID",
+      "ESCOBILLON PANDA MARFIL S/C",
+      "REJILLA AUTO PESADA",
+      "R.C. INST X300 PAÑOS X9 UNID",
+      "ESP ACERO ESTROPAJO X 12",
+      "REJILLA DOBLE CARA EXTRALIMP",
+      "R.C. INST X120 PAÑOS X20 UNID",
+      "ESP DORADA EXTRAL.15GR",
+      "REJILLA ESPONJA DOME",
+      "R.C. INST X120 PAÑOS X15 UNID",
+      "ESP.DORADA ECOOO X24 UNID",
+      "REJILLA PABILO DOBLE DOME",
+      "R.C. INST X200 PAÑOS X6 UNID",
+      "ESP.INOX MAKE X10GRS X24UNID",
+      "REJILLA PAVILO DON BOSCO SUPER",
+      "ACIDO MURIAT.X1LTS X6",
+      "ESP.INOX MAKE X50GRS X12UNID",
+      "REPASADOR PICO DULCE X 12",
+      "ACIDO MURIAT.X5LTS XUN M&M",
+      "ESP.INOX, OK 10 GRSX12UNID",
+      "REPASADOR TOALLA FIBRAN",
+      "AGUA DESTILADA X 5LTS",
+      "ESP.INOX.MAKE 15G X 1UNID",
+      "REJILLA PABILO DON BOSCO ECO",
+      "ALCOHOL EN GEL ALGABO X300ML",
+      "ESP.INOX.MAKE 30G X 1UNID",
+      "ROCIADOR / PULVERIZADOR",
+      "ALCOHOL EN GEL HOLDER ALGABO X30ML",
+      "ESPIRAL FUYI X12",
+      "ROLLO COCINA DESNUDO X200 PAÑOS",
+      "ALCOHOL EN GEL X300 REPUESTO",
+      "ESPONJA BAÑO COMUN",
+      "PAPEL HIGIENICO FELPITA X30MTS X4X12UNID",
+      "ALCOHOL ETILICO SAN IGINIO X500CC",
+      "FIBRA ESPONJA OK X24UNID",
+      "ROLLO COC. CARTABELLA X3X10",
+      "ALCOHOL QUEMAR",
+      "FIBRA PLATEADA ECOOO",
+      "ROLLO COC. FELPITA X12 X200PAÑOS",
+      "AROMATIZANTE MAKE",
+      "FOSFORO 3 PATITOS X222",
+      "ROLLO COC. MAXISEC X4X3 X120PAÑOS",
+      "AZUFRE X20X5 GONZALITO",
+      "FIBRA SANITARIO",
+      "SECAD, DOBLE GOMA PLASTHOUSE",
+      "AZUFRE X50 C/SEPARADOR",
+      "FIBRA VERDE ABRASIVA",
+      "SECAD. SECAMAX 40CM X12UNID",
+      "BABOSIL- CEBO X 200 GRS",
+      "FLUIDO GONZALITO X500 X12",
+      "SECAD.BLANCO 40 SG",
+      "BALDE QUECHUA 11LTS",
+      "FOLEX-SEPAR.FIAMBRE-",
+      "SECAD.DOBLE GOMA GAUCHITA ECO",
+      "BALDE PLAST M.ALAMB 11LTS",
+      "FRANELAS",
+      "SECAD.DOBLE GOMA SALZANO",
+      "BALDE PLAST M.ALAMB 13LTS",
+      "GARRAPATICIDA ECTOL LIQ.",
+      "SECAD.NEGRO 30 SUPPY",
+      "BALDE CENTRIFUGO XUNID",
+      "GEL POMO ALGABO X150G",
+      "SECAD.NEGRO 40 SUPPY",
+      "BARRE HOJAS PROFESIONAL",
+      "GUANTES CORAL CH-M-G-XG",
+      "SECAD.NEGRO 50 SUPPY",
+      "BARREHOJAS MODOPLAST SIN CABO",
+      "GUANTES MAKE CH-M-G-XG",
+      "SECAD.ROJO 30 SUPPY",
+      "BOB.ARRANQUE 15X20",
+      "HISOPO Q-SOFT 24X100UNID",
+      "SECAD.ROJO 40 SG",
+      "BOB.ARRANQUE X unid",
+      "HORMIG.GRANO HORTAL X100GR",
+      "SECAD.ROJO 40 SUPPY",
+      "BOB ARRANQUE 50X70",
+      "HORMIG.LIQ. X60CC HORTAL",
+      "SECAD.ROJO 50 SUPPY",
+      "BOLSA CAMIS, BCA 50X60/17",
+      "HORMIG.POLVO X250G HORTAL",
+      "SECAD.ROJO 80 SG",
+      "BOLSA CAMIS,BCA 20X30",
+      "INSECT ESCUDO CASA Y JARDIN X360CC",
+      "SECADOR DOBLE GOMA 4-R X12UNID",
+      "BOLSA CAMIS.BCA 30X40/13MIC",
+      "INSECT ESCUDO CUCARACH X360CC",
+      "SERVILLETA ELEGANTE X150 X18",
+      "BOLSA CAMIS.BCA40X50/11MIC",
+      "INSECT AERO FUYI X12",
+      "SERVILLETA ELEGANTE X80",
+      "BOLSA CAMIS.BCA40X50/16MIC",
+      "INSECT RAID SIN OLOR X12UNID",
+      "SOPAPAS ROJAS SG",
+      "BOLSA FERIA",
+      "INSECT ESCUDO M/M X360CC",
+      "SOPAPAS SUPPY",
+      "BOLSA RESID SIPACK 45X60",
+      "LIMPIA HORNOS SMELLFRESH 360CC XUNID",
+      "SPUGNELLA EXTRALIMP X12 UN",
+      "BOLSA RESID SERVIPLAST 50X70",
+      "INSECT MOSQUITRAP X370CCX12",
+      "TALCO PARA PIES ALGABO X100G",
+      "BOLSA RESID SERVIPLAST 60X90",
+      "INSECT ESCUDO PULGAS X360CC",
+      "TALCO PARA PIES ALGABO X200G",
+      "BOLSA RESID SERVIPLAST 80X110",
+      "INSECT ESCUDO POLILLAS X360CC",
+      "TALCO PARA PIES ALGABO X200G REP",
+      "BROCHE MADERA X12",
+      "INSECT ESCUDO M/M X360CC SIN OLOR",
+      "TALCO PARA PIES ALGABO X60G",
+      "BROCHE PLAST ARCO IRIS X12",
+      "INSECT.AEROS.RAID AZUL",
+      "TALCO PERFUMADO ALGABO X200G",
+      "BRUJITAS X UNID",
+      "INSECT.AEROS.RAID NEGRO",
+      "TRAPO PISO DOME 50X60",
+      "CABO BARRENDERO",
+      "INSECT.LIQ X500 GORRION",
+      "TRAPO PISO DOME CONSORCIO",
+      "CABO EXT.LIMPIATECHO",
+      "JABON EL ARGENTINO BLANCO",
+      "TRAPO PISO DURAMAS BLANCO",
+      "CABO LARGO 2,00MTS",
+      "JABON LIQUIDO SKIP/ARIEL X5LTS",
+      "TRAPO PISO DURAMAS GRIS",
+      "CABO MADERA BLANCO",
+      "JABON POLYANA x72 UNID",
+      "TRAPO PISO M.TRAPO",
+      "BROCHE ECONOMICO",
+      "JABON SEISEME X 50 UNID",
+      "TRAPO PISO NIDO DE ABEJA",
+      "CABO MEDIANO 1,50CM",
+      "JABON TOCADOR ARGENTINO",
+      "VELA PARAFINA BCA TREBOLX50U",
+      "CARRITO COMPRA",
+      "JABON TRICOLOR CUPIDO",
+      "VELA PARAFINA TREBOL COLORX24",
+      "CEP CALZADO",
+      "LAMPAZO HILO ECO X UNID",
+      "VELAS CEBO VILLA IRIS X25UNID",
+      "CEP PARRILLERO",
+      "LAMPAZO MAXI DURAMAS XUNID",
+      "VELITAS NOCHE",
+      "CEP. LAVACAMION ECO",
+      "LAMPAZO MOPA FIBRA AMARILLA",
+      "CEPILLO LAVACAMION SALZANO",
+      "LAMPAZO RECTANG 40 CM",
+      "CEPILLO LAVA AUTO",
+      "LAMPAZO RECTANG 55 CM",
+      "CEPILLO LIMPIA ESPALDA MADERA",
+      "LAMPAZO RECTANG 70 CM",
+      "CEPILLO MANO RECTANG MADERA",
+      "LANA ACERO MAKE X25UNI",
+      "CEPILLO P/ UÑAS XUNID",
+      "LAVAND. GEL MAGNUS",
+      "CEPILLO PISO GIGANTE",
+      "LAVAND.LIMPIAMAX X1L X15UNID",
+      "CEPILLO PLANCHITA ECO",
+      "LAVAND.LIMPIAMAX X2L X8UNID",
+      "CERA LIQUIDA X5LTRS XUNID",
+      "LAVAND.LIMPIAMAX X5LT",
+      "CLORO X5LTS",
+      "LIMP VID/MULTIUSO GATILLO X1LT XUNID",
+      "COLONIA ALGABO X500ML",
+      "LIMP VIDRIO REPUESTO XUNID",
+      "CUCARACH.JERINGA XUNID",
+      "LIMP.VIDRIO METAL CHICO",
+      "DERRIBANTE / RESIDUAL",
+      "LIMPIATECHO SIN CABO",
+      "POLVO LIMPIADOR PULOIL X400X15",
+      "LIMPIAVIDRIO SECADOR 20CM",
+      "DESENGRASANTE CONCENTRADO X5LTS",
+      "LIMPIAVIDRIO SECADOR 30CM",
+      "DESOD.LIQ. X5 LTS",
+      "LIMPIA VIDRIO COLA DE BALLENA",
+      "SUAVIZANTE X1,5LTS",
+      "MAQUINA FLI METALICA",
+      "JABON LIQUIDO ARIEL X1,5LTS",
+      "APRESTO DANUBIO",
+      "ALCOHOL EN GEL X5LTS",
+      "ALFOMBRA HILO SISAL XUNID",
+      "BALDE PLAST ECO COLOR 10LTS",
+      "ALFOMBRA MULTICOLOR GRANDE",
+      "BALDE LIVIANO 12 LTS",
+      "ALFOMBRA ECO",
+      "COLADOR P/PASTAS",
+      "ALFOMBRA PARA BAÑO",
+      "BALDE C/ESCURRIDOR REPUESTO",
+      "ALFOMBRA MULTICOLOR CHICA",
+      "BALDE C/ESCURRIDOR",
+      "ANTIHUMEDAD AIR PUR X250G",
+      "FUENTON REDONDO 12 LTS",
+      "LIMPIA MOTOR",
+      "FUENTON REDONDO 14 LTS",
+      "ANTORCHITAS X24UNID",
+      "FUENTON REDONDO 16 LTS",
+      "DESOD AMBIENTE GLADE",
+      "FUENTON REDONDO 22 LTS",
+      "DETERGENTE BARRA AZUL X30UNID",
+      "FUENTON REDONDO 28 LTS",
+      "BOLS PLAST.REDONDO 1LTS XUNID",
+      "FUENTON REDONDO 35 LTS",
+      "BOLS PLAST.RECTANG 2LTS X24UNID",
+      "FUENTON REDONDO 52 LTS",
+      "BOLS PLAST.RECTANG 3LTS X24UNID",
+      "FUENTON BAÑERA 50 LTS",
+      "BOLS PLAST.RECTANG 5LTS X12UNID",
+      "PALANGANA 4 LTS",
+      "BOMBILLA MATE XUNID",
+      "PALANGANA 6 LTS",
+      "CABO EXTENSIBLE 1,50MTS XUNID",
+      "PALANGANA 8LTS",
+      "BOYA HONGO",
+      "PALANGANA 9 LTS",
+      "CABO ALUMINIO P/ SACAHOJAS",
+      "RECIPIENTE P/ RESIDUOS DE 7 LTS",
+      "CEPILLO CERDA BIGOTE XUNID",
+      "RECIPIENTE P/ RESIDUOS DE 12LTS",
+      "CLORO PASTILLA XKILO",
+      "RECIPIENTE P/ RESIDUOS DE 16LTS",
+      "COLADOR N10 XUNID",
+      "RECIPIENTE P/ RESIDUOS DE 22LTS",
+      "COLADOR MAKE N8 XUNID",
+      "RECIPIENTE P/ RESIDUOS DE 34LTS",
+      "CORTINA LIVIANA",
+      "RECIPIENTE P/ RESIDUOS DE 70LTS",
+      "BOYA SATELITE GRANDE",
+      "RECIPIENTE P/ RESIDUOS DE 60LTS VAIVEN",
+      "CONSERVADORA 34LTS XUNID",
+      "RECIPIENTE P/ RESIDUOS DE 120LTS VAIVEN",
+      "CORTINA PESADA SIMPLE",
+      "RECIPIENTE CUAD DE 6 LTS C/TAPA VAIVEN",
+      "CORTINA ENCIMADA 80CM",
+      "RECIPIENTE RED DE 8 LTS C/TAPA VAIVEN",
+      "CUCARACHICIDA SOBRE",
+      "RECIPIENTE RED DE 10 LTS C/TAPA VAIVEN",
+      "CUCARACHICIDA CEBO CUCATRAP",
+      "RECIPIENTE C/PEDAL 13 LTS",
+      "CUCARACHICIDA CEBO GELTEKXUNID",
+      "CESTO REDONDO CALADO P ROPA",
+      "CUCARACHICIDA JERINGA GELTEKXUNID",
+      "CESTO RECTANGULAR CALADO P ROPA",
+      "CURITAS X8UNID",
+      "BANDEJA P HELADERA MEDIANA",
+      "DESOD ANTI TRANSP POLYANA X12UNID",
+      "BANDEJA P HELADERA CH",
+      "DESOD ANTI TRANSPIRANTE P/PIES X153ML",
+      "BANDEJA P HELADERA GDE 18LTS",
+      "DESOD CONC CHICO 1/4",
+      "BAÑERA PARA BEBE DE 50 LTS",
+      "DESOD CONCENTRADO X1LT XUNID",
+      "BAÑERA PARA BEBE DE 35 LTS",
+      "DESOD CONC MAGNUS 1/4",
+      "ENSALADERA MEDIANA REDONDA/CUADRADA",
+      "DIFUSOR CUADRADO KALLMA",
+      "COMPOTERA",
+      "DIFUSOR CUADRADO HOME",
+      "BOL GRANDE CON TAPA",
+      "DISPENSER ANALOGICO MAKE",
+      "BOL MEDIANO CON TAPA",
+      "DISPENSER JABON LIQ X900CM3 XUNID",
+      "CANASTO CALADO P ROPA CHICO",
+      "DISPENSER P/ BOB 300MTS XUNID",
+      "CANASTO CALADO P ROPA GRANDE",
+      "DISPENSER P/ PAPEL JUMBO",
+      "SILLON INFANTIL",
+      "DISPENSER SERV INTERCALADA",
+      "ESCURRIDOR DE VAJILLA",
+      "CABO CHAPA",
+      "PALA CON CABO",
+      "PERFUMINA KALLMA CONCENTRADA X250CC",
+      "PELELA",
+      "ESC INDUSTRIAL XUNID",
+      "PORTA CUBIERTOS",
+      "ESCOB BARRENDERO PROFESIONAL X6",
+      "MESITA",
+      "ESCOB LAQUEADO LA GAUCHITA X12 UNID",
+      "MACETA N20",
+      "ESPIRAL GORRION LAVANDA XUNID",
+      "MACETA N24",
+      "FILTRO PARA CAFÉ XUNID",
+      "MACETA N28",
+      "FLOTA FLOTA",
+      "MACETA N31",
+      "HORMI MIREX x250GRS XUNID",
+      "MACETA N35",
+      "HORMIGUICIDA JERINGA GELTEK XUNID",
+      "MACETA JARDINERA CHICA Nº35",
+      "INTERCALADAS BCA x1300 XUNID",
+      "MACETA JARDINERA MEDIANA Nº 45",
+      "INTERCALADAS BEIGE X1300 XUNID",
+      "MACETA JARDINERA GRANDE Nº55",
+      "INTERCALADAS BEIGE X 1,650KG",
+      "MACETA CUADRADA Nº30",
+      "SUAVIZANTE X5LTS VERON",
+      "MACETA CUADRADA Nº35",
+      "JABON LIQUIDO ALGABO X300ML",
+      "MACETA CUADRADA Nº40",
+      "JABON LIQUIDO QUERUB X3LTS X4UNID",
+      "MACETA BOWL COLGANTE Nº19",
+      "JABON LIQUIDO QUERUB X800LTS X12UNID",
+      "GANCHO PARA MACETA",
+      "JABON LIQUIDO REP. ALGABO X300ML",
+      "BANQUETA NEGRA",
+      "JARRA PLASTICA MEDIDORA",
+      "JARRA MEDIDORA 2LTS",
+      "LAMP REP 100CM",
+      "JARRA MEDIDORA DE 3LTS",
+      "LAMP REP 40CM",
+      "EMBUTO CHICO",
+      "LAMP REP 55CM",
+      "EMBUTO MEDIANO",
+      "LAMP REP 70CM",
+      "BLEM",
+      "EMBUTO GRANDE",
+      "CUBETERA",
+      "SILLA METALICA P/NIÑOS",
+      "JABON BLANCO PULOIL X150G X56UNID",
+      "HERMETICO REDONDEO 0,750",
+      "PERCHA PLASTICA X4 UNID",
+      "HERMETICO REDONDO 1 LT",
+      "LIMPIADOR X5 LTS ENSOBRADO",
+      "HERMETICO RECTANGULAR 1,5LT",
+      "MAQ VAPE S/CABLE XUNID",
+      "HERMETICO CUADRADO 1,7LT",
+      "MATAMOSCAS PALMETA",
+      "HERMETICO RECTANGULAR 2,5LT",
+      "JABON PARA MANOS X5LTS",
+      "HERMETICO RECTANGULAR 3,5LT",
+      "NAFTALINA VIANCE X200",
+      "HERMETICO RECTANGULAR 6LT",
+      "NAFTALINA PERFUMADA VIANCE X200",
+      "HERMETICO RECTANGULAR 8LT",
+      "OSRAM LED VALUE 12W",
+      "HERMETICO REDONDO TARTA/PIZZA",
+      "OSRAM LED VALUE 14W",
+      "HERMETICO REDONDO TORTA",
+      "OSRAM LED VALUE 5W",
+      "COMBO PALANGANA+FUENTON+BALDE",
+      "OSRAM LED VALUE 7W",
+      "ORGANIZADOR MULTIUSO 25LTS",
+      "OSRAM LED VALUE 9W",
+      "ORGANIZADOR MULTIUSO 32LTS",
+      "SUAVIZANTE X5LTS MAGNUS",
+      "ORGANIZADOR MULTIUSO 50LTS",
+      "PALILLERO LINCE X12UNID",
+      "ORGANIZADOR MULTIUSO 60LTS",
+      "FIBRA ESPONJA PARRILLERA",
+      "PAPEL MANTECA MAKE X5MTS",
+      "LISOFORM",
+      "PERFUMINA REPUESTO 1LT",
+      "PILA DURACELL AA",
+      "PILA DURACELL AAA",
+      "PRESTOBARBA GILLETE X2 FILOS",
+      "QUITASARRO/DESTAPACAÑERIA X 1LT",
+      "RATICIDA SACHET X60GR ULTRA",
+      "REJILLA MICROFIBRA XUNID",
+      "REPELENTE OFF CREMA",
+      "ROCIADOR VALVULA",
+      "ROLLO ALUMINIO MAKE",
+      "SACAHOJAS ECO",
+      "ROLLO FILM MAKE",
+      "SACAHOJAS",
+      "ATRAPA POLVO X5LTS",
+      "AGUA MICELAR ALGABO X200ML",
+      "ESPUMA DE AFEITAR ALGABO X415CC X12UNID",
+      "SUAV QUERUBIN PREMIUM X3LTS X4UNID",
+      "SUAV QUERUBIN PREMIUM X900 X12UNID",
+      "LIMPIATAPIZADOS ESCUDO",
+      "ESCOBILLON VAMILE MAKE",
+      "MANGUERA 3/4 15MTS",
+      "MANGUERA 1/2 15MTS",
+      "TENDER CON ALAS",
+      "LAPICERA FILGO FASTGRIP",
+      "LAPICERA FILGO MULTICOLOR",
+      "VAPE FUYI X24UNID",
+      "VAPE RAID/ FUYI X12UNID",
+      "VAPE RAID X24UNID",
+      "CORTINA PARA BAÑO SUPERIOR",
+      "BARREHOJAS PROFESIONAL ECO",
+      "CERA LIQUIDA X1LT",
+      "GUANTES DE TRABAJO",
+      "QUITA PELUSA",
+      "CEPILLO MULTIUSO EXTRALIMP",
+      "CORTINA PARA BAÑO",
+      "BURLETE",
+      "SILICONA X250CC XUNID",
+      "COMBO JAB.LIQ+SUAV+LAV",
+      "RESMA A4",
+      "CEP LIMPIA ESPALDA PLASTICO X UNID",
+      "REGADERA Nº5",
+      "REGADERA Nº8",
+      "REGADERA Nº10",
+      "PERFUMINA GATILLO",
+      "SILICONA ESCUDO X390",
+      "ANTIGRASA RESPLANDOR",
+      "PILAS RAYOVAC AA",
+      "PILAS RAYOVAC AAA",
+      "CLARIFICADOR",
+      "ALGUICIDA",
+      "LAMPAZO Nº5 C/C",
+      "LAMPAZO Nº7 C/C",
+      "ALFOMBRA ALGODÓN",
+      "VELON 7 DIAS 7 COLORES",
+      "VELON 7 DIAS",
+      "VELON 3 DIAS",
+      "FLUIDO DESINF ESPACIAL X500CC",
+      "INSEC LIQ ESPACIAL X500CC",
+      "HORMIG. POLVO ESPACIAL X250 X12UNID",
+      "ESPIRAL RAID X12 NOCHES",
+      "ESPIRAL ECO",
+      "DESODORANTE X1LT ECONOMICO",
+      "DETERGENTE X5LTS MAGNUS",
+      "REPELENTE ESCUDO X180CC X12UNID",
+      "DESENGRASANTE X1LT MAGNUS",
+      "DESINF AERO SMELL FRESHX12UNID",
+      "PROTECTOR PARA CORTINA DE BAÑO",
+      "PORTA ESPIRAL",
+      "ESPUMA CARNAVAL",
+      "SECAPLATO",
+      "TERMO AMIGO ACONCAGUA",
+      "TERMO TERRA PASTEL",
+      "REPUESTO TERMO 1LT",
+      "LUSTRA MUEBLE DANUBIO",
+      "HORMIGUICIDA POLVO MANCHESTER",
+      "ENVASE CON VALVULA 100CC",
+      "ENVASE CON VALVULA 250CC",
+      "TERMO ALFA X1LT",
+      "TERMO CRETA/MEDITERRANEO X1LT",
+      "TERMO SUPERTERMICA X1LT",
+      "TERMO TATU X1LT",
+      "TERMO CLASICO X1LT",
+      "TERMO BOCA/RIVER X1LT",
+      "LUBRICANTE ESCUDO",
+      "DESODORANTE AERO MC GREGOR",
+      "SOPAPA CON CABO",
+      "BURLETE",
+      "BARRAL ECO",
+      "REPELENTE FUYI AERO",
+      "TIERRA X10KG",
+      "TIERRA X5KG",
+      "RESACA X5KG",
+      "MANTEL VINILICO",
+      "ESPONJA LAVAAUTO",
+      "FUENTON 45LTS QUECHUA",
+      "FUENTON 55LTS QUECHUA",
+      "STRETCH SIN MANGO",
+      "MANTEL 1,40",
+      "MANTEL 1,80",
+      "MANTEL 2,20",
+      "WALKER ATOMIZADOR X60CM3 XUNID",
+      "WALKER SILICONA PERFUMADA X400CM3",
+      "WALKER SHAMPOO X500CM3",
+      "WALKER PINO PERFUMADO",
+      "WALKER MINI LATITA PERFUMADA X40GRS",
+      "WALKER PERFUME ESTRELLA",
+      "WALKER CUBO",
+      "ARIEL X1LT",
+      "SUAV X1LT",
+      "VELA PARAFINA SUELTA",
+      "STRETCH ROLLITO XUNID",
+      "STRETCH CON MANGO XUNID",
+      "JABON LIQ ALGABO ANTIBACT REPUESTO X300ML X12UNID",
+      "JABON LIQ ALGABO ANTIBACT X300ML X12UNID",
+      "REPELENTE MAX AROMA",
+      "TOALLAS REGULAR POCKET XUNID (96)",
+      "TOALLAS ULTRAFINAS XUNID (96)",
+      "TOALLAS NOCTURNAS XUNID (96)",
+      "PROTECTORES FEMENINO XUNID (96)",
+      "TOALLAS FEM PLEG.VERDES XUNID (96)",
+      "FIBRA ESPONJA TEK BOND SALVA UÑAS XUNID",
+      "FIBRA ESPONJA TEK BOND MULTIUSO XUNID",
+      "ESPONJA ANTIADHERENTE TEK BOND XUNID",
+      "PEGAMENTO TEKFAST GEL 3G",
+      "PEGAMENTO TEKFAST 2G",
+      "PEGAMENTO CALZADO ZAPATEK 9G",
+      "SILICONA TRANSPARENTE 25G",
+      "PALITA XPER LITA X36UNID",
+      "PALITA XPER LITA PLUS X24UNID",
+      "PALITA XPER LITA PLUS CON CABO",
+      "BALDO 12LTS XPER",
+      "ALCOHOL VILLA IRIS X500 X20UNID"
+    ];
+
+    // Productos fijos (siempre en ofertas)
+    const productosFijos = [
+      "P.H. NORIPEL X1X60mtx48",
+      "ROLLO COCINA DESNUDO X200 PAÑOS",
+      "P.H. INST DOBLE HOJA X30U",
+      "ROLLO COC. FELPITA X12 X200PAÑOS"
+    ];
+
+    // Asignar categorías
+    function getCategoria(nombre) {
+      if (nombre.includes("P.H.") || nombre.includes("Papel") || nombre.includes("PAÑUELOS") || nombre.includes("PAÑO")) return "papel";
+      if (nombre.includes("COCINA") || nombre.includes("CARTABELLA") || nombre.includes("FELPITA") || nombre.includes("COCTELERA") || nombre.includes("COLADOR")) return "cocina";
+      if (nombre.includes("BALDE") || nombre.includes("FUENTON") || nombre.includes("PALANGANA") || nombre.includes("MACETA") || nombre.includes("BOLSA") || nombre.includes("BOLS") || nombre.includes("CANASTO") || nombre.includes("PORTA") || nombre.includes("HERMETICO") || nombre.includes("ORGANIZADOR")) return "bazar";
+      if (nombre.includes("LIMPIA") || nombre.includes("DETERG") || nombre.includes("CLORO") || nombre.includes("DESENGRASANTE") || nombre.includes("ACIDO") || nombre.includes("POLVO") || nombre.includes("ESPONJA") || nombre.includes("LAMPAZO") || nombre.includes("ESCOBA") || nombre.includes("ESCOBILLON") || nombre.includes("REJILLA") || nombre.includes("TRAPO") || nombre.includes("SECAD") || nombre.includes("REPASADOR")) return "limpieza";
+      if (nombre.includes("AROMATIZANTE") || nombre.includes("PERFUMINA") || nombre.includes("WALKER") || nombre.includes("DESOD") || nombre.includes("DIFUSOR") || nombre.includes("NAFTALINA")) return "aromatizantes";
+      return "otros";
+    }
+
+    // Iconos por palabras clave
+    const getIcon = (nombre) => {
+      if (nombre.includes("P.H.") || nombre.includes("Papel")) return "🧻";
+      if (nombre.includes("COCINA") || nombre.includes("FELPITA")) return "🍽️";
+      if (nombre.includes("BALDE") || nombre.includes("FUENTON")) return "🪣";
+      if (nombre.includes("LIMPIA") || nombre.includes("DETERG") || nombre.includes("CLORO")) return "🧪";
+      if (nombre.includes("ESCOBA") || nombre.includes("ESCOBILLON")) return "🧹";
+      if (nombre.includes("PAÑO") || nombre.includes("REPASADOR")) return "🧽";
+      if (nombre.includes("DESOD") || nombre.includes("PERFUMINA") || nombre.includes("WALKER")) return "🌸";
+      if (nombre.includes("MACETA") || nombre.includes("TIERRA")) return "🌱";
+      if (nombre.includes("TERMOS") || nombre.includes("TERMO")) return "☕";
+      if (nombre.includes("LAMP") || nombre.includes("LED")) return "💡";
+      if (nombre.includes("BOLSA")) return "🛍️";
+      if (nombre.includes("PILAS") || nombre.includes("PILA")) return "🔋";
+      if (nombre.includes("VELON")) return "🎨";
+      return "📦";
+    };
+
+    let currentCategory = "all";
+
+    function mostrarProductos(lista) {
+      const contenedor = document.getElementById("products");
+      contenedor.innerHTML = "";
+      const filtrados = lista.filter(p => currentCategory === "all" || getCategoria(p) === currentCategory);
+      filtrados.forEach(prod => {
+        const div = document.createElement("div");
+        div.className = "product";
+        div.innerHTML = `<div class="icon">${getIcon(prod)}</div> ${prod}`;
+        contenedor.appendChild(div);
+      });
+    }
+
+    // Ofertas rotativas cada 3 días (solo 4 productos)
+    function obtenerOfertasRotativas() {
+      const hoy = new Date();
+      const diasDesdeInicio = Math.floor(hoy.getTime() / (1000 * 60 * 60 * 24));
+      const bloque = Math.floor(diasDesdeInicio / 3);
+      const semilla = (bloque * 997) % productos.length;
+      const ofertas = [];
+      for (let i = 0; i < 4; i++) {
+        ofertas.push(productos[(semilla + i) % productos.length]);
+      }
+      return ofertas;
+    }
+
+    // Combinar fijos + rotativos
+    function obtenerOfertasCompletas() {
+      const rotativas = obtenerOfertasRotativas();
+      return [...productosFijos, ...rotativas];
+    }
+
+    // Carrusel de ofertas
+    let currentIndex = 0;
+    const carouselSlide = document.getElementById("carousel-slide");
+
+    function crearCarrusel(ofertas) {
+      carouselSlide.innerHTML = "";
+      ofertas.forEach(prod => {
+        const item = document.createElement("div");
+        item.className = "carousel-item";
+        item.innerHTML = `
+          <div class="carousel-icon">${getIcon(prod)}</div>
+          <div class="carousel-name">${prod}</div>
+        `;
+        carouselSlide.appendChild(item);
+      });
+      updateCarousel();
+    }
+
+    function updateCarousel() {
+      carouselSlide.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % ofertas.length;
+      updateCarousel();
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + ofertas.length) % ofertas.length;
+      updateCarousel();
+    }
+
+    // Autoplay cada 5 segundos
+    let interval;
+    function startAutoPlay() {
+      interval = setInterval(nextSlide, 5000);
+    }
+
+    // Buscador
+    document.getElementById("search").addEventListener("input", (e) => {
+      clearInterval(interval);
+      const term = e.target.value.toLowerCase();
+      const filtrados = productos.filter(p => p.toLowerCase().includes(term));
+      mostrarProductos(filtrados);
+    });
+
+    // Categorías
+    document.querySelectorAll(".tab").forEach(tab => {
+      tab.addEventListener("click", () => {
+        clearInterval(interval);
+        document.querySelector(".tab.active").classList.remove("active");
+        tab.classList.add("active");
+        currentCategory = tab.getAttribute("data-category");
+        document.getElementById("search").value = "";
+        mostrarProductos(productos);
+      });
+    });
+
+    // Flechas carrusel
+    document.getElementById("next").addEventListener("click", () => {
+      clearInterval(interval);
+      nextSlide();
+      startAutoPlay();
+    });
+
+    document.getElementById("prev").addEventListener("click", () => {
+      clearInterval(interval);
+      prevSlide();
+      startAutoPlay();
+    });
+
+    // Cargar todo al inicio
+    let ofertas = [];
+    window.onload = () => {
+      ofertas = obtenerOfertasCompletas();
+      crearCarrusel(ofertas);
+      startAutoPlay();
+      mostrarProductos(productos);
+    };
+  </script>
+</body>
+</html>

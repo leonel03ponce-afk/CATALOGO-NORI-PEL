@@ -109,7 +109,7 @@
       font-weight: bold;
     }
 
-    /* Carrusel de ofertas */
+    /* Carrusel de ofertas (4 productos por slide) */
     .offers {
       padding: 20px;
       text-align: center;
@@ -123,7 +123,7 @@
 
     .carousel-container {
       position: relative;
-      max-width: 800px;
+      max-width: 1000px;
       margin: 0 auto;
       overflow: hidden;
       border-radius: 12px;
@@ -133,23 +133,43 @@
 
     .carousel-slide {
       display: flex;
-      transition: transform 0.5s ease;
+      transition: transform 0.6s ease;
+    }
+
+    .carousel-row {
+      display: flex;
+      width: 100%;
+      gap: 12px;
+      padding: 20px;
+      flex-shrink: 0;
     }
 
     .carousel-item {
-      min-width: 100%;
-      padding: 30px;
+      flex: 1;
+      min-width: 0;
+      padding: 15px;
+      background-color: var(--white);
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       text-align: center;
+      font-size: 14px;
+    }
+
+    .carousel-img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
     }
 
     .carousel-icon {
-      font-size: 60px;
-      margin-bottom: 15px;
+      font-size: 30px;
+      margin-bottom: 5px;
     }
 
     .carousel-name {
-      font-size: 18px;
-      font-weight: bold;
+      font-size: 13px;
       color: var(--primary-dark);
     }
 
@@ -198,6 +218,14 @@
       text-align: center;
     }
 
+    .product-img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+
     .icon {
       font-size: 24px;
       margin-bottom: 8px;
@@ -231,10 +259,10 @@
   </div>
 
   <section class="offers">
-    <h2>🎉 OFERTAS DE LA SEMANA (siempre con nuestros TOP 4)</h2>
+    <h2>🎉 OFERTAS DE LA SEMANA (4 fijos + rotativos)</h2>
     <div class="carousel-container">
       <div class="carousel-slide" id="carousel-slide">
-        <!-- Ofertas se cargarán aquí -->
+        <!-- Filas de productos se cargarán aquí -->
       </div>
       <div class="carousel-nav">
         <button class="carousel-btn" id="prev">‹</button>
@@ -640,18 +668,19 @@
       "JABON LIQUIDO QUERUB X3LTS X4UNID",
       "MACETA BOWL COLGANTE Nº19",
       "JABON LIQUIDO QUERUB X800LTS X12UNID",
-      "GANCHO PARA MACETA",
+      "MACETA BOWL COLGANTE Nº23",
       "JABON LIQUIDO REP. ALGABO X300ML",
-      "BANQUETA NEGRA",
+      "GANCHO PARA MACETA",
       "JARRA PLASTICA MEDIDORA",
-      "JARRA MEDIDORA 2LTS",
+      "BANQUETA NEGRA",
       "LAMP REP 100CM",
-      "JARRA MEDIDORA DE 3LTS",
+      "JARRA MEDIDORA 2LTS",
       "LAMP REP 40CM",
-      "EMBUTO CHICO",
+      "JARRA MEDIDORA DE 3LTS",
       "LAMP REP 55CM",
-      "EMBUTO MEDIANO",
+      "EMBUTO CHICO",
       "LAMP REP 70CM",
+      "EMBUTO MEDIANO",
       "BLEM",
       "EMBUTO GRANDE",
       "CUBETERA",
@@ -686,6 +715,7 @@
       "ORGANIZADOR MULTIUSO 50LTS",
       "PALILLERO LINCE X12UNID",
       "ORGANIZADOR MULTIUSO 60LTS",
+      "FIBRA ESPONJA PARRILLERA",
       "FIBRA ESPONJA PARRILLERA",
       "PAPEL MANTECA MAKE X5MTS",
       "LISOFORM",
@@ -823,6 +853,145 @@
       "ALCOHOL VILLA IRIS X500 X20UNID"
     ];
 
+    // === Asociación de imágenes ===
+    const imagenesMap = {
+      "ALCOHOL EN GEL ALGABO X300ML": "https://i.postimg.cc/BZkTDTk2/alcohol-en-gel-algabo-x300ml.webp",
+      "ALCOHOL EN GEL ALGABO X750ML": "https://i.postimg.cc/gJrhLjKM/alcohol-en-gel-algabo-x750ml.png",
+      "ALCOHOL ETILICO SAN IGINIO X500CC": "https://i.postimg.cc/ZqbpZVvz/alcohol-etilico-san-iginio-x500cc.jpg",
+      "ALCOHOL QUEMAR": "https://i.postimg.cc/QdrcYXXt/alcohol-quemar.webp",
+      "AROMATIZANTE MAKE": "https://i.postimg.cc/52qLZZ0m/aromatizante-make.jpg",
+      "AROMATIZANTE MAX AROMA": "https://i.postimg.cc/jjMNjPyw/aromatizante-max-aroma.webp",
+      "AZUFRE X20X5 GONZALITO": "https://i.postimg.cc/MT4Q7wPz/azufre-x20x5-gonzalito.webp",
+      "BABOSIL- CEBO X 200 GRS": "https://i.postimg.cc/j27Jv1mP/babosil-cebo-x-200-grs.webp",
+      "BOB.ARRANQUE 15X20": "https://i.postimg.cc/XX6BP86h/bob-arranque-15x20.webp",
+      "BOB ARRANQUE 50X70": "https://i.postimg.cc/Gm1fC8Pn/bob-arranque-50x70.png",
+      "BOB.ARRANQUE X unid": "https://i.postimg.cc/1Rf2cZR2/bob-arranque-x-unid.webp",
+      "BOLSA CAMIS.BCA40X50/11MIC": "https://i.postimg.cc/7ZMWYHXG/bolsa-camis-bca40x50-11mic.webp",
+      "BOLSA CAMIS.BCA40X50/16MIC": "https://i.postimg.cc/FKrnYMnP/bolsa-camis-bca40x50-16mic.webp",
+      "BOLSA CAMIS,BCA 20X30": "https://i.postimg.cc/bYWMmFsJ/bolsa-camis-bca-20x30.webp",
+      "BOLSA CAMIS.BCA 30X40/13MIC": "https://i.postimg.cc/m29nJNHS/bolsa-camis-bca-30x40-13mic.webp",
+      "BOLSA FERIA": "https://i.postimg.cc/Bvm7HmrJ/bolsa-feria.webp",
+      "BOLSA RESID SERVIPLAST 50X70": "https://i.postimg.cc/wv3fVhzL/bolsa-resid-serviplast-50x70.webp",
+      "BOLSA RESID SERVIPLAST 60X90": "https://i.postimg.cc/KzV9sRcV/bolsa-resid-serviplast-60x90.webp",
+      "BOLSA RESID SERVIPLAST 80X110": "https://i.postimg.cc/VvC7ymdN/bolsa-resid-serviplast-80x110.webp",
+      "BOLSA RESID SIPACK 45X60": "https://i.postimg.cc/VsrZ0BDc/bolsa-resid-sipack-45x60.webp",
+      "BROCHE MADERA X12": "https://i.postimg.cc/VsxGqrV0/broche-madera-x12.webp",
+      "BRUJITAS X UNID": "https://i.postimg.cc/3xBtQLJ2/brujitas-x-unid.png",
+      "CABO BARRENDERO": "https://i.postimg.cc/QMd08pHw/cabo-barrendero.jpg",
+      "CABO LARGO 2,00MTS": "https://i.postimg.cc/vH5P3YJq/cabo-largo-2-00mts.webp",
+      "CABO MEDIANO 1,50CM": "https://i.postimg.cc/8zDZ38D1/cabo-mediano-1-50cm.webp",
+      "CARRITO COMPRA": "https://i.postimg.cc/76pVndmr/carrito-compra.jpg",
+      "CEPILLO LAVACAMION SALZANO": "https://i.postimg.cc/bJGgbp0R/cepillo-lavacamion-salzano.webp",
+      "CEPILLO LAVA AUTO": "https://i.postimg.cc/tJWzSkMZ/cepillo-lava-auto-jpg-crdownload.webp",
+      "CEP. LAVACAMION ECO": "https://i.postimg.cc/0NXZbbSQ/cep-lavacamion-eco.webp",
+      "CLORO X5LTS": "https://i.postimg.cc/sfhKgfgj/cloro-x5lts.webp",
+      "COLONIA ALGABO X500ML": "https://i.postimg.cc/rF2j06DS/colonia-algabo-x500ml.webp",
+      "CUCARACH.JERINGA XUNID": "https://i.postimg.cc/5N538PzD/cucarach-jeringa-xunid.webp",
+      "DERRIBANTE / RESIDUAL": "https://i.postimg.cc/MpWY5ybH/derribante-residual.webp",
+      "EMBUTO CHICO": "https://i.postimg.cc/13JrjfJH/embuto-chico.webp",
+      "EMBUTO GRANDE": "https://i.postimg.cc/Dz0PknNK/embuto-grande.webp",
+      "ENCENDEDORES X25": "https://i.postimg.cc/R0YQv2rJ/encendedores-x25.webp",
+      "ENCENDEDORES X50": "https://i.postimg.cc/sXZPxKy6/encendedores-x50.webp",
+      "ESCOBA PLAST.S/CABO EUROPA": "https://i.postimg.cc/4yk69txJ/escoba-plast-s-cabo-europa.webp",
+      "ESCOBILLA BAÑO PRIMAVERA SAMANTHA": "https://i.postimg.cc/prfDYTmK/escobilla-ba-o-primavera-samantha.webp",
+      "ESCOBILLA BAÑO WC C/DEPOS": "https://i.postimg.cc/ryxCLhfz/escobilla-ba-o-wc-c-depos.webp",
+      "ESCOBILLON ANDEN 100 CM": "https://i.postimg.cc/7ZYg0qwT/escobillon-anden-100-cm.webp",
+      "ESCOBILLON ANDEN 50 CM": "https://i.postimg.cc/VLw9sjhg/escobillon-anden-50-cm.webp",
+      "ESCOBILLON ANDEN 60 CM": "https://i.postimg.cc/dt92hhPY/escobillon-anden-60-cm.webp",
+      "ESPIRAL FUYI X12": "https://i.postimg.cc/kX78P7Vh/espiral-fuyi-x12.webp",
+      "ESPONJA BAÑO COMUN": "https://i.postimg.cc/ZKjNTXpY/esponja-ba-o-comun.webp",
+      "ESP ACERO ESTROPAJO X 12": "https://i.postimg.cc/CxPb49xr/esp-acero-estropajo-x-12.webp",
+      "ESP.DORADA ECOOO X24 UNID": "https://i.postimg.cc/nLXBSTsF/esp-dorada-ecooo-x24-unid.webp",
+      "ESP DORADA EXTRAL.15GR": "https://i.postimg.cc/wBnJCJJh/esp-dorada-extral-15gr.png",
+      "ESP.INOX.MAKE 15G X 1UNID": "https://i.postimg.cc/9MTTCMts/esp-inox-make-15g-x-1unid.webp",
+      "ESP.INOX MAKE X10GRS X24UNID": "https://i.postimg.cc/zvrhBrxv/esp-inox-make-x10grs-x24unid.webp",
+      "ESP.INOX MAKE X50GRS X12UNID": "https://i.postimg.cc/Hn9y8hN2/esp-inox-make-x50grs-x12unid.webp",
+      "ESP.INOX, OK 10 GRSX12UNID": "https://i.postimg.cc/ry1WHDpr/esp-inox-ok-10-grsx12unid.webp",
+      "FIBRA ESPONJA OK X24UNID": "https://i.postimg.cc/t4Tx7DN3/fibra-esponja-ok-x24unid.webp",
+      "FIBRA PLATEADA ECOOO": "https://i.postimg.cc/x14bmH6W/fibra-plateada-ecooo.webp",
+      "FIBRA SANITARIO": "https://i.postimg.cc/9fwwYMSz/fibra-sanitario.webp",
+      "FIBRA VERDE ABRASIVA": "https://i.postimg.cc/sXFQ6zdm/fibra-verde-abrasiva.webp",
+      "FLUIDO GONZALITO X500 X12": "https://i.postimg.cc/XJwZtPnb/fluido-gonzalito-x500-x12.webp",
+      "FOLEX-SEPAR.FIAMBRE-": "https://i.postimg.cc/4ysKG13h/folex-separ-fiambre.webp",
+      "FOSFORO 3 PATITOS X222": "https://i.postimg.cc/tJks4V1v/fosforo-3-patitos-x222.webp",
+      "FRANELAS": "https://i.postimg.cc/dQjkBgWR/franelas.webp",
+      "GANCHO PARA MACETA": "https://i.postimg.cc/m2Zc6Vqv/gancho-para-maceta.webp",
+      "GEL POMO ALGABO X150G": "https://i.postimg.cc/Kv9KXBhR/gel-pomo-algabo-x150g.jpg",
+      "GUANTES MAKE CH-M-G-XG": "https://i.postimg.cc/vZc4GTGX/guantes-make-ch-m-g-xg.webp",
+      "HERMETICO REDONDO 1 LT": "https://i.postimg.cc/fRpJysLs/hermetico-redondo-1-lt.webp",
+      "HISOPO Q-SOFT 24X100UNID": "https://i.postimg.cc/Xv5XyPGC/hisopo-q-soft-24x100unid.webp",
+      "HORMIG.GRANO HORTAL X100GR": "https://i.postimg.cc/hjqv80T3/hormig-grano-hortal-x100gr.webp",
+      "HORMIG.LIQ. X60CC HORTAL": "https://i.postimg.cc/tJqgwCr3/hormig-liq-x60cc-hortal.webp",
+      "HORMIG.POLVO X250G HORTAL": "https://i.postimg.cc/mDNDmFSZ/hormig-polvo-x250g-hortal.webp",
+      "INSECT.AEROS.RAID AZUL": "https://i.postimg.cc/MH9GS24h/insect-aeros-raid-azul.webp",
+      "INSECT.AEROS.RAID NEGRO": "https://i.postimg.cc/59gyvL0n/insect-aeros-raid-negro.webp",
+      "INSECT AERO FUYI X12": "https://i.postimg.cc/bNvJRrS8/insect-aero-fuyi-x12.jpg",
+      "INSECT ESCUDO CASA Y JARDIN X360CC": "https://i.postimg.cc/SNtK14c9/insect-escudo-casa-y-jardin-x360cc.webp",
+      "INSECT ESCUDO CUCARACH X360CC": "https://i.postimg.cc/Z5B51QLM/insect-escudo-cucarach-x360cc.webp",
+      "INSECT ESCUDO M/M X360CC": "https://i.postimg.cc/T3z3Gc7Y/insect-escudo-m-m-x360cc.webp",
+      "INSECT ESCUDO M/M X360CC SIN OLOR": "https://i.postimg.cc/tgFCgVwd/insect-escudo-m-m-x360cc-sin-olor.webp",
+      "INSECT ESCUDO POLILLAS X360CC": "https://i.postimg.cc/3R7r0xQs/insect-escudo-polillas-x360cc.webp",
+      "INSECT ESCUDO PULGAS X360CC": "https://i.postimg.cc/gJDzVbYn/insect-escudo-pulgas-x360cc.webp",
+      "INSECT RAID SIN OLOR X12UNID": "https://i.postimg.cc/1X39M7tM/insect-raid-sin-olor-x12unid.webp",
+      "JABON LIQUIDO ARIEL X1,5LTS": "https://i.postimg.cc/6pvBHvWs/jabon-liquido-ariel-x1-5lts.jpg",
+      "JABON SEISEME X 50 UNID": "https://i.postimg.cc/j23R16nT/jabon-seiseme-x-50-unid.webp",
+      "JABON TOCADOR ARGENTINO": "https://i.postimg.cc/PfSfNH37/jabon-tocador-argentino.webp",
+      "JABON TRICOLOR CUPIDO": "https://i.postimg.cc/gkrzZ712/jabon-tricolor-cupido.webp",
+      "LAMPAZO MAXI DURAMAS XUNID": "https://i.postimg.cc/TYSRq9Xq/lampazo-maxi-duramas-xunid.webp",
+      "LANA ACERO MAKE X25UNI": "https://i.postimg.cc/hGRcNtvX/lana-acero-make-x25uni.webp",
+      "LIMPIAVIDRIO SECADOR 20CM": "https://i.postimg.cc/QtXsxYps/limpiavidrio-secador-20cm.webp",
+      "LIMPIAVIDRIO SECADOR 30CM": "https://i.postimg.cc/G2qRBPQD/limpiavidrio-secador-30cm.webp",
+      "LIMP VID/MULTIUSO GATILLO X1LT XUNID": "https://i.postimg.cc/KY7xbh3J/limp-vid-multiuso-gatillo-x1lt-xunid.webp",
+      "PALA PLASTICA CON CABO ECO": "https://i.postimg.cc/NMJhGss7/pala-plastica-con-cabo-eco.webp",
+      "PAPEL HIGIENICO FELPITA X30MTS X4X12UNID": "https://i.postimg.cc/mktvtvhx/papel-higienico-felpita-x30mts-x4x12unid.webp",
+      "PAÑO COCINA AMARILLO": "https://i.postimg.cc/3JPTDxgt/pa-o-cocina-amarillo.webp",
+      "PAÑO COCINA ESCOCES": "https://i.postimg.cc/Vknc9Pgm/pa-o-cocina-escoces.webp",
+      "PAÑO PISO AMARILLO": "https://i.postimg.cc/wBk8P5nr/pa-o-piso-amarillo.webp",
+      "PAÑUELOS DESC. X6 ELEGANTE": "https://i.postimg.cc/GpRnqggY/pa-uelos-desc-x6-elegante.webp",
+      "PAÑUELOS DESC. X6 MAXISEC": "https://i.postimg.cc/MTK28MSp/pa-uelos-desc-x6-maxisec.webp",
+      "PLUMERO DE LANA": "https://i.postimg.cc/hv6Hx27X/plumero-de-lana.webp",
+      "POLVO LIMPIADOR ODEX X400X18": "https://i.postimg.cc/MZLkhprz/polvo-limpiador-odex-x400x18.webp",
+      "POLVO LIMPIADOR PULOIL X400X15": "https://i.postimg.cc/5NFc1WZL/polvo-limpiador-puloil-x400x15.webp",
+      "POLVO LIMPIADOR X400 CAMPANOL": "https://i.postimg.cc/MGqgyMXm/polvo-limpiador-x400-campanol.webp",
+      "P.H. INST DOBLE HOJA X30U": "https://i.postimg.cc/J0FWx1S4/p-h-inst-doble-hoja-x30u.jpg",
+      "P.H. NORIPEL X1X60mtx48": "https://i.postimg.cc/KcpFxN4S/p-h-noripel-x1x60mtx48.jpg",
+      "P.H. NORIPEL X6BCOx180mtX12": "https://i.postimg.cc/L6qSX1Zq/p-h-noripel-x6bcox180mtx12.jpg",
+      "P.H. ZENIN X4 BCO X12U": "https://i.postimg.cc/vTTs51qN/p-h-zenin-x4-bco-x12u.webp",
+      "QUITAESMALTE ALGABO X100ML": "https://i.postimg.cc/6pdD2L6Q/quitaesmalte-algabo-x100ml.webp",
+      "QUITAESMALTE ALGABO X50ML": "https://i.postimg.cc/CK7XJhqT/quitaesmalte-algabo-x50ml.webp",
+      "RATICIDA SACHET X60GR ULTRA": "https://i.postimg.cc/QtMPy2QB/raticida-sachet-x60gr-ultra.webp",
+      "REJILLA AMERICANA TD": "https://i.postimg.cc/j2w1sykt/rejilla-americana-td.webp",
+      "REJILLA PAVILO DON BOSCO SUPER": "https://i.postimg.cc/JndgVpxp/rejilla-pavilo-don-bosco-super.webp",
+      "REPASADOR PICO DULCE X 12": "https://i.postimg.cc/Kj6H44dL/repasador-pico-dulce-x-12.webp",
+      "REPASADOR TOALLA FIBRAN": "https://i.postimg.cc/CMRMZt3L/repasador-toalla-fibran.webp",
+      "ROLLO COC. CARTABELLA X3X10": "https://i.postimg.cc/J4J1xX7f/rollo-coc-cartabella-x3x10.webp",
+      "SECADOR DOBLE GOMA 4-R X12UNID": "https://i.postimg.cc/FHpXCgMB/secador-doble-goma-4-r-x12unid.webp",
+      "SECAD.BLANCO 40 SG": "https://i.postimg.cc/sfbj5mzP/secad-blanco-40-sg.webp",
+      "SECAD.DOBLE GOMA GAUCHITA ECO": "https://i.postimg.cc/NjcQz055/secad-doble-goma-gauchita-eco.webp",
+      "SECAD, DOBLE GOMA PLASTHOUSE": "https://i.postimg.cc/jS4R0r7v/secad-doble-goma-plasthouse.webp",
+      "SECAD.DOBLE GOMA SALZANO": "https://i.postimg.cc/g0cmGByp/secad-doble-goma-salzano.webp",
+      "SECAD.NEGRO 30 SUPPY": "https://i.postimg.cc/s2nyx9Kh/secad-negro-30-suppy.webp",
+      "SECAD.NEGRO 40 SUPPY": "https://i.postimg.cc/9Mr27RNN/secad-negro-40-suppy.webp",
+      "SECAD.NEGRO 50 SUPPY": "https://i.postimg.cc/859SBp2k/secad-negro-50-suppy.webp",
+      "SECAD.ROJO 30 SUPPY": "https://i.postimg.cc/Vs01sttJ/secad-rojo-30-suppy.webp",
+      "SECAD.ROJO 40 SUPPY": "https://i.postimg.cc/FzSQPtvy/secad-rojo-40-suppy.webp",
+      "SECAD.ROJO 50 SUPPY": "https://i.postimg.cc/02gvzNGc/secad-rojo-50-suppy.webp",
+      "SECAD.ROJO 80 SG": "https://i.postimg.cc/7Ygk0ymD/secad-rojo-80-sg.webp",
+      "SECAD. SECAMAX 40CM X12UNID": "https://i.postimg.cc/RZ4zTbDt/secad-secamax-40cm-x12unid.webp",
+      "SERVILLETA ELEGANTE X80": "https://i.postimg.cc/XvvSRB37/servilleta-elegante-x80.webp",
+      "SOPAPAS ROJAS SG": "https://i.postimg.cc/FKn5NFsb/sopapas-rojas-sg.webp",
+      "SOPAPAS SUPPY": "https://i.postimg.cc/50Yc0c6h/sopapas-suppy.webp",
+      "SPUGNELLA EXTRALIMP X12 UN": "https://i.postimg.cc/mkC0YQ3V/spugnella-extralimp-x12-un.webp",
+      "TALCO PARA PIES ALGABO X100G": "https://i.postimg.cc/ydwM3fRk/talco-para-pies-algabo-x100g.webp",
+      "TALCO PARA PIES ALGABO X200G": "https://i.postimg.cc/7Pz8rkv7/talco-para-pies-algabo-x200g.webp",
+      "TALCO PARA PIES ALGABO X200G REP": "https://i.postimg.cc/15Zx9jPd/talco-para-pies-algabo-x200g-rep.webp",
+      "TALCO PERFUMADO ALGABO X200G": "https://i.postimg.cc/Jz19XHsc/talco-perfumado-algabo-x200g.webp",
+      "TRAPO PISO DOME 50X60": "https://i.postimg.cc/ZKPG0x55/trapo-piso-dome-50x60.webp",
+      "TRAPO PISO DURAMAS BLANCO": "https://i.postimg.cc/7ZmjnP7v/trapo-piso-duramas-blanco.webp",
+      "TRAPO PISO DURAMAS GRIS": "https://i.postimg.cc/7LhdsvM5/trapo-piso-duramas-gris.webp",
+      "VELITAS NOCHE": "https://i.postimg.cc/B61y3xzs/velitas-noche.webp"
+    };
+
     // Productos fijos (siempre en ofertas)
     const productosFijos = [
       "P.H. NORIPEL X1X60mtx48",
@@ -868,12 +1037,16 @@
       filtrados.forEach(prod => {
         const div = document.createElement("div");
         div.className = "product";
-        div.innerHTML = `<div class="icon">${getIcon(prod)}</div> ${prod}`;
+        const img = imagenesMap[prod] || "";
+        div.innerHTML = `
+          ${img ? `<img src="${img}" alt="${prod}" class="product-img">` : `<div class="icon">${getIcon(prod)}</div>`}
+          ${prod}
+        `;
         contenedor.appendChild(div);
       });
     }
 
-    // Ofertas rotativas cada 3 días (solo 4 productos)
+    // Ofertas rotativas cada 3 días (4 productos)
     function obtenerOfertasRotativas() {
       const hoy = new Date();
       const diasDesdeInicio = Math.floor(hoy.getTime() / (1000 * 60 * 60 * 24));
@@ -886,26 +1059,39 @@
       return ofertas;
     }
 
-    // Combinar fijos + rotativos
-    function obtenerOfertasCompletas() {
+    // Combinar fijos + rotativos y agrupar en filas de 4
+    function crearSlides() {
       const rotativas = obtenerOfertasRotativas();
-      return [...productosFijos, ...rotativas];
+      const todos = [...productosFijos, ...rotativas]; // 8 productos
+
+      const slides = [];
+      for (let i = 0; i < todos.length; i += 4) {
+        slides.push(todos.slice(i, i + 4));
+      }
+      return slides;
     }
 
-    // Carrusel de ofertas
+    // Carrusel
     let currentIndex = 0;
     const carouselSlide = document.getElementById("carousel-slide");
 
-    function crearCarrusel(ofertas) {
+    function renderSlides() {
+      const slides = crearSlides();
       carouselSlide.innerHTML = "";
-      ofertas.forEach(prod => {
-        const item = document.createElement("div");
-        item.className = "carousel-item";
-        item.innerHTML = `
-          <div class="carousel-icon">${getIcon(prod)}</div>
-          <div class="carousel-name">${prod}</div>
-        `;
-        carouselSlide.appendChild(item);
+      slides.forEach(slide => {
+        const row = document.createElement("div");
+        row.className = "carousel-row";
+        slide.forEach(prod => {
+          const item = document.createElement("div");
+          item.className = "carousel-item";
+          const img = imagenesMap[prod] || "";
+          item.innerHTML = `
+            ${img ? `<img src="${img}" alt="${prod}" class="carousel-img">` : `<div class="carousel-icon">${getIcon(prod)}</div>`}
+            <div class="carousel-name">${prod}</div>
+          `;
+          row.appendChild(item);
+        });
+        carouselSlide.appendChild(row);
       });
       updateCarousel();
     }
@@ -915,19 +1101,21 @@
     }
 
     function nextSlide() {
-      currentIndex = (currentIndex + 1) % ofertas.length;
+      const slides = crearSlides();
+      currentIndex = (currentIndex + 1) % slides.length;
       updateCarousel();
     }
 
     function prevSlide() {
-      currentIndex = (currentIndex - 1 + ofertas.length) % ofertas.length;
+      const slides = crearSlides();
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
       updateCarousel();
     }
 
-    // Autoplay cada 5 segundos
+    // Autoplay cada 7 segundos
     let interval;
     function startAutoPlay() {
-      interval = setInterval(nextSlide, 5000);
+      interval = setInterval(nextSlide, 7000);
     }
 
     // Buscador
@@ -964,10 +1152,8 @@
     });
 
     // Cargar todo al inicio
-    let ofertas = [];
     window.onload = () => {
-      ofertas = obtenerOfertasCompletas();
-      crearCarrusel(ofertas);
+      renderSlides();
       startAutoPlay();
       mostrarProductos(productos);
     };

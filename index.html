@@ -109,7 +109,7 @@
       font-weight: bold;
     }
 
-    /* Carrusel de ofertas (4 productos por slide) */
+    /* Carrusel 1: Ofertas rotativas */
     .offers {
       padding: 20px;
       text-align: center;
@@ -124,7 +124,7 @@
     .carousel-container {
       position: relative;
       max-width: 1000px;
-      margin: 0 auto;
+      margin: 0 auto 30px;
       overflow: hidden;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -200,6 +200,19 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
 
+    /* Carrusel 2: Destacados con fotos */
+    .destacados {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .destacados h2 {
+      color: var(--primary-dark);
+      margin-bottom: 15px;
+      font-size: 20px;
+    }
+
+    /* General */
     .products {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -258,19 +271,35 @@
     <input type="text" id="search" placeholder="🔍 Buscar productos..." />
   </div>
 
+  <!-- Carrusel 1: Ofertas rotativas -->
   <section class="offers">
     <h2>🎉 OFERTAS DE LA SEMANA (4 fijos + rotativos)</h2>
     <div class="carousel-container">
       <div class="carousel-slide" id="carousel-slide">
-        <!-- Filas de productos se cargarán aquí -->
+        <!-- Se llena con JavaScript -->
       </div>
       <div class="carousel-nav">
-        <button class="carousel-btn" id="prev">‹</button>
-        <button class="carousel-btn" id="next">›</button>
+        <button class="carousel-btn" id="prev1">‹</button>
+        <button class="carousel-btn" id="next1">›</button>
       </div>
     </div>
   </section>
 
+  <!-- Carrusel 2: Productos destacados -->
+  <section class="destacados">
+    <h2>🌟 PRODUCTOS DESTACADOS</h2>
+    <div class="carousel-container">
+      <div class="carousel-slide" id="destacados-slide">
+        <!-- Se llena con JavaScript -->
+      </div>
+      <div class="carousel-nav">
+        <button class="carousel-btn" id="prev2">‹</button>
+        <button class="carousel-btn" id="next2">›</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filtros -->
   <div class="category-tabs">
     <div class="tab active" data-category="all">Todos</div>
     <div class="tab" data-category="papel">🧻 Papel Higiénico</div>
@@ -281,8 +310,9 @@
     <div class="tab" data-category="otros">📦 Otros</div>
   </div>
 
+  <!-- Lista de productos -->
   <section class="products" id="products">
-    <!-- Productos cargados aquí -->
+    <!-- Se llena con JavaScript -->
   </section>
 
   <footer>
@@ -290,7 +320,7 @@
   </footer>
 
   <script>
-    // Lista completa de productos (sin los eliminados)
+    // Lista completa de productos
     const productos = [
       "DETERG MAGNUS X1LT",
       "OFF AERO X170",
@@ -992,12 +1022,20 @@
       "VELITAS NOCHE": "https://i.postimg.cc/B61y3xzs/velitas-noche.webp"
     };
 
-    // Productos fijos (siempre en ofertas)
+    // Productos fijos en ofertas
     const productosFijos = [
       "P.H. NORIPEL X1X60mtx48",
       "ROLLO COCINA DESNUDO X200 PAÑOS",
       "P.H. INST DOBLE HOJA X30U",
       "ROLLO COC. FELPITA X12 X200PAÑOS"
+    ];
+
+    // Productos destacados (con imágenes)
+    const productosDestacados = [
+      "P.H. ZENIN X4 BCO X12U",
+      "P.H. NORIPEL X6BCOx180mtX12",
+      "ENCENDEDORES X50",
+      "ALCOHOL EN GEL ALGABO X300ML"
     ];
 
     // Asignar categorías
@@ -1046,7 +1084,7 @@
       });
     }
 
-    // Ofertas rotativas cada 3 días (4 productos)
+    // Ofertas rotativas cada 3 días
     function obtenerOfertasRotativas() {
       const hoy = new Date();
       const diasDesdeInicio = Math.floor(hoy.getTime() / (1000 * 60 * 60 * 24));
@@ -1059,11 +1097,10 @@
       return ofertas;
     }
 
-    // Combinar fijos + rotativos y agrupar en filas de 4
-    function crearSlides() {
+    // Carrusel 1: Ofertas (fijos + rotativos)
+    function crearSlidesOfertas() {
       const rotativas = obtenerOfertasRotativas();
-      const todos = [...productosFijos, ...rotativas]; // 8 productos
-
+      const todos = [...productosFijos, ...rotativas];
       const slides = [];
       for (let i = 0; i < todos.length; i += 4) {
         slides.push(todos.slice(i, i + 4));
@@ -1071,13 +1108,22 @@
       return slides;
     }
 
-    // Carrusel
-    let currentIndex = 0;
-    const carouselSlide = document.getElementById("carousel-slide");
+    // Carrusel 2: Destacados
+    function crearSlidesDestacados() {
+      const slides = [];
+      for (let i = 0; i < productosDestacados.length; i += 4) {
+        slides.push(productosDestacados.slice(i, i + 4));
+      }
+      return slides;
+    }
 
-    function renderSlides() {
-      const slides = crearSlides();
-      carouselSlide.innerHTML = "";
+    // Renderizar carrusel 1
+    let currentIndex1 = 0;
+    const carouselSlide1 = document.getElementById("carousel-slide");
+
+    function renderSlides1() {
+      const slides = crearSlidesOfertas();
+      carouselSlide1.innerHTML = "";
       slides.forEach(slide => {
         const row = document.createElement("div");
         row.className = "carousel-row";
@@ -1091,36 +1137,79 @@
           `;
           row.appendChild(item);
         });
-        carouselSlide.appendChild(row);
+        carouselSlide1.appendChild(row);
       });
-      updateCarousel();
+      updateCarousel1();
     }
 
-    function updateCarousel() {
-      carouselSlide.style.transform = `translateX(-${currentIndex * 100}%)`;
+    function updateCarousel1() {
+      carouselSlide1.style.transform = `translateX(-${currentIndex1 * 100}%)`;
     }
 
-    function nextSlide() {
-      const slides = crearSlides();
-      currentIndex = (currentIndex + 1) % slides.length;
-      updateCarousel();
+    function nextSlide1() {
+      const slides = crearSlidesOfertas();
+      currentIndex1 = (currentIndex1 + 1) % slides.length;
+      updateCarousel1();
     }
 
-    function prevSlide() {
-      const slides = crearSlides();
-      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-      updateCarousel();
+    function prevSlide1() {
+      const slides = crearSlidesOfertas();
+      currentIndex1 = (currentIndex1 - 1 + slides.length) % slides.length;
+      updateCarousel1();
     }
 
-    // Autoplay cada 7 segundos
-    let interval;
+    // Renderizar carrusel 2
+    let currentIndex2 = 0;
+    const carouselSlide2 = document.getElementById("destacados-slide");
+
+    function renderSlides2() {
+      const slides = crearSlidesDestacados();
+      carouselSlide2.innerHTML = "";
+      slides.forEach(slide => {
+        const row = document.createElement("div");
+        row.className = "carousel-row";
+        slide.forEach(prod => {
+          const item = document.createElement("div");
+          item.className = "carousel-item";
+          const img = imagenesMap[prod] || "";
+          item.innerHTML = `
+            ${img ? `<img src="${img}" alt="${prod}" class="carousel-img">` : `<div class="carousel-icon">${getIcon(prod)}</div>`}
+            <div class="carousel-name">${prod}</div>
+          `;
+          row.appendChild(item);
+        });
+        carouselSlide2.appendChild(row);
+      });
+      updateCarousel2();
+    }
+
+    function updateCarousel2() {
+      carouselSlide2.style.transform = `translateX(-${currentIndex2 * 100}%)`;
+    }
+
+    function nextSlide2() {
+      const slides = crearSlidesDestacados();
+      currentIndex2 = (currentIndex2 + 1) % slides.length;
+      updateCarousel2();
+    }
+
+    function prevSlide2() {
+      const slides = crearSlidesDestacados();
+      currentIndex2 = (currentIndex2 - 1 + slides.length) % slides.length;
+      updateCarousel2();
+    }
+
+    // Autoplay
+    let interval1, interval2;
     function startAutoPlay() {
-      interval = setInterval(nextSlide, 7000);
+      interval1 = setInterval(nextSlide1, 7000);
+      interval2 = setInterval(nextSlide2, 8000);
     }
 
     // Buscador
     document.getElementById("search").addEventListener("input", (e) => {
-      clearInterval(interval);
+      clearInterval(interval1);
+      clearInterval(interval2);
       const term = e.target.value.toLowerCase();
       const filtrados = productos.filter(p => p.toLowerCase().includes(term));
       mostrarProductos(filtrados);
@@ -1129,7 +1218,8 @@
     // Categorías
     document.querySelectorAll(".tab").forEach(tab => {
       tab.addEventListener("click", () => {
-        clearInterval(interval);
+        clearInterval(interval1);
+        clearInterval(interval2);
         document.querySelector(".tab.active").classList.remove("active");
         tab.classList.add("active");
         currentCategory = tab.getAttribute("data-category");
@@ -1138,22 +1228,32 @@
       });
     });
 
-    // Flechas carrusel
-    document.getElementById("next").addEventListener("click", () => {
-      clearInterval(interval);
-      nextSlide();
+    // Flechas carruseles
+    document.getElementById("next1").addEventListener("click", () => {
+      clearInterval(interval1);
+      nextSlide1();
+      startAutoPlay();
+    });
+    document.getElementById("prev1").addEventListener("click", () => {
+      clearInterval(interval1);
+      prevSlide1();
+      startAutoPlay();
+    });
+    document.getElementById("next2").addEventListener("click", () => {
+      clearInterval(interval2);
+      nextSlide2();
+      startAutoPlay();
+    });
+    document.getElementById("prev2").addEventListener("click", () => {
+      clearInterval(interval2);
+      prevSlide2();
       startAutoPlay();
     });
 
-    document.getElementById("prev").addEventListener("click", () => {
-      clearInterval(interval);
-      prevSlide();
-      startAutoPlay();
-    });
-
-    // Cargar todo al inicio
+    // Cargar todo
     window.onload = () => {
-      renderSlides();
+      renderSlides1();
+      renderSlides2();
       startAutoPlay();
       mostrarProductos(productos);
     };

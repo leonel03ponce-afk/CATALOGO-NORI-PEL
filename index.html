@@ -109,7 +109,7 @@
       font-weight: bold;
     }
 
-    /* Carrusel de ofertas (4 productos, secuencia de onda) */
+    /* Carrusel de ofertas (3 fijos + 2 aleatorios) */
     .offers {
       padding: 20px;
       text-align: center;
@@ -133,15 +133,9 @@
 
     .carousel-slide {
       display: flex;
-      transition: transform 0.6s ease;
-    }
-
-    .carousel-row {
-      display: flex;
-      width: 100%;
       gap: 12px;
       padding: 20px;
-      flex-shrink: 0;
+      transition: opacity 0.4s ease;
     }
 
     .carousel-item {
@@ -266,7 +260,7 @@
     <input type="text" id="search" placeholder="🔍 Buscar productos..." />
   </div>
 
-  <!-- Carrusel: Ofertas con secuencia de onda -->
+  <!-- Carrusel: Ofertas con 3 fijos + 2 aleatorios -->
   <section class="offers">
     <h2>🎉 OFERTAS DE LA SEMANA</h2>
     <div class="carousel-container" id="carousel-container">
@@ -569,9 +563,8 @@
     // Productos fijos en ofertas
     const productosFijos = [
       "P.H. NORIPEL X1X60mtx48",
-      "ROLLO COCINA DESNUDO X200 PAÑOS",
       "P.H. INST DOBLE HOJA X30U",
-      "ROLLO COC. FELPITA X12 X200PAÑOS"
+      "P.H. NORIPEL X6BCOx180mtX12"
     ];
 
     // Productos destacados (6 fijos)
@@ -630,12 +623,10 @@
       });
     }
 
-    // Carrusel de ofertas con secuencia de onda
+    // Carrusel de ofertas (3 fijos + 2 aleatorios)
     const carouselSlide = document.getElementById("carousel-slide");
     const carouselContainer = document.getElementById("carousel-container");
-    let currentIndex = 0;
     let interval;
-    const totalPhases = 9; // 1f 2f 3f 4f → 1f 2f 3f 4A → ... → 1f 2f 3f 4f
 
     function getRandomProduct() {
       const randomIndex = Math.floor(Math.random() * productos.length);
@@ -643,53 +634,19 @@
     }
 
     function renderCarousel() {
-      const container = document.createElement("div");
-      container.className = "carousel-row";
-
-      switch (currentIndex) {
-        case 0: // 1f 2f 3f 4f
-          [0,1,2,3].forEach(i => {
-            const item = createCarouselItem(productosFijos[i]);
-            container.appendChild(item);
-          });
-          break;
-        case 1: // 1f 2f 3f 4A
-          [0,1,2].forEach(i => container.appendChild(createCarouselItem(productosFijos[i])));
-          container.appendChild(createCarouselItem(getRandomProduct()));
-          break;
-        case 2: // 1f 2f 3A 4A
-          [0,1].forEach(i => container.appendChild(createCarouselItem(productosFijos[i])));
-          [0,1].forEach(() => container.appendChild(createCarouselItem(getRandomProduct())));
-          break;
-        case 3: // 1f 2A 3A 4A
-          container.appendChild(createCarouselItem(productosFijos[0]));
-          [0,1,2].forEach(() => container.appendChild(createCarouselItem(getRandomProduct())));
-          break;
-        case 4: // 1A 2A 3A 4A
-          [0,1,2,3].forEach(() => container.appendChild(createCarouselItem(getRandomProduct())));
-          break;
-        case 5: // 1f 2A 3A 4A
-          container.appendChild(createCarouselItem(productosFijos[0]));
-          [0,1,2].forEach(() => container.appendChild(createCarouselItem(getRandomProduct())));
-          break;
-        case 6: // 1f 2f 3A 4A
-          [0,1].forEach(i => container.appendChild(createCarouselItem(productosFijos[i])));
-          [0,1].forEach(() => container.appendChild(createCarouselItem(getRandomProduct())));
-          break;
-        case 7: // 1f 2f 3f 4A
-          [0,1,2].forEach(i => container.appendChild(createCarouselItem(productosFijos[i])));
-          container.appendChild(createCarouselItem(getRandomProduct()));
-          break;
-        case 8: // 1f 2f 3f 4f
-          [0,1,2,3].forEach(i => {
-            const item = createCarouselItem(productosFijos[i]);
-            container.appendChild(item);
-          });
-          break;
-      }
-
       carouselSlide.innerHTML = "";
-      carouselSlide.appendChild(container);
+
+      // Añadir 3 productos fijos
+      productosFijos.forEach(prod => {
+        const item = createCarouselItem(prod);
+        carouselSlide.appendChild(item);
+      });
+
+      // Añadir 2 productos aleatorios
+      for (let i = 0; i < 2; i++) {
+        const item = createCarouselItem(getRandomProduct());
+        carouselSlide.appendChild(item);
+      }
     }
 
     function createCarouselItem(producto) {
@@ -703,13 +660,10 @@
       return item;
     }
 
-    function nextPhase() {
-      currentIndex = (currentIndex + 1) % totalPhases;
-      renderCarousel();
-    }
-
     function startAutoPlay() {
-      interval = setInterval(nextPhase, 4000);
+      interval = setInterval(() => {
+        renderCarousel();
+      }, 4000);
     }
 
     // Pausar al pasar el mouse

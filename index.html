@@ -181,10 +181,9 @@
     }
 
     .destacados-row {
-      display: flex;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       gap: 15px;
-      flex-wrap: wrap;
       padding: 10px;
     }
 
@@ -417,7 +416,7 @@
       "BALDO 12LTS XPER", "ALCOHOL VILLA IRIS X500 X20UNID"
     ];
 
-    // Imágenes actualizadas desde tu Excel + el nuevo link que me pasaste
+    // Imágenes actualizadas desde tu Excel
     const imagenesMap = {
       "P.H. NORIPEL X1X60mtx48": "https://i.postimg.cc/KcpFxN4S/p-h-noripel-x1x60mtx48.jpg",
       "PALA PLASTICA CON CABO ECO": "https://i.postimg.cc/vmxjR105/PALA-PLASTICA-CON-CABO-ECO.jpg",
@@ -570,7 +569,7 @@
       "ACIDO MURIAT.X1LTS X6": "https://i.postimg.cc/d0H9xwBx/ACIDO-MURIAT-X1-LTS-X6.jpg",
       "ACIDO MURIAT.X5LTS XUN M&M": "https://i.postimg.cc/SsnG031N/ACIDO-MURIAT-X5-LTS-XUN-M-M.jpg",
       "AGUA DESTILADA X 5LTS": "https://i.postimg.cc/tRVzB0VB/AGUA-DESTILADA-X-5-LTS.jpg",
-      "PLUMERO ECO Nº 34 grande": "https://i.postimg.cc/bwdjsHJD/PLUMERO-ECO-N-34-grande.jpg"
+      "PLUMERO ECO Nº 34 grande": "https://i.postimg.cc/qq8y4Ts0/PLUMERO-ECO-N-26-mediano.jpg"
     };
 
     // Productos fijos en ofertas
@@ -632,7 +631,7 @@
           ${img ? `<img src="${img}" alt="${prod}" class="product-img">` : `<div class="icon">${getIcon(prod)}</div>`}
           ${prod}
         `;
-        contenedor.appendChild(div);
+        contyen.appendChild(div);
       });
     }
 

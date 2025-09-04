@@ -631,7 +631,7 @@
           ${img ? `<img src="${img}" alt="${prod}" class="product-img">` : `<div class="icon">${getIcon(prod)}</div>`}
           ${prod}
         `;
-        contyen.appendChild(div);
+        contenedor.appendChild(div); // ✅ Corregido aquí
       });
     }
 

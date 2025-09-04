@@ -68,49 +68,7 @@
       box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
 
-    /* Buscador debajo de ofertas y destacados */
-    .search-box {
-      padding: 20px;
-      text-align: center;
-      background-color: white;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    #search {
-      width: 90%;
-      max-width: 500px;
-      padding: 12px;
-      border: 2px solid var(--primary-light);
-      border-radius: 8px;
-      font-size: 16px;
-    }
-
-    .category-tabs {
-      display: flex;
-      overflow-x: auto;
-      background-color: white;
-      padding: 10px 0;
-      gap: 10px;
-      justify-content: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    .tab {
-      padding: 10px 16px;
-      background-color: var(--primary-light);
-      color: white;
-      border-radius: 20px;
-      font-size: 14px;
-      white-space: nowrap;
-      cursor: pointer;
-    }
-
-    .tab.active {
-      background-color: var(--primary);
-      font-weight: bold;
-    }
-
-    /* Carrusel de ofertas (3 fijos + 2 aleatorios) */
+    /* Ofertas de la semana */
     .offers {
       padding: 20px;
       text-align: center;
@@ -122,53 +80,47 @@
       font-size: 20px;
     }
 
-    .carousel-container {
-      position: relative;
-      max-width: 1000px;
-      margin: 0 auto 30px;
-      overflow: hidden;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      background-color: white;
-    }
-
-    .carousel-slide {
+    .offers-container {
       display: flex;
-      gap: 12px;
-      padding: 20px;
-      transition: opacity 0.4s ease;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      padding: 10px;
     }
 
-    .carousel-item {
-      flex: 1;
-      min-width: 0;
-      padding: 15px;
-      background-color: var(--white);
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    .offer-item {
       text-align: center;
       font-size: 14px;
+      max-width: 140px;
+      background-color: white;
+      padding: 12px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: relative;
     }
 
-    .carousel-img {
+    .offer-badge {
+      position: absolute;
+      top: -10px;
+      right: 10px;
+      background-color: #ff5722;
+      color: white;
+      font-size: 12px;
+      padding: 5px 8px;
+      border-radius: 20px;
+      font-weight: bold;
+    }
+
+    .offer-img {
       width: 100%;
       height: 120px;
       object-fit: cover;
       border-radius: 8px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
+      loading: lazy;
     }
 
-    .carousel-icon {
-      font-size: 30px;
-      margin-bottom: 5px;
-    }
-
-    .carousel-name {
-      font-size: 13px;
-      color: var(--primary-dark);
-    }
-
-    /* Destacados (fijo, 6 productos) */
+    /* Destacados */
     .destacados {
       padding: 20px;
       text-align: center;
@@ -199,16 +151,72 @@
       object-fit: cover;
       border-radius: 8px;
       margin-bottom: 8px;
+      loading: lazy;
+    }
+
+    /* Buscador + Categorías */
+    .search-and-tabs {
+      padding: 20px;
+      text-align: center;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    #search {
+      width: 90%;
+      max-width: 500px;
+      padding: 12px;
+      border: 2px solid var(--primary-light);
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .category-tabs {
+      display: flex;
+      overflow-x: auto;
+      background-color: white;
+      padding: 10px 0;
+      gap: 10px;
+      justify-content: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-top: 15px;
+    }
+
+    .tab {
+      padding: 10px 16px;
+      background-color: var(--primary-light);
+      color: white;
+      border-radius: 20px;
+      font-size: 14px;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .tab.active {
+      background-color: var(--primary);
+      font-weight: bold;
     }
 
     /* Productos */
     .products {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 12px;
       padding: 15px;
       max-width: 1400px;
       margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+      .products {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .products {
+        grid-template-columns: 1fr;
+      }
     }
 
     .product {
@@ -226,6 +234,7 @@
       object-fit: cover;
       border-radius: 8px;
       margin-bottom: 8px;
+      loading: lazy;
     }
 
     .icon {
@@ -256,43 +265,39 @@
     <a href="https://wa.me/5491164233586" class="whatsapp-btn">💬 Contactar por WhatsApp</a>
   </header>
 
-  <!-- Carrusel: Ofertas con 3 fijos + 2 aleatorios -->
+  <!-- OFERTAS DE LA SEMANA -->
   <section class="offers">
-    <h2>🎉 OFERTAS DE LA SEMANA</h2>
-    <div class="carousel-container" id="carousel-container">
-      <div class="carousel-slide" id="carousel-slide">
-        <!-- Se llena con JavaScript -->
-      </div>
+    <h2>🔥 OFERTAS DE LA SEMANA</h2>
+    <div class="offers-container" id="offers-container">
+      <!-- Se llena con JS -->
     </div>
   </section>
 
-  <!-- Sección: Productos Destacados (6 fijos) -->
+  <!-- PRODUCTOS DESTACADOS -->
   <section class="destacados">
     <h2>🌟 PRODUCTOS DESTACADOS</h2>
     <div class="destacados-row" id="destacados-row">
-      <!-- Se llena con JavaScript -->
+      <!-- Se llena con JS -->
     </div>
   </section>
 
-  <!-- BUSCADOR MOVIDO AQUÍ -->
-  <div class="search-box">
+  <!-- BUSCADOR + CATEGORÍAS -->
+  <div class="search-and-tabs">
     <input type="text" id="search" placeholder="🔍 Buscar productos..." />
+    <div class="category-tabs">
+      <div class="tab active" data-category="all">Todos</div>
+      <div class="tab" data-category="papel">🧻 Papel Higiénico</div>
+      <div class="tab" data-category="cocina">🍽️ Rollo Cocina</div>
+      <div class="tab" data-category="bazar">🏪 Bazar / Cocina</div>
+      <div class="tab" data-category="limpieza">🧽 Limpieza</div>
+      <div class="tab" data-category="aromatizantes">🌸 Aromatizantes</div>
+      <div class="tab" data-category="otros">📦 Otros</div>
+    </div>
   </div>
 
-  <!-- Filtros -->
-  <div class="category-tabs">
-    <div class="tab active" data-category="all">Todos</div>
-    <div class="tab" data-category="papel">🧻 Papel Higiénico</div>
-    <div class="tab" data-category="cocina">🍽️ Rollo Cocina</div>
-    <div class="tab" data-category="bazar">🏪 Bazar / Cocina</div>
-    <div class="tab" data-category="limpieza">🧽 Limpieza</div>
-    <div class="tab" data-category="aromatizantes">🌸 Aromatizantes</div>
-    <div class="tab" data-category="otros">📦 Otros</div>
-  </div>
-
-  <!-- Lista de productos -->
+  <!-- LISTA DE PRODUCTOS -->
   <section class="products" id="products">
-    <!-- Se llena con JavaScript -->
+    <!-- Se llena con JS -->
   </section>
 
   <footer>
@@ -300,7 +305,7 @@
   </footer>
 
   <script>
-    // Lista completa de productos (357 ítems)
+    // Lista completa de productos
     const productos = [
       "DETERG MAGNUS X1LT", "OFF AERO X170", "P.H. NORIPEL X1X60mtx48", "DETERG. SUELTO X5LTS", "PALA PLASTICA CON CABO ECO",
       "P.H. NORIPEL X4X240mtx12", "DISPENSER DUO MAKE", "PALITAS PLAST. ECO", "P.H. NORIPEL X6X360mtx12", "ENCENDEDORES X50",
@@ -382,14 +387,14 @@
       "INTERCALADAS BEIGE x1300 XUNID", "MACETA BOWL COLGANTE Nº19", "INTERCALADAS BEIGE X 1,650KG", "MACETA BOWL COLGANTE Nº23",
       "SUAVIZANTE X5LTS VERON", "MACETA BOWL COLGANTE Nº27", "JABON LIQUIDO ALGABO X300ML", "GANCHO PARA MACETA", "JABON LIQUIDO QUERUB X3LTS X4UNID",
       "BANQUETA NEGRA", "JABON LIQUIDO QUERUB X800LTS X12UNID", "JARRA MEDIDORA 2LTS", "JABON LIQUIDO REP. ALGABO X300ML", "JARRA PLASTICA MEDIDORA",
-      "EMBUTO CHICO", "JARRA MEDIDORA DE 3LTS", "EMBUTO MEDIANO", "LAMP REP 100CM", "EMBUTO GRANDE", "LAMP REP 40CM", "SILLA METALICA P/NIÑOS",
-      "LAMP REP 55CM", "JABON BLANCO PULOIL X150G X56UNID", "LAMP REP 70CM", "PERCHA PLASTICA X4 UNID", "BLEM", "LIMPIADOR X5 LTS ENSOBRADO",
+      "EMBUTO CHICO", "JABON BLANCO PULOIL X150G X56UNID", "JARRA MEDIDORA DE 3LTS", "EMBUTO MEDIANO", "PERCHA PLASTICA X4 UNID", "LAMP REP 100CM",
+      "EMBUTO GRANDE", "LAMP REP 40CM", "SILLA METALICA P/NIÑOS", "LAMP REP 55CM", "LAMP REP 70CM", "BLEM", "LIMPIADOR X5 LTS ENSOBRADO",
       "CUBETERA", "HERMETICO RECTANGULAR 1,5LT", "JABON PARA MANOS X5LTS", "HERMETICO CUADRADO 1,7LT", "NAFTALINA VIANCE X200", "HERMETICO RECTANGULAR 2,5LT",
       "NAFTALINA PERFUMADA VIANCE X200", "HERMETICO RECTANGULAR 3,5LT", "OSRAM LED VALUE 12W", "HERMETICO RECTANGULAR 6LT", "OSRAM LED VALUE 14W",
       "HERMETICO RECTANGULAR 8LT", "OSRAM LED VALUE 5W", "HERMETICO REDONDO TARTA/PIZZA", "OSRAM LED VALUE 7W", "COMBO PALANGANA+FUENTON+BALDE",
-      "OSRAM LED VALUE 9W", "ORGANIZADOR MULTIUSO 25LTS", "SUAVIZANTE X5LTS MAGNUS", "ORGANIZADOR MULTIUSO 32LTS", "PALILLERO LINCE X12UNID",
-      "ORGANIZADOR MULTIUSO 50LTS", "FIBRA ESPONJA PARRILLERA", "ORGANIZADOR MULTIUSO 60LTS", "PAPEL MANTECA MAKE X5MTS", "FIBRA ESPONJA PARRILLERA",
-      "LISOFORM", "PERFUMINA REPUESTO 1LT", "PILA DURACELL AA", "PILA DURACELL AAA", "PRESTOBARBA GILLETE X2 FILOS", "QUITASARRO/DESTAPACAÑERIA X 1LT",
+      "OSRAM LED VALUE 9W", "ORGANIZADOR MULTIUSO 25LTS", "SUAVIZANTE X5LTS MAGNUS", "PALILLERO LINCE X12UNID", "ORGANIZADOR MULTIUSO 32LTS",
+      "FIBRA ESPONJA PARRILLERA", "ORGANIZADOR MULTIUSO 50LTS", "PAPEL MANTECA MAKE X5MTS", "ORGANIZADOR MULTIUSO 60LTS", "LISOFORM",
+      "PERFUMINA REPUESTO 1LT", "PILA DURACELL AA", "PILA DURACELL AAA", "PRESTOBARBA GILLETE X2 FILOS", "QUITASARRO/DESTAPACAÑERIA X 1LT",
       "RATICIDA SACHET X60GR ULTRA", "REJILLA MICROFIBRA XUNID", "REPELENTE OFF CREMA", "ROCIADOR VALVULA", "ROLLO ALUMINIO MAKE", "SACAHOJAS ECO",
       "ROLLO FILM MAKE", "SACAHOJAS", "ATRAPA POLVO X5LTS", "AGUA MICELAR ALGABO X200ML", "ESPUMA DE AFEITAR ALGABO X415CC X12UNID",
       "SUAV QUERUBIN PREMIUM X3LTS X4UNID", "SUAV QUERUBIN PREMIUM X900 X12UNID", "LIMPIATAPIZADOS ESCUDO", "ESCOBILLON VAMILE MAKE",
@@ -416,7 +421,7 @@
       "BALDO 12LTS XPER", "ALCOHOL VILLA IRIS X500 X20UNID"
     ];
 
-    // Imágenes actualizadas desde tu Excel
+    // Imágenes
     const imagenesMap = {
       "P.H. NORIPEL X1X60mtx48": "https://i.postimg.cc/KcpFxN4S/p-h-noripel-x1x60mtx48.jpg",
       "PALA PLASTICA CON CABO ECO": "https://i.postimg.cc/vmxjR105/PALA-PLASTICA-CON-CABO-ECO.jpg",
@@ -572,14 +577,14 @@
       "PLUMERO ECO Nº 34 grande": "https://i.postimg.cc/qq8y4Ts0/PLUMERO-ECO-N-26-mediano.jpg"
     };
 
-    // Productos fijos en ofertas
-    const productosFijos = [
+    // Productos en oferta (solo NORIPEL)
+    const productosOferta = [
       "P.H. NORIPEL X1X60mtx48",
-      "P.H. INST DOBLE HOJA X30U",
-      "P.H. NORIPEL X6BCOx180mtX12"
+      "P.H. NORIPEL X6BCOx180mtX12",
+      "P.H. NORIPEL X4BCO PURO X30MTS X12U"
     ];
 
-    // Productos destacados (6 fijos)
+    // Productos destacados (actualizados)
     const productosDestacados = [
       "P.H. ZENIN X4 BCO X12U",
       "P.H. NORIPEL X6BCOx180mtX12",
@@ -621,7 +626,7 @@
 
     function mostrarProductos(lista) {
       const contenedor = document.getElementById("products");
-      contenedor.innerHTML = "";
+      cont-selector.innerHTML = "";
       const filtrados = lista.filter(p => currentCategory === "all" || getCategoria(p) === currentCategory);
       filtrados.forEach(prod => {
         const div = document.createElement("div");
@@ -631,58 +636,28 @@
           ${img ? `<img src="${img}" alt="${prod}" class="product-img">` : `<div class="icon">${getIcon(prod)}</div>`}
           ${prod}
         `;
-        contenedor.appendChild(div); // ✅ Corregido aquí
+        contyen.appendChild(div);
       });
     }
 
-    // Carrusel de ofertas (3 fijos + 2 aleatorios)
-    const carouselSlide = document.getElementById("carousel-slide");
-    const carouselContainer = document.getElementById("carousel-container");
-    let interval;
-
-    function getRandomProduct() {
-      const randomIndex = Math.floor(Math.random() * productos.length);
-      return productos[randomIndex];
-    }
-
-    function renderCarousel() {
-      carouselSlide.innerHTML = "";
-
-      // Añadir 3 productos fijos
-      productosFijos.forEach(prod => {
-        const item = createCarouselItem(prod);
-        carouselSlide.appendChild(item);
+    // Renderizar ofertas (solo NORIPEL)
+    function renderOfertas() {
+      const container = document.getElementById("offers-container");
+      container.innerHTML = "";
+      productosOferta.forEach(prod => {
+        const item = document.createElement("div");
+        item.className = "offer-item";
+        const img = imagenesMap[prod] || "";
+        item.innerHTML = `
+          <div class="offer-badge">🔥 Oferta</div>
+          ${img ? `<img src="${img}" alt="${prod}" class="offer-img">` : `<div class="carousel-icon">${getIcon(prod)}</div>`}
+          ${prod}
+        `;
+        container.appendChild(item);
       });
-
-      // Añadir 2 productos aleatorios
-      for (let i = 0; i < 2; i++) {
-        const item = createCarouselItem(getRandomProduct());
-        carouselSlide.appendChild(item);
-      }
     }
 
-    function createCarouselItem(producto) {
-      const item = document.createElement("div");
-      item.className = "carousel-item";
-      const img = imagenesMap[producto] || "";
-      item.innerHTML = `
-        ${img ? `<img src="${img}" alt="${producto}" class="carousel-img">` : `<div class="carousel-icon">${getIcon(producto)}</div>`}
-        <div class="carousel-name">${producto}</div>
-      `;
-      return item;
-    }
-
-    function startAutoPlay() {
-      interval = setInterval(() => {
-        renderCarousel();
-      }, 4000);
-    }
-
-    // Pausar al pasar el mouse
-    carouselContainer.addEventListener("mouseenter", () => clearInterval(interval));
-    carouselContainer.addEventListener("mouseleave", startAutoPlay);
-
-    // Renderizar destacados
+    // Renderizar destacados (actualizado)
     function renderDestacados() {
       const container = document.getElementById("destacados-row");
       container.innerHTML = "";
@@ -698,9 +673,8 @@
       });
     }
 
-    // Buscador en tiempo real
+    // Buscador
     document.getElementById("search").addEventListener("input", (e) => {
-      clearInterval(interval);
       const term = e.target.value.toLowerCase();
       const filtrados = productos.filter(p => p.toLowerCase().includes(term));
       mostrarProductos(filtrados);
@@ -709,7 +683,6 @@
     // Categorías
     document.querySelectorAll(".tab").forEach(tab => {
       tab.addEventListener("click", () => {
-        clearInterval(interval);
         document.querySelector(".tab.active").classList.remove("active");
         tab.classList.add("active");
         currentCategory = tab.getAttribute("data-category");
@@ -720,9 +693,8 @@
 
     // Cargar todo
     window.onload = () => {
-      renderCarousel();
+      renderOfertas();
       renderDestacados();
-      startAutoPlay();
       mostrarProductos(productos);
     };
   </script>

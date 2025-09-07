@@ -117,7 +117,6 @@
       object-fit: cover;
       border-radius: 8px;
       margin-bottom: 8px;
-      loading: lazy;
     }
 
     /* Destacados */
@@ -151,7 +150,6 @@
       object-fit: cover;
       border-radius: 8px;
       margin-bottom: 8px;
-      loading: lazy;
     }
 
     /* Buscador + Categorías */
@@ -234,7 +232,6 @@
       object-fit: cover;
       border-radius: 8px;
       margin-bottom: 8px;
-      loading: lazy;
     }
 
     .icon {
@@ -305,7 +302,7 @@
   </footer>
 
   <script>
-    // Lista completa de productos (con imágenes actualizadas)
+    // Lista completa de productos desde tu Excel (corregida)
     const productos = [
       "DETERG MAGNUS X1LT", "OFF AERO X170", "P.H. NORIPEL X1X60mtx48", "DETERG. SUELTO X5LTS", "PALA PLASTICA CON CABO ECO",
       "P.H. NORIPEL X4X240mtx12", "DISPENSER DUO MAKE", "PALITAS PLAST. ECO", "P.H. NORIPEL X6X360mtx12", "ENCENDEDORES X50",
@@ -421,7 +418,7 @@
       "BALDO 12LTS XPER", "ALCOHOL VILLA IRIS X500 X20UNID"
     ];
 
-    // Imágenes actualizadas (solo las que tienen URL válida)
+    // Imágenes desde tu Excel actualizado
     const imagenesMap = {
       "P.H. NORIPEL X1X60mtx48": "https://i.postimg.cc/KcpFxN4S/p-h-noripel-x1x60mtx48.jpg",
       "PALA PLASTICA CON CABO ECO": "https://i.postimg.cc/vmxjR105/PALA-PLASTICA-CON-CABO-ECO.jpg",
@@ -584,7 +581,7 @@
       "P.H. NORIPEL X4BCO PURO X30MTS X12U"
     ];
 
-    // Productos destacados (actualizados)
+    // Productos destacados
     const productosDestacados = [
       "P.H. ZENIN X4 BCO X12U",
       "P.H. NORIPEL X6BCOx180mtX12",
@@ -626,7 +623,7 @@
 
     function mostrarProductos(lista) {
       const contenedor = document.getElementById("products");
-      contyen.innerHTML = "";
+      contenedor.innerHTML = "";
       const filtrados = lista.filter(p => currentCategory === "all" || getCategoria(p) === currentCategory);
       filtrados.forEach(prod => {
         const div = document.createElement("div");
@@ -636,11 +633,11 @@
           ${img ? `<img src="${img}" alt="${prod}" class="product-img">` : `<div class="icon">${getIcon(prod)}</div>`}
           ${prod}
         `;
-        contyen.appendChild(div);
+        contenedor.appendChild(div);
       });
     }
 
-    // Renderizar ofertas (solo NORIPEL)
+    // Renderizar ofertas
     function renderOfertas() {
       const container = document.getElementById("offers-container");
       container.innerHTML = "";
@@ -657,7 +654,7 @@
       });
     }
 
-    // Renderizar destacados (actualizado)
+    // Renderizar destacados
     function renderDestacados() {
       const container = document.getElementById("destacados-row");
       container.innerHTML = "";

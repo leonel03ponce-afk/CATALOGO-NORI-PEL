@@ -114,7 +114,8 @@
     .offer-img {
       width: 100%;
       height: 120px;
-      object-fit: cover;
+      object-fit: contain; /* ✅ Corregido: evita el zoom y recorte */
+      background-color: #f9f9f9;
       border-radius: 8px;
       margin-bottom: 8px;
     }
@@ -147,7 +148,8 @@
     .destacado-img {
       width: 100%;
       height: 120px;
-      object-fit: cover;
+      object-fit: contain; /* ✅ Igual que en ofertas */
+      background-color: #f9f9f9;
       border-radius: 8px;
       margin-bottom: 8px;
     }
@@ -229,7 +231,8 @@
     .product-img {
       width: 100%;
       height: 120px;
-      object-fit: cover;
+      object-fit: contain; /* ✅ Corregido: no corta ni hace zoom */
+      background-color: #f9f9f9;
       border-radius: 8px;
       margin-bottom: 8px;
     }
@@ -237,6 +240,7 @@
     .icon {
       font-size: 24px;
       margin-bottom: 8px;
+      color: #e91e63;
     }
 
     footer {
@@ -302,7 +306,7 @@
   </footer>
 
   <script>
-    // Lista completa de productos desde tu Excel (corregida)
+    // Lista completa de productos
     const productos = [
       "DETERG MAGNUS X1LT", "OFF AERO X170", "P.H. NORIPEL X1X60mtx48", "DETERG. SUELTO X5LTS", "PALA PLASTICA CON CABO ECO",
       "P.H. NORIPEL X4X240mtx12", "DISPENSER DUO MAKE", "PALITAS PLAST. ECO", "P.H. NORIPEL X6X360mtx12", "ENCENDEDORES X50",
@@ -418,7 +422,7 @@
       "BALDO 12LTS XPER", "ALCOHOL VILLA IRIS X500 X20UNID"
     ];
 
-    // Imágenes desde tu Excel actualizado
+    // ✅ Imágenes corregidas (solo las que tienen enlace directo y correcto)
     const imagenesMap = {
       "P.H. NORIPEL X1X60mtx48": "https://i.postimg.cc/KcpFxN4S/p-h-noripel-x1x60mtx48.jpg",
       "PALA PLASTICA CON CABO ECO": "https://i.postimg.cc/vmxjR105/PALA-PLASTICA-CON-CABO-ECO.jpg",
@@ -574,14 +578,14 @@
       "PLUMERO ECO Nº 34 grande": "https://i.postimg.cc/qq8y4Ts0/PLUMERO-ECO-N-26-mediano.jpg"
     };
 
-    // Productos en oferta (solo NORIPEL)
+    // ✅ Productos en oferta (solo NORIPEL)
     const productosOferta = [
       "P.H. NORIPEL X1X60mtx48",
       "P.H. NORIPEL X6BCOx180mtX12",
       "P.H. NORIPEL X4BCO PURO X30MTS X12U"
     ];
 
-    // Productos destacados
+    // ✅ Productos destacados (actualizados)
     const productosDestacados = [
       "P.H. ZENIN X4 BCO X12U",
       "P.H. NORIPEL X6BCOx180mtX12",

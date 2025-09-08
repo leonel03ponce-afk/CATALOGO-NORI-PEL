@@ -113,27 +113,27 @@
     
 .offer-img {
   width: 100%;
-  height: 120px;
+  height: 150px;
   object-fit: scale-down;
   object-position: center;
   background-color: #ffffff;
   border: 1px solid #eee;
   border-radius: 8px;
   margin-bottom: 8px;
-  padding: 8px;
+  padding: 10px;
   box-sizing: border-box;
 }
 
 .destacado-img {
   width: 100%;
-  height: 120px;
+  height: 150px;
   object-fit: scale-down;
   object-position: center;
   background-color: #ffffff;
   border: 1px solid #eee;
   border-radius: 8px;
   margin-bottom: 8px;
-  padding: 8px;
+  padding: 10px;
   box-sizing: border-box;
 }
 
@@ -248,24 +248,25 @@
     }
 
     .product {
-      background-color: white;
-      padding: 12px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      font-size: 14px;
-      text-align: center;
+  background-color: white;
+  padding: 14px; /* ✅ Un poco más de espacio */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  font-size: 14.5px; /* Puede subir a 15px si querés */
+  text-align: center;
+  height: 100%; /* Para que todos los productos tengan la misma altura */
     }
 
   .product-img {
   width: 100%;
-  height: 120px;
-  object-fit: scale-down;     /* Ajusta sin distorsionar ni acercar demasiado */
-  object-position: center;    /* Centra la imagen */
-  background-color: #ffffff;  /* Fondo blanco limpio */
-  border: 1px solid #eee;     /* Borde suave */
+  height: 150px; /* ✅ Aumentado de 120px a 150px */
+  object-fit: scale-down; /* Muestra la imagen completa */
+  object-position: center;
+  background-color: #ffffff;
+  border: 1px solid #eee;
   border-radius: 8px;
   margin-bottom: 8px;
-  padding: 8px;               /* Espacio interno para que no toque los bordes */
+  padding: 10px; /* ✅ Un poco más de espacio interno */
   box-sizing: border-box;
 }
 
@@ -340,7 +341,7 @@
   <script>
     // Lista completa de productos
     const productos = [
-      "OFF AERO X170", "P.H. NORIPEL X1X60mtx48", "DETERG. SUELTO X5LTS", "PALA PLASTICA CON CABO ECO",
+      "OFF AERO X170", "P.H. NORIPEL X1X60mtx48", "DETERG. SUELTO X5LTS", "PALA PLASTICA CON CABO ECO", "DETERGENTE X1LT MAGNUS", 
       "P.H. NORIPEL X4X240mtx12", "DISPENSER DUO MAKE", "PALITAS PLAST. ECO", "P.H. NORIPEL X6X360mtx12", "ENCENDEDORES X50",
       "PALITAS PLAST.C/CABO", "P.H. NORIPEL X4BCO PURO D/HOJA X30MTS X12U", "ENCENDEDORES X25", "PALITAS PLAST.C/GOMA",
       "P.H. NORIPEL X4BCO PURO X30MTS X12U", "ESCOBA 5 HILOS", "PALITOS BROCHETTES", "P.H. NORIPEL X1BCOX50mtx48",
@@ -734,6 +735,7 @@
   </script>
 </body>
 </html>
+
 
 
 

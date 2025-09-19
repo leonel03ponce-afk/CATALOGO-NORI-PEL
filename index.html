@@ -323,18 +323,26 @@
   </section>
 
   <!-- BUSCADOR + CATEGORÍAS -->
-  <div class="search-and-tabs">
-    <input type="text" id="search" placeholder="🔍 Buscar productos..." />
-    <div class="category-tabs">
-      <div class="tab active" data-category="all">Todos</div>
-      <div class="tab" data-category="papel">🧻 Papel Higiénico</div>
-      <div class="tab" data-category="cocina">🍽️ Rollo Cocina</div>
-      <div class="tab" data-category="bazar">🏪 Bazar / Cocina</div>
-      <div class="tab" data-category="limpieza">🧽 Limpieza</div>
-      <div class="tab" data-category="aromatizantes">🌸 Aromatizantes</div>
-      <div class="tab" data-category="otros">📦 Otros</div>
-    </div>
+<div class="search-and-tabs">
+  <input 
+    type="text" 
+    id="search" 
+    placeholder="🔍 Buscar productos..." 
+    autocomplete="off" 
+    autocorrect="off" 
+    autocapitalize="off" 
+    spellcheck="false"
+  />
+  <div class="category-tabs">
+    <div class="tab active" data-category="all">Todos</div>
+    <div class="tab" data-category="papel">🧻 Papel Higiénico</div>
+    <div class="tab" data-category="cocina">🍽️ Rollo Cocina</div>
+    <div class="tab" data-category="bazar">🏪 Bazar / Cocina</div>
+    <div class="tab" data-category="limpieza">🧽 Limpieza</div>
+    <div class="tab" data-category="aromatizantes">🌸 Aromatizantes</div>
+    <div class="tab" data-category="otros">📦 Otros</div>
   </div>
+</div>
 
   <!-- LISTA DE PRODUCTOS -->
   <section class="products" id="products">
@@ -784,6 +792,7 @@
   </script>
 </body>
 </html>
+
 
 
 

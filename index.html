@@ -114,7 +114,7 @@
     /* Secciones por grupo */
     .product-group {
       padding: 22px 16px;
-      background-color: #fff9f9; /* ✅ Fondo suave */
+      background-color: #fff9f9;
       margin: 18px auto;
       border-radius: 14px;
       box-shadow: 0 3px 10px rgba(233, 30, 99, 0.06);
@@ -372,8 +372,8 @@
       "BALDO 12LTS XPER", "ALCOHOL VILLA IRIS X500 X20UNID", "ESCOBILLON GONDOLA SUPER S/C", 
     ];
 
-    // ✅ Imágenes COMPLETAS (tal como las pasaste)
-    const imagenesMap = {
+    // ✅ Imágenes (tal como las pasaste)
+    const imagenesMapRaw = {
       "P.H. NORIPEL X1X60mtx48": "https://i.postimg.cc/KcpFxN4S/p-h-noripel-x1x60mtx48.jpg",
       "LUBRICANTE ESCUDO": "https://i.postimg.cc/ZnkR796w/LUBRICANTE-ESCUDO.jpg",
       "P.H. ALTO METRAJE X8": "https://i.postimg.cc/pL07FjLN/P-H-ALTO-METRAJE-X8.jpg",
@@ -685,6 +685,21 @@
       "PLUMERO ECO Nº 34 grande": "https://i.postimg.cc/bwdjsHJD/PLUMERO-ECO-N-34-grande.jpg",
     };
 
+    // ✅ Normalizar clave para comparar imágenes
+    function normalizarClave(str) {
+      return str
+        .toUpperCase()
+        .replace(/\s+/g, ' ')
+        .trim()
+        .replace(/\.$/, ''); // elimina punto final si hay
+    }
+
+    // Crear mapa normalizado
+    const imagenesMap = {};
+    for (let clave in imagenesMapRaw) {
+      imagenesMap[normalizarClave(clave)] = imagenesMapRaw[clave];
+    }
+
     // ✅ Ofertas: 4 productos
     const productosOferta = [
       "P.H. NORIPEL X1X60mtx48",
@@ -693,9 +708,9 @@
       "P.H. NORIPEL X4BCO PURO D/HOJA X30MTS X12U"
     ];
 
-    // ✅ Clasificación exacta
+    // ✅ Clasificación CORREGIDA: todos los "P.H." van a Nuestras Marcas
     const nuestrasMarcas = productos.filter(p =>
-      p.includes("NORIPEL") ||
+      p.includes("P.H.") ||
       p.includes("ZENIN") ||
       p.includes("INSTITUCIONAL") ||
       (p.includes("PURO") && p.includes("BCO"))
@@ -708,9 +723,8 @@
     );
 
     const otrosPapeles = productos.filter(p =>
-      (p.includes("P.H.") || p.includes("PAÑUELOS") || p.includes("FELPITA") || p.includes("MAXISEC")) &&
-      !nuestrasMarcas.includes(p) &&
-      !rollosCocina.includes(p)
+      (p.includes("PAÑUELOS") || p.includes("FELPITA") || p.includes("MAXISEC")) &&
+      !p.includes("P.H.")
     );
 
     const escobas = productos.filter(p =>
@@ -820,7 +834,7 @@
       return "📦";
     };
 
-    // Renderizar grupo
+    // Renderizar un grupo
     function renderGrupo(productosLista, contenedorId) {
       const contenedor = document.getElementById(contenedorId);
       if (!contenedor) return;
@@ -828,7 +842,8 @@
       productosLista.forEach(prod => {
         const div = document.createElement("div");
         div.className = "product";
-        const img = imagenesMap[prod] || "";
+        const claveNormalizada = normalizarClave(prod);
+        const img = imagenesMap[claveNormalizada] || "";
         div.innerHTML = `
           ${img ? `<img src="${img}" alt="${prod}" class="product-img">` : `<div class="icon">${getIcon(prod)}</div>`}
           ${prod}
@@ -844,7 +859,8 @@
       productosOferta.forEach(prod => {
         const item = document.createElement("div");
         item.className = "offer-item";
-        const img = imagenesMap[prod] || "";
+        const claveNormalizada = normalizarClave(prod);
+        const img = imagenesMap[claveNormalizada] || "";
         item.innerHTML = `
           <div class="offer-badge">🔥 Oferta</div>
           ${img ? `<img src="${img}" alt="${prod}" class="offer-img">` : `<div class="icon">${getIcon(prod)}</div>`}

@@ -99,10 +99,9 @@
       font-weight: bold;
     }
     .offer-img,
-    .destacado-img,
     .product-img {
       width: 100%;
-      height: 190px; /* ✅ Aumentado */
+      height: 190px;
       object-fit: scale-down;
       object-position: center;
       background-color: #ffffff;
@@ -112,70 +111,29 @@
       padding: 12px;
       box-sizing: border-box;
     }
-    /* Carruseles */
-    .carousel-container {
-      position: relative;
-      max-width: 900px;
-      margin: 0 auto;
-      overflow: hidden;
+    /* Secciones por grupo */
+    .product-group {
+      padding: 22px 16px;
+      background-color: #fff9f9; /* ✅ Fondo suave */
+      margin: 18px auto;
+      border-radius: 14px;
+      box-shadow: 0 3px 10px rgba(233, 30, 99, 0.06);
+      max-width: 1400px;
     }
-    .carousel {
-      display: flex;
-      transition: transform 0.5s ease-in-out;
-    }
-    .carousel-item {
-      min-width: 100%;
-      display: flex;
-      justify-content: center;
-      padding: 10px;
-      box-sizing: border-box;
-    }
-    .destacado-item {
+    .group-title {
       text-align: center;
-      font-size: 18px;
-      max-width: 300px;
-      margin: 0 auto;
-    }
-    /* Buscador + Categorías */
-    .search-and-tabs {
-      padding: 20px;
-      text-align: center;
-      background-color: white;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    #search {
-      width: 90%;
-      max-width: 500px;
-      padding: 12px;
-      border: 2px solid var(--primary-light);
-      border-radius: 8px;
-      font-size: 16px;
-    }
-    .category-tabs {
-      display: flex;
-      overflow-x: auto;
-      background-color: white;
-      padding: 10px 0;
-      gap: 10px;
-      justify-content: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      margin-top: 15px;
-    }
-    .tab {
-      padding: 10px 16px;
-      background-color: var(--primary-light);
       color: white;
-      border-radius: 20px;
-      font-size: 14px;
-      white-space: nowrap;
-      cursor: pointer;
-    }
-    .tab.active {
-      background-color: var(--primary);
+      margin-bottom: 22px;
+      font-size: 23px;
       font-weight: bold;
+      background: linear-gradient(135deg, #e91e63, #c2185b);
+      padding: 12px 20px;
+      border-radius: 50px;
+      display: inline-block;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
-    /* Productos */
-    .products {
+    /* Grillas de productos */
+    .products-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 16px;
@@ -184,23 +142,27 @@
       margin: 0 auto;
     }
     @media (max-width: 768px) {
-      .products {
+      .products-grid {
         grid-template-columns: repeat(2, 1fr);
       }
     }
-    @media (max-width: 480px) {
-      .products {
+    @media (max-width: 360px) {
+      .products-grid {
         grid-template-columns: 1fr;
       }
     }
     .product {
       background-color: white;
       padding: 18px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
       font-size: 15px;
       text-align: center;
-      height: 100%;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .product:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 12px rgba(0,0,0,0.12);
     }
     .icon {
       font-size: 26px;
@@ -235,53 +197,66 @@
     <div class="offers-container" id="offers-container"></div>
   </section>
 
-  <!-- PRODUCTOS DESTACADOS -->
-  <section class="destacados">
-    <h2>🌟 PRODUCTOS DESTACADOS</h2>
-    <div class="carousel-container">
-      <div class="carousel" id="destacados-carousel"></div>
-    </div>
-  </section>
-
   <!-- NUESTRAS MARCAS -->
-  <section class="destacados">
-    <h2>✨ Nuestras Marcas – Calidad Nori-Pel</h2>
-    <div class="carousel-container">
-      <div class="carousel" id="nuestras-marcas-carousel"></div>
-    </div>
+  <section class="product-group">
+    <h2 class="group-title">✨ Nuestras Marcas – Calidad Nori-Pel</h2>
+    <div class="products-grid" id="grupo-nuestras-marcas"></div>
   </section>
 
-  <!-- BUSCADOR + CATEGORÍAS -->
-  <div class="search-and-tabs">
-    <input 
-      type="text" 
-      id="search" 
-      placeholder="🔍 Buscar productos..." 
-      autocomplete="off" 
-      autocorrect="off" 
-      autocapitalize="off" 
-      spellcheck="false"
-    />
-    <div class="category-tabs">
-      <div class="tab active" data-category="all">Todos</div>
-      <div class="tab" data-category="papel">🧻 Papel Higiénico</div>
-      <div class="tab" data-category="cocina">🍽️ Rollo Cocina</div>
-      <div class="tab" data-category="bazar">🏪 Bazar / Cocina</div>
-      <div class="tab" data-category="limpieza">🧽 Limpieza</div>
-      <div class="tab" data-category="aromatizantes">🌸 Aromatizantes</div>
-      <div class="tab" data-category="otros">📦 Otros</div>
-    </div>
-  </div>
+  <!-- ROLLOS DE COCINA -->
+  <section class="product-group">
+    <h2 class="group-title">🍽️ Rollos de Cocina</h2>
+    <div class="products-grid" id="grupo-cocina"></div>
+  </section>
 
-  <!-- LISTA DE PRODUCTOS -->
-  <section class="products" id="products"></section>
+  <!-- OTROS PAPELES -->
+  <section class="product-group">
+    <h2 class="group-title">🧻 Otros Papeles (Felpita, MaxiSec, etc.)</h2>
+    <div class="products-grid" id="grupo-otros-papeles"></div>
+  </section>
+
+  <!-- ESCOBAS Y ESCOBILLONES -->
+  <section class="product-group">
+    <h2 class="group-title">🧹 Escobas y Escobillones</h2>
+    <div class="products-grid" id="grupo-escobas"></div>
+  </section>
+
+  <!-- SECADORES, TRAPEADORES, REJILLAS -->
+  <section class="product-group">
+    <h2 class="group-title">🧽 Secadores, Trapeadores y Rejillas</h2>
+    <div class="products-grid" id="grupo-secadores"></div>
+  </section>
+
+  <!-- BAZAR -->
+  <section class="product-group">
+    <h2 class="group-title">🪣 Bazar (Baldes, Macetas, Bolsas, Herméticos...)</h2>
+    <div class="products-grid" id="grupo-bazar"></div>
+  </section>
+
+  <!-- LIMPIEZA -->
+  <section class="product-group">
+    <h2 class="group-title">🧴 Limpieza (Detergentes, Cloro, Ácidos...)</h2>
+    <div class="products-grid" id="grupo-limpieza"></div>
+  </section>
+
+  <!-- AROMATIZANTES -->
+  <section class="product-group">
+    <h2 class="group-title">🌸 Aromatizantes y Perfumes</h2>
+    <div class="products-grid" id="grupo-aromatizantes"></div>
+  </section>
+
+  <!-- OTROS -->
+  <section class="product-group">
+    <h2 class="group-title">📦 Otros Productos</h2>
+    <div class="products-grid" id="grupo-otros"></div>
+  </section>
 
   <footer>
     NORI-PEL © 2025 | Av. Perón 217, Villa de Mayo | WhatsApp: +54 9 11 6423-3586
   </footer>
 
   <script>
-    // Lista completa de productos (tal como la pasaste)
+    // ✅ Lista COMPLETA de productos (tal como la pasaste)
     const productos = [
       "OFF AERO X170", "P.H. NORIPEL X1X60mtx48", "DETERG. SUELTO X5LTS", "PALA PLASTICA CON CABO ECO", "DETERGENTE X1LT MAGNUS", 
       "P.H. NORIPEL X4X240mtx12", "DISPENSER DUO MAKE", "PALITAS PLAST. ECO", "P.H. NORIPEL X6X360mtx12", "ENCENDEDORES X50",
@@ -397,7 +372,7 @@
       "BALDO 12LTS XPER", "ALCOHOL VILLA IRIS X500 X20UNID", "ESCOBILLON GONDOLA SUPER S/C", 
     ];
 
-    // Imágenes (tal como las pasaste)
+    // ✅ Imágenes COMPLETAS (tal como las pasaste)
     const imagenesMap = {
       "P.H. NORIPEL X1X60mtx48": "https://i.postimg.cc/KcpFxN4S/p-h-noripel-x1x60mtx48.jpg",
       "LUBRICANTE ESCUDO": "https://i.postimg.cc/ZnkR796w/LUBRICANTE-ESCUDO.jpg",
@@ -710,22 +685,15 @@
       "PLUMERO ECO Nº 34 grande": "https://i.postimg.cc/bwdjsHJD/PLUMERO-ECO-N-34-grande.jpg",
     };
 
-    // Productos en oferta y destacados
+    // ✅ Ofertas: 4 productos
     const productosOferta = [
       "P.H. NORIPEL X1X60mtx48",
       "P.H. NORIPEL X6BCOx180mtX12",
-      "P.H. NORIPEL X4BCO PURO X30MTS X12U"
-    ];
-    const productosDestacados = [
-      "P.H. ZENIN X4 BCO X12U",
-      "P.H. NORIPEL X6BCOx180mtX12",
-      "ENCENDEDORES X50",
-      "ALCOHOL EN GEL ALGABO X300ML",
-      "ESCOBILLON ANDEN 60 CM",
-      "ROLLO COC. CARTABELLA X3X10"
+      "P.H. NORIPEL X4BCO PURO X30MTS X12U",
+      "P.H. NORIPEL X4BCO PURO D/HOJA X30MTS X12U"
     ];
 
-    // Productos de nuestras marcas
+    // ✅ Clasificación exacta
     const nuestrasMarcas = productos.filter(p =>
       p.includes("NORIPEL") ||
       p.includes("ZENIN") ||
@@ -733,15 +701,106 @@
       (p.includes("PURO") && p.includes("BCO"))
     );
 
-    // Asignar categorías
-    function getCategoria(nombre) {
-      if (nombre.includes("P.H.") || nombre.includes("Papel") || nombre.includes("PAÑUELOS") || nombre.includes("PAÑO")) return "papel";
-      if (nombre.includes("COCINA") || nombre.includes("CARTABELLA") || nombre.includes("FELPITA") || nombre.includes("COCTELERA") || nombre.includes("COLADOR")) return "cocina";
-      if (nombre.includes("BALDE") || nombre.includes("FUENTON") || nombre.includes("PALANGANA") || nombre.includes("MACETA") || nombre.includes("BOLSA") || nombre.includes("BOLS") || nombre.includes("CANASTO") || nombre.includes("PORTA") || nombre.includes("HERMETICO") || nombre.includes("ORGANIZADOR")) return "bazar";
-      if (nombre.includes("LIMPIA") || nombre.includes("DETERG") || nombre.includes("CLORO") || nombre.includes("DESENGRASANTE") || nombre.includes("ACIDO") || nombre.includes("POLVO") || nombre.includes("ESPONJA") || nombre.includes("LAMPAZO") || nombre.includes("ESCOBA") || nombre.includes("ESCOBILLON") || nombre.includes("REJILLA") || nombre.includes("TRAPO") || nombre.includes("SECAD") || nombre.includes("REPASADOR")) return "limpieza";
-      if (nombre.includes("AROMATIZANTE") || nombre.includes("PERFUMINA") || nombre.includes("WALKER") || nombre.includes("DESOD") || nombre.includes("DIFUSOR") || nombre.includes("NAFTALINA")) return "aromatizantes";
-      return "otros";
-    }
+    const rollosCocina = productos.filter(p =>
+      p.includes("ROLLO COC") ||
+      p.includes("R.C. INST") ||
+      p.includes("CARTABELLA")
+    );
+
+    const otrosPapeles = productos.filter(p =>
+      (p.includes("P.H.") || p.includes("PAÑUELOS") || p.includes("FELPITA") || p.includes("MAXISEC")) &&
+      !nuestrasMarcas.includes(p) &&
+      !rollosCocina.includes(p)
+    );
+
+    const escobas = productos.filter(p =>
+      p.includes("ESCOBA") ||
+      p.includes("ESCOBILLON") ||
+      p.includes("BARRE HOJAS") ||
+      p.includes("BARREHOJAS")
+    );
+
+    const secadores = productos.filter(p =>
+      p.includes("SECAD") ||
+      p.includes("TRAPO") ||
+      p.includes("REJILLA") ||
+      p.includes("LAMPAZO") ||
+      p.includes("MOPA") ||
+      (p.includes("ESPONJA") && !p.includes("LAVAAUTO"))
+    );
+
+    const bazar = productos.filter(p =>
+      p.includes("BALDE") ||
+      p.includes("FUENTON") ||
+      p.includes("PALANGANA") ||
+      p.includes("MACETA") ||
+      p.includes("BOLSA") ||
+      p.includes("BOLS") ||
+      p.includes("CANASTO") ||
+      p.includes("PORTA") ||
+      p.includes("HERMETICO") ||
+      p.includes("ORGANIZADOR") ||
+      p.includes("MANTEL") ||
+      p.includes("TIERRA") ||
+      p.includes("REGADERA") ||
+      p.includes("TERM") ||
+      p.includes("LAMP") ||
+      p.includes("CORTINA") ||
+      p.includes("ALFOMBRA") ||
+      p.includes("CUBETA") ||
+      p.includes("ENSALADERA") ||
+      p.includes("BANDEJA") ||
+      p.includes("COMBO")
+    );
+
+    const limpieza = productos.filter(p =>
+      p.includes("LIMPIA") ||
+      p.includes("DETERG") ||
+      p.includes("CLORO") ||
+      p.includes("DESENGRASANTE") ||
+      p.includes("ACIDO") ||
+      p.includes("POLVO") ||
+      p.includes("ESPONJA LAVAAUTO") ||
+      p.includes("QUITASARRO") ||
+      p.includes("DESINF") ||
+      p.includes("LAVAND") ||
+      p.includes("SUAVIZANTE") ||
+      p.includes("JABON") ||
+      p.includes("CERA") ||
+      p.includes("ALCOHOL") ||
+      p.includes("DESOD") ||
+      p.includes("LISOFORM") ||
+      p.includes("PEGAMENTO") ||
+      p.includes("SILICONA") ||
+      p.includes("LUBRICANTE")
+    );
+
+    const aromatizantes = productos.filter(p =>
+      p.includes("AROMATIZANTE") ||
+      p.includes("PERFUMINA") ||
+      p.includes("WALKER") ||
+      p.includes("DESOD") ||
+      p.includes("DIFUSOR") ||
+      p.includes("NAFTALINA") ||
+      p.includes("VELA") ||
+      p.includes("ESPIRAL") ||
+      p.includes("REPELENTE") ||
+      p.includes("OFF") ||
+      p.includes("VAPE")
+    );
+
+    const todosAgrupados = [
+      ...nuestrasMarcas,
+      ...rollosCocina,
+      ...otrosPapeles,
+      ...escobas,
+      ...secadores,
+      ...bazar,
+      ...limpieza,
+      ...aromatizantes
+    ];
+
+    const otros = productos.filter(p => !todosAgrupados.includes(p));
 
     // Iconos
     const getIcon = (nombre) => {
@@ -761,13 +820,12 @@
       return "📦";
     };
 
-    let currentCategory = "all";
-
-    function mostrarProductos(lista) {
-      const contenedor = document.getElementById("products");
+    // Renderizar grupo
+    function renderGrupo(productosLista, contenedorId) {
+      const contenedor = document.getElementById(contenedorId);
+      if (!contenedor) return;
       contenedor.innerHTML = "";
-      const filtrados = lista.filter(p => currentCategory === "all" || getCategoria(p) === currentCategory);
-      filtrados.forEach(prod => {
+      productosLista.forEach(prod => {
         const div = document.createElement("div");
         div.className = "product";
         const img = imagenesMap[prod] || "";
@@ -789,82 +847,26 @@
         const img = imagenesMap[prod] || "";
         item.innerHTML = `
           <div class="offer-badge">🔥 Oferta</div>
-          ${img ? `<img src="${img}" alt="${prod}" class="offer-img">` : `<div class="carousel-icon">${getIcon(prod)}</div>`}
+          ${img ? `<img src="${img}" alt="${prod}" class="offer-img">` : `<div class="icon">${getIcon(prod)}</div>`}
           ${prod}
         `;
         container.appendChild(item);
       });
     }
 
-    // Renderizar carrusel genérico
-    function renderCarousel(productosLista, contenedorId) {
-      const container = document.getElementById(contenedorId);
-      container.innerHTML = "";
-      productosLista.forEach(prod => {
-        const item = document.createElement("div");
-        item.className = "carousel-item";
-        const img = imagenesMap[prod] || "";
-        item.innerHTML = `
-          <div class="destacado-item">
-            ${img ? `<img src="${img}" alt="${prod}" class="destacado-img">` : `<div class="carousel-icon">${getIcon(prod)}</div>`}
-            ${prod}
-          </div>
-        `;
-        container.appendChild(item);
-      });
-    }
-
-    // Carrusel automático
-    function iniciarCarrusel(contenedorId, totalItems) {
-      let currentIndex = 0;
-      const carousel = document.getElementById(contenedorId);
-      if (!carousel || totalItems <= 1) return;
-
-      setInterval(() => {
-        currentIndex = (currentIndex + 1) % totalItems;
-        carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
-      }, 4000);
-    }
-
-    // Renderizar destacados
-    function renderDestacados() {
-      renderCarousel(productosDestacados, "destacados-carousel");
-      iniciarCarrusel("destacados-carousel", productosDestacados.length);
-    }
-
-    // Renderizar nuestras marcas
-    function renderNuestrasMarcas() {
-      renderCarousel(nuestrasMarcas, "nuestras-marcas-carousel");
-      iniciarCarrusel("nuestras-marcas-carousel", nuestrasMarcas.length);
-    }
-
-    // Buscador
-    document.getElementById("search").addEventListener("input", (e) => {
-      const term = e.target.value.toLowerCase();
-      const filtrados = productos.filter(p => p.toLowerCase().includes(term));
-      mostrarProductos(filtrados);
-    });
-
-    // Categorías
-    document.querySelectorAll(".tab").forEach(tab => {
-      tab.addEventListener("click", () => {
-        document.querySelector(".tab.active").classList.remove("active");
-        tab.classList.add("active");
-        currentCategory = tab.getAttribute("data-category");
-        document.getElementById("search").value = "";
-        mostrarProductos(productos);
-      });
-    });
-
     // Cargar todo
     window.onload = () => {
       renderOfertas();
-      renderDestacados();
-      renderNuestrasMarcas();
-      mostrarProductos(productos);
+      renderGrupo(nuestrasMarcas, "grupo-nuestras-marcas");
+      renderGrupo(rollosCocina, "grupo-cocina");
+      renderGrupo(otrosPapeles, "grupo-otros-papeles");
+      renderGrupo(escobas, "grupo-escobas");
+      renderGrupo(secadores, "grupo-secadores");
+      renderGrupo(bazar, "grupo-bazar");
+      renderGrupo(limpieza, "grupo-limpieza");
+      renderGrupo(aromatizantes, "grupo-aromatizantes");
+      renderGrupo(otros, "grupo-otros");
     };
   </script>
 </body>
 </html>
-
-

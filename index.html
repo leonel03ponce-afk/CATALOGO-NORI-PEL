@@ -834,39 +834,24 @@
       return "📦";
     };
 
-   // Renderizar un grupo (solo productos con imagen)
-function renderGrupo(productosLista, contenedorId, sectionElement) {
-  const contenedor = document.getElementById(contenedorId);
-  if (!contenedor || !sectionElement) return;
+    // Renderizar un grupo
+    function renderGrupo(productosLista, contenedorId) {
+      const contenedor = document.getElementById(contenedorId);
+      if (!contenedor) return;
+      contenedor.innerHTML = "";
+      productosLista.forEach(prod => {
+        const div = document.createElement("div");
+        div.className = "product";
+        const claveNormalizada = normalizarClave(prod);
+        const img = imagenesMap[claveNormalizada] || "";
+        div.innerHTML = `
+          ${img ? `<img src="${img}" alt="${prod}" class="product-img">` : `<div class="icon">${getIcon(prod)}</div>`}
+          ${prod}
+        `;
+        contenedor.appendChild(div);
+      });
+    }
 
-  // Filtrar solo productos que tienen imagen
-  const productosConImagen = productosLista.filter(prod => {
-    const claveNormalizada = normalizarClave(prod);
-    return imagenesMap.hasOwnProperty(claveNormalizada);
-  });
-
-  // Si no hay productos con imagen, ocultar toda la sección
-  if (productosConImagen.length === 0) {
-    sectionElement.style.display = 'none';
-    return;
-  } else {
-    sectionElement.style.display = 'block';
-  }
-
-  contenedor.innerHTML = "";
-  productosConImagen.forEach(prod => {
-    const div = document.createElement("div");
-    div.className = "product";
-    const claveNormalizada = normalizarClave(prod);
-    const img = imagenesMap[claveNormalizada];
-    div.innerHTML = `
-      <img src="${img}" alt="${prod}" class="product-img">
-      ${prod}
-    `;
-    contenedor.appendChild(div);
-  });
- }
-    
     // Renderizar ofertas
     function renderOfertas() {
       const container = document.getElementById("offers-container");
@@ -887,21 +872,18 @@ function renderGrupo(productosLista, contenedorId, sectionElement) {
 
     // Cargar todo
     window.onload = () => {
-  renderOfertas(); // Esta ya filtra por los 4 productos con imagen
-
-  // Guardamos referencias a las secciones para poder ocultarlas si están vacías
-  renderGrupo(nuestrasMarcas, "grupo-nuestras-marcas", document.querySelector('#grupo-nuestras-marcas').closest('.product-group'));
-  renderGrupo(rollosCocina, "grupo-cocina", document.querySelector('#grupo-cocina').closest('.product-group'));
-  renderGrupo(otrosPapeles, "grupo-otros-papeles", document.querySelector('#grupo-otros-papeles').closest('.product-group'));
-  renderGrupo(escobas, "grupo-escobas", document.querySelector('#grupo-escobas').closest('.product-group'));
-  renderGrupo(secadores, "grupo-secadores", document.querySelector('#grupo-secadores').closest('.product-group'));
-  renderGrupo(bazar, "grupo-bazar", document.querySelector('#grupo-bazar').closest('.product-group'));
-  renderGrupo(limpieza, "grupo-limpieza", document.querySelector('#grupo-limpieza').closest('.product-group'));
-  renderGrupo(aromatizantes, "grupo-aromatizantes", document.querySelector('#grupo-aromatizantes').closest('.product-group'));
-  renderGrupo(otros, "grupo-otros", document.querySelector('#grupo-otros').closest('.product-group'));
-};
+      renderOfertas();
+      renderGrupo(nuestrasMarcas, "grupo-nuestras-marcas");
+      renderGrupo(rollosCocina, "grupo-cocina");
+      renderGrupo(otrosPapeles, "grupo-otros-papeles");
+      renderGrupo(escobas, "grupo-escobas");
+      renderGrupo(secadores, "grupo-secadores");
+      renderGrupo(bazar, "grupo-bazar");
+      renderGrupo(limpieza, "grupo-limpieza");
+      renderGrupo(aromatizantes, "grupo-aromatizantes");
+      renderGrupo(otros, "grupo-otros");
+    };
   </script>
 </body>
 </html>
-
 

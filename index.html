@@ -247,6 +247,12 @@
     <h2 class="group-title">🌸 Aromatizantes y Perfumes</h2>
     <div class="products-grid" id="grupo-aromatizantes"></div>
   </section>
+  
+    <!-- PLÁSTICOS -->
+  <section class="product-group">
+    <h2 class="group-title">🧴 Plásticos (Dispensers, Bañeras, Pelelas...)</h2>
+    <div class="products-grid" id="grupo-plasticos"></div>
+  </section>
 
   <!-- OTROS -->
   <section class="product-group">
@@ -703,7 +709,7 @@
       "P.H. NORIPEL X4BCO PURO D/HOJA X30MTS X12U"
     ];
 
-    // ✅ Clasificación CORREGIDA: todos los "P.H." van a Nuestras Marcas
+       // ✅ NUESTRAS MARCAS: todos los P.H., ZENIN, INSTITUCIONAL y variantes
     const nuestrasMarcas = productos.filter(p =>
       p.includes("P.H.") ||
       p.includes("ZENIN") ||
@@ -711,24 +717,33 @@
       (p.includes("PURO") && p.includes("BCO"))
     );
 
+    // ✅ ROLLOS DE COCINA
     const rollosCocina = productos.filter(p =>
       p.includes("ROLLO COC") ||
       p.includes("R.C. INST") ||
       p.includes("CARTABELLA")
     );
 
+    // ✅ OTROS PAPELES
     const otrosPapeles = productos.filter(p =>
       (p.includes("PAÑUELOS") || p.includes("FELPITA") || p.includes("MAXISEC")) &&
       !p.includes("P.H.")
     );
 
+    // ✅ ESCOBAS Y ESCOBILLONES (ampliado)
     const escobas = productos.filter(p =>
       p.includes("ESCOBA") ||
       p.includes("ESCOBILLON") ||
       p.includes("BARRE HOJAS") ||
-      p.includes("BARREHOJAS")
+      p.includes("BARREHOJAS") ||
+      p.includes("PALA") || // palas y palitas
+      p.includes("PALIT") ||
+      p.includes("ESC INDUSTRIAL") ||
+      p.includes("ESCOB BARRENDERO") ||
+      p.includes("ESCOB LAQUEADO")
     );
 
+    // ✅ SECADORES, TRAPEADORES, REJILLAS
     const secadores = productos.filter(p =>
       p.includes("SECAD") ||
       p.includes("TRAPO") ||
@@ -738,8 +753,18 @@
       (p.includes("ESPONJA") && !p.includes("LAVAAUTO"))
     );
 
+    // ✅ PLÁSTICOS (nueva categoría)
+    const plasticos = productos.filter(p =>
+      p.includes("DISPENSER") ||
+      p.includes("ESCURRIDOR DE VAJILLA") ||
+      p.includes("PELELA") ||
+      p.includes("BAÑERA PARA BEBE") ||
+      p.includes("SILLON INFANTIL")
+    );
+
+    // ✅ BAZAR (sin los plásticos ya extraídos)
     const bazar = productos.filter(p =>
-      p.includes("BALDE") ||
+      (p.includes("BALDE") ||
       p.includes("FUENTON") ||
       p.includes("PALANGANA") ||
       p.includes("MACETA") ||
@@ -759,9 +784,11 @@
       p.includes("CUBETA") ||
       p.includes("ENSALADERA") ||
       p.includes("BANDEJA") ||
-      p.includes("COMBO")
+      p.includes("COMBO")) &&
+      !plasticos.includes(p) // evita duplicados
     );
 
+    // ✅ LIMPIEZA
     const limpieza = productos.filter(p =>
       p.includes("LIMPIA") ||
       p.includes("DETERG") ||
@@ -784,6 +811,7 @@
       p.includes("LUBRICANTE")
     );
 
+    // ✅ AROMATIZANTES
     const aromatizantes = productos.filter(p =>
       p.includes("AROMATIZANTE") ||
       p.includes("PERFUMINA") ||
@@ -798,17 +826,20 @@
       p.includes("VAPE")
     );
 
+    // ✅ Agrupar todos los clasificados
     const todosAgrupados = [
       ...nuestrasMarcas,
       ...rollosCocina,
       ...otrosPapeles,
       ...escobas,
       ...secadores,
+      ...plasticos,
       ...bazar,
       ...limpieza,
       ...aromatizantes
     ];
 
+    // ✅ Resto: productos no clasificados
     const otros = productos.filter(p => !todosAgrupados.includes(p));
 
     // Iconos
@@ -921,11 +952,11 @@
       renderGrupo(otrosPapeles, "grupo-otros-papeles");
       renderGrupo(escobas, "grupo-escobas");
       renderGrupo(secadores, "grupo-secadores");
+      renderGrupo(plasticos, "grupo-plasticos"); // ← NUEVA LÍNEA
       renderGrupo(bazar, "grupo-bazar");
       renderGrupo(limpieza, "grupo-limpieza");
       renderGrupo(aromatizantes, "grupo-aromatizantes");
       renderGrupo(otros, "grupo-otros");
-
       // Conectar el buscador
       const inputBuscador = document.getElementById("buscador");
       if (inputBuscador) {
@@ -935,6 +966,7 @@
   </script>
 </body>
 </html>
+
 
 
 

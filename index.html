@@ -834,23 +834,26 @@
       return "📦";
     };
 
-    // Renderizar un grupo
-    function renderGrupo(productosLista, contenedorId) {
-      const contenedor = document.getElementById(contenedorId);
-      if (!contenedor) return;
-      contenedor.innerHTML = "";
-      productosLista.forEach(prod => {
-        const div = document.createElement("div");
-        div.className = "product";
-        const claveNormalizada = normalizarClave(prod);
-        const img = imagenesMap[claveNormalizada] || "";
-        div.innerHTML = `
-          ${img ? `<img src="${img}" alt="${prod}" class="product-img">` : `<div class="icon">${getIcon(prod)}</div>`}
-          ${prod}
-        `;
-        contenedor.appendChild(div);
-      });
+// Renderizar un grupo (solo productos con imagen)
+function renderGrupo(productosLista, contenedorId) {
+  const contenedor = document.getElementById(contenedorId);
+  if (!contenedor) return;
+  contenedor.innerHTML = "";
+  productosLista.forEach(prod => {
+    const claveNormalizada = normalizarClave(prod);
+    const img = imagenesMap[claveNormalizada];
+    // Solo renderizamos si hay imagen
+    if (img && img.trim() !== "") {
+      const div = document.createElement("div");
+      div.className = "product";
+      div.innerHTML = `
+        <img src="${img}" alt="${prod}" class="product-img">
+        ${prod}
+      `;
+      contenedor.appendChild(div);
     }
+  });
+}
 
     // Renderizar ofertas
     function renderOfertas() {
@@ -886,4 +889,5 @@
   </script>
 </body>
 </html>
+
 

@@ -212,12 +212,6 @@
     <div class="products-grid" id="grupo-cocina"></div>
   </section>
 
-  <!-- OTROS PAPELES -->
-  <section class="product-group">
-    <h2 class="group-title">🧻 Otros Papeles (Felpita, MaxiSec, etc.)</h2>
-    <div class="products-grid" id="grupo-otros-papeles"></div>
-  </section>
-
   <!-- ESCOBAS Y ESCOBILLONES -->
   <section class="product-group">
     <h2 class="group-title">🧹 Escobas y Escobillones</h2>
@@ -820,7 +814,6 @@
     const todosAgrupados = [
       ...nuestrasMarcas,
       ...rollosCocina,
-      ...otrosPapeles,
       ...escobas,
       ...secadores,
       ...plasticos,
@@ -924,7 +917,6 @@
         renderOfertas();
         renderGrupo(nuestrasMarcas, "grupo-nuestras-marcas");
         renderGrupo(rollosCocina, "grupo-cocina");
-        renderGrupo(otrosPapeles, "grupo-otros-papeles");
         renderGrupo(escobas, "grupo-escobas");
         renderGrupo(secadores, "grupo-secadores");
         renderGrupo(bazar, "grupo-bazar");
@@ -939,7 +931,6 @@
       renderOfertas();
       renderGrupo(nuestrasMarcas, "grupo-nuestras-marcas");
       renderGrupo(rollosCocina, "grupo-cocina");
-      renderGrupo(otrosPapeles, "grupo-otros-papeles");
       renderGrupo(escobas, "grupo-escobas");
       renderGrupo(secadores, "grupo-secadores");
       renderGrupo(plasticos, "grupo-plasticos"); // ← NUEVA LÍNEA
@@ -956,6 +947,7 @@
   </script>
 </body>
 </html>
+
 
 
 

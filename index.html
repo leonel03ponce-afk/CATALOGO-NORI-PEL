@@ -267,17 +267,17 @@
   <script>
     // ✅ Lista COMPLETA de productos (tal como la pasaste)
     const productos = [
-      "OFF AERO X170", "P.H. NORIPEL X1X60mtx48", "DETERG. SUELTO X5LTS", "PALA PLASTICA CON CABO ECO", "DETERGENTE X1LT MAGNUS", 
+      "OFF AERO X170", "DETERG. SUELTO X5LTS", "PALA PLASTICA CON CABO ECO", "DETERGENTE X1LT MAGNUS", 
       "P.H. NORIPEL X4X240mtx12", "DISPENSER DUO MAKE", "PALITAS PLAST. ECO", "P.H. NORIPEL X6X360mtx12", "ENCENDEDORES X50",
       "PALITAS PLAST.C/CABO", "P.H. NORIPEL X4BCO PURO D/HOJA X30MTS X12U", "ENCENDEDORES X25", "PALITAS PLAST.C/GOMA",
       "P.H. NORIPEL X4BCO PURO X30MTS X12U", "ESCOBA 5 HILOS", "PALITOS BROCHETTES", "P.H. NORIPEL X1BCOX50mtx48",
       "ESCOBA 6 HILOS", "PAÑO COCINA AMARILLO", "P.H. NORIPEL X4BCOX120mtx12", "ESCOBA GUINEA NENA", "PAÑO COCINA ESCOCES",
       "P.H. NORIPEL X4BCOX320mtx12", "ESCOBA JARDINERA", "PAÑO PISO AMARILLO", "P.H. NORIPEL X6BCOx180mtX12",
-      "ESCOBA PLAST.S/CABO EUROPA", "PAÑUELOS DESC. X6 ELEGANTE", "P.H. NORIPEL X50mtsBCO X24",
+      "ESCOBA PLAST.S/CABO EUROPA", "P.H. NORIPEL X50mtsBCO X24",
       "PASACERA BASE PLASTICA", "P.H. ZENIN X4 BCO X60MTS X12U", "ESCOBILLA BAÑO WC C/DEPOS", "PAST.LISY CLORO CANASTA X15 GRS",
       "P.H. INSTITUCIONAL X2KG X30UNID BCO", "ESCOBILLA BAÑO WC S/DEPOS", "PAST.LISY CLORO MOCHILA X50GRS", "P.H. NORIPEL X30MTS BCO X12UX4",
       "ESCOBILLON ANDEN 100 CM", "PAST.SNUGGY BLOQUE CANASTA 32G", "P.H. NORIPEL X30MTS X12UX4", "POLVO LIMPIADOR X400 CAMPANOL",
-      "PAÑUELOS DESC. X6 MAXISEC", "P.H. ZENIN X4 BCO X12U", "PAÑUELOS DESC BOX X75UNID",
+      "P.H. ZENIN X4 BCO X12U", "PAÑUELOS DESC BOX X75UNID",
       "P.H. ZENIN X 6 BCO X12U", "ESCOBILLON ANDEN 60 CM", "PLUMERO DE LANA", "P.H. INST DOBLE HOJA X30U", "ESCOBILLON ANDEN 80 CM",
       "PLUMERO ECO Nº 20 chico", "P.H INST XL X50mtsX30U", "ESCOBILLON BABILONIA SUPER S-C", "PLUMERO ECO Nº 26 mediano",
       "P.H. INST X90mtsX30U N1", "ESCOBILLON GONDOLA LAQUEADO S/C", "PLUMERO ECO Nº 34 grande", "P.H. INST X80mtsX30U N2 3,5kg",
@@ -304,8 +304,8 @@
       "HORMIG.POLVO X250G HORTAL", "SECAD.ROJO 50 SUPPY", "INSECT ESCUDO CASA Y JARDIN X360CC", "SECAD.ROJO 80 SG",
       "BOLSA CAMIS.BCA 30X40/13MIC", "INSECT ESCUDO CUCARACH X360CC", "SECADOR DOBLE GOMA 4-R X12UNID", "BOLSA CAMIS.BCA40X50/11MIC",
       "INSECT AERO FUYI X12", "SERVILLETA ELEGANTE X150 X18", "BOLSA CAMIS.BCA40X50/16MIC", "INSECT RAID SIN OLOR X12UNID", "SOPAPAS ROJAS SG",
-      "BOLSA FERIA", "INSECT ESCUDO M/M X360CC", "SOPAPAS SUPPY", "BOLSA RESID SIPACK 45X60", "LIMPIA HORNOS SMELLFRESH 360CC XUNID",
-      "SPUGNELLA EXTRALIMP X12 UN", "SOPAPA CON CABO", "BOLSA RESID SERVIPLAST 50X70", "INSECT MOSQUITRAP X370CCX12", "TALCO PARA PIES ALGABO X100G",
+      "BOLSA FERIA", "INSECT ESCUDO M/M X360CC", "BOLSA RESID SIPACK 45X60", "LIMPIA HORNOS SMELLFRESH 360CC XUNID",
+      "SPUGNELLA EXTRALIMP X12 UN", "BOLSA RESID SERVIPLAST 50X70", "INSECT MOSQUITRAP X370CCX12", "TALCO PARA PIES ALGABO X100G",
       "BOLSA RESID SERVIPLAST 60X90", "INSECT ESCUDO PULGAS X360CC", "TALCO PARA PIES ALGABO X200G", "BOLSA RESID SERVIPLAST 80X110",
       "INSECT ESCUDO POLILLAS X360CC", "TALCO PARA PIES ALGABO X200G REP", "BROCHE MADERA X12", "INSECT ESCUDO M/M X360CC SIN OLOR",
       "TALCO PARA PIES ALGABO X60G", "BROCHE PLAST ARCO IRIS X12", "INSECT.AEROS.RAID AZUL", "TALCO PERFUMADO ALGABO X200G", "BRUJITAS X UNID",
@@ -314,7 +314,7 @@
       "TRAPO PISO DURAMAS GRIS", "CABO MADERA BLANCO", "JABON POLYANA x72 UNID", "TRAPO PISO M.TRAPO", "BROCHE ECONOMICO", "JABON SEISEME X 50 UNID",
       "TRAPO PISO NIDO DE ABEJA", "CABO MEDIANO 1,50CM", "JABON TOCADOR ARGENTINO", "VELA PARAFINA BCA TREBOLX50U", "CARRITO COMPRA",
       "JABON TRICOLOR CUPIDO", "VELA PARAFINA TREBOL COLORX24", "CEP CALZADO", "LAMPAZO HILO ECO X UNID", "VELAS CEBO VILLA IRIS X25UNID",
-      "CEP PARRILLERO", "LAMPAZO MAXI DURAMAS XUNID", "VELITAS NOCHE", "CEP. LAVACAMION ECO", "LAMPAZO MOPA FIBRA AMARILLA", "CEPILLO LAVACAMION SALZANO",
+      "CEP PARRILLERO", "LAMPAZO MAXI DURAMAS XUNID", "VELITAS NOCHE", "CEP. LAVACAMION ECO", "LAMPAZO MOPA FIBRA AMARILLA",
       "LAMPAZO RECTANG 40 CM", "CEPILLO LAVA AUTO", "LAMPAZO RECTANG 55 CM", "CEPILLO LIMPIA ESPALDA MADERA", "LAMPAZO RECTANG 70 CM",
       "CEPILLO MANO RECTANG MADERA", "LANA ACERO MAKE X25UNI", "CEPILLO P/ UÑAS XUNID", "LAVAND. GEL MAGNUS", "CEPILLO PISO GIGANTE",
       "LAVAND.LIMPIAMAX X1L X15UNID", "CEPILLO PLANCHITA ECO", "LAVAND.LIMPIAMAX X2L X8UNID", "CERA LIQUIDA X5LTRS XUNID", "LAVAND.LIMPIAMAX X5LT",
@@ -379,12 +379,11 @@
       "ESPONJA ANTIADHERENTE TEK BOND XUNID", "PEGAMENTO TEK BOND", "PEGAMENTO TEKFAST 2G", "PEGAMENTO CALZADO ZAPATEK 9G",
       "SILICONA TRANSPARENTE 25G", "PALITA XPER LITA X36UNID", "PALITA XPER LITA PLUS X24UNID", "PALITA XPER LITA PLUS CON CABO",
       "BALDO 12LTS XPER", "ALCOHOL VILLA IRIS X500 X20UNID", "ESCOBILLON GONDOLA SUPER S/C", "Limpiavidrios secador 20 cm", "Limpiavidrios secador 30 cm", "Bolsa camis bca 30x40 /13mic",
-      "Bolsa camis bca 40x50 /11mic", "Bolsa camis bca 40x50 -16mic",
+      "Bolsa camis bca 40x50 /11mic", "Bolsa camis bca 40x50 -16mic", "Sopapas Suppy",
     ];
 
     // ✅ Imágenes (tal como las pasaste)
     const imagenesMapRaw = {
-      "P.H. NORIPEL X1X60mtx48": "https://i.postimg.cc/KcpFxN4S/p-h-noripel-x1x60mtx48.jpg",
       "LUBRICANTE ESCUDO": "https://i.postimg.cc/ZnkR796w/LUBRICANTE-ESCUDO.jpg",
       "P.H. ALTO METRAJE X8": "https://i.postimg.cc/pL07FjLN/P-H-ALTO-METRAJE-X8.jpg",
       "Bolsa camis bca 30x40 /13mic": "https://i.postimg.cc/zvcFDTzd/Bolsa-camis-bca-30x40-13mic.jpg",
@@ -457,7 +456,7 @@
       "QUITASARRO/DESTAPACAÑERIA X 1LT": "https://i.postimg.cc/HLjfrBFy/QUITASARRO-DESTAPACA-ERIA-X-1-LT.jpg",
       "DIFUSOR CUADRADO KALLMA": "https://i.postimg.cc/Y9ww78ww/DIFUSOR-CUADRADO-KALLMA.jpg",
       "DIFUSOR CUADRADO HOME": "https://i.postimg.cc/FFpQtjW2/DIFUSOR-CUADRADO-HOME.jpg",
-      "ALCOHOL VILLA IRIS X500 X20UNID": "ALCOHOL VILLA IRIS X500 X20UNID",
+      "ALCOHOL VILLA IRIS X500 X20UNID": "https://i.postimg.cc/hG5ggT6s/ALCOHOL-VILLA-IRIS-X500-X20UNID.jpg",
       "DISPENSER JABON LIQ X900CM3 XUNID": "https://i.postimg.cc/L5wDdCrt/DISPENSER-JABON-LIQ-X900-CM3-XUNID.jpg",
       "JABON LIQUIDO REP. ALGABO X300ML": "https://i.postimg.cc/pTbnm1yG/JABON-LIQUIDO-REP-ALGABO-X300-ML.jpg",
       "VELA PARAFINA TREBOL COLORX24": "https://i.postimg.cc/wvZ1mPfL/VELA-PARAFINA-TREBOL-COLORX24.jpg",
@@ -527,7 +526,6 @@
       "PAÑO PISO AMARILLO": "https://i.postimg.cc/RFFmJn5H/PANO-PISO-AMARILLO.jpg",
       "TRAPO PISO NIDO DE ABEJA": "https://i.postimg.cc/WbQvgVw5/TRAPO-PISO-NIDO-DE-ABEJA.jpg",
       "REPELENTE OFF CREMA": "https://i.postimg.cc/52yPgjpc/REPELENTE-OFF-CREMA.jpg",
-      "PAÑUELOS DESC. X6 ELEGANTE": "https://i.postimg.cc/GpRnqggY/pa-uelos-desc-x6-elegante.webp",
       "PLUMERO ECO Nº 20 chico": "https://i.postimg.cc/ZYxQhzxs/PLUMERO-ECO-N-20-chico.jpg",
       "FUENTON REDONDO 16 LTS": "https://i.postimg.cc/VNhJ8HCS/FUENTON-REDONDO-16-LTS.jpg",
       "ESCOBILLON BABILONIA SUPER S-C": "https://i.postimg.cc/g2T5ByHY/ESCOBILLON-BABILONIA-SUPER-S-C.jpg",
@@ -581,10 +579,9 @@
       "LAMPAZO MAXI DURAMAS XUNID": "https://i.postimg.cc/TYSRq9Xq/lampazo-maxi-duramas-xunid.webp",
       "LANA ACERO MAKE X25UNI": "https://i.postimg.cc/hGRcNtvX/lana-acero-make-x25uni.webp",
       "SOPAPA CON CABO": "https://i.postimg.cc/26WjZzgh/SOPAPA-CON-CABO.jpg",
-      "LIMP VID/MULTIUSO GATILLO X1LT XUNID": "https://i.postimg.cc/KY7xbh3J/limp-vid-multiuso-gatillo-x1lt-xunid.webp",
+      "LIMP VID/MULTIUSO GATILLO X1LT XUNID": "https://i.postimg.cc/2S1ZrFXb/Limp-vid-multiuso-gatillo-x-1lt-x-unid.jpg",
       "PAÑO COCINA AMARILLO": "https://i.postimg.cc/3JPTDxgt/pa-o-cocina-amarillo.webp",
       "PAÑO COCINA ESCOCES": "https://i.postimg.cc/hGnPvjt8/Pano-cocina-escoces.jpg",
-      "PAÑUELOS DESC. X6 MAXISEC": "https://i.postimg.cc/MTK28MSp/pa-uelos-desc-x6-maxisec.webp",
       "PLUMERO DE LANA": "https://i.postimg.cc/hv6Hx27X/plumero-de-lana.webp",
       "POLVO LIMPIADOR X400 CAMPANOL": "https://i.postimg.cc/NGxDW19d/POLVO-LIMPIADOR-X400-CAMPANOL.jpg",
       "P.H. INST DOBLE HOJA X30U": "https://i.postimg.cc/J0FWx1S4/p-h-inst-doble-hoja-x30u.jpg",
@@ -613,7 +610,7 @@
       "SERVILLETA ELEGANTE X150 X18": "https://i.postimg.cc/PfmzT5vH/SERVILLETA-ELEGANTE-X150.jpg",
       "REJILLA MICROFIBRA XUNID": "https://i.postimg.cc/760tzc9f/REJILLA-MICROFIBRA-XUNID.jpg",
       "SOPAPAS ROJAS SG": "https://i.postimg.cc/FKn5NFsb/sopapas-rojas-sg.webp",
-      "SOPAPAS SUPPY": "https://i.postimg.cc/50Yc0c6h/sopapas-suppy.webp",
+      "SOPAPAS SUPPY": "https://i.postimg.cc/MGKd9xft/Sopapas-Suppy.jpg",
       "REJILLA PABILO DON BOSCO": "Rejilla pabilo Don Bosco",
       "SPUGNELLA EXTRALIMP X12 UN": "https://i.postimg.cc/mkC0YQ3V/spugnella-extralimp-x12-un.webp",
       "TALCO PARA PIES ALGABO X100G": "https://i.postimg.cc/ydwM3fRk/talco-para-pies-algabo-x100g.webp",
@@ -623,7 +620,7 @@
       "TRAPO PISO DOME 50X60": "https://i.postimg.cc/ZKPG0x55/trapo-piso-dome-50x60.webp",
       "TRAPO PISO DURAMAS BLANCO": "https://i.postimg.cc/7ZmjnP7v/trapo-piso-duramas-blanco.webp",
       "TRAPO PISO DURAMAS GRIS": "https://i.postimg.cc/Gt5HTQst/Trapo-piso-Duramas-gris.jpg",
-      "VELITAS NOCHE": "https://i.postimg.cc/B61y3xzs/velitas-noche.webp",
+      "VELITAS NOCHE": "https://i.postimg.cc/pT6CXXJt/Velitas-noches.jpg",
       "ALCOHOL EN GEL ALGABO X300ML": "https://i.postimg.cc/BZkTDTk2/alcohol-en-gel-algabo-x300ml.webp",
       "ALCOHOL ETILICO SAN IGINIO X500CC": "https://i.postimg.cc/ZqbpZVvz/alcohol-etilico-san-iginio-x500cc.jpg",
       "ALCOHOL QUEMAR": "https://i.postimg.cc/QdrcYXXt/alcohol-quemar.webp",
@@ -644,13 +641,12 @@
       "BOLSA RESID SERVIPLAST 60X90": "https://i.postimg.cc/43gjVHt6/Bolsa-resid-serviplast-60x90.jpg",
       "BOLSA RESID SERVIPLAST 80X110": "https://i.postimg.cc/MpkLJf9h/Bolsa-resid-serviplast-80x110.jpg",
       "BOLSA RESID SIPACK 45X60": "https://i.postimg.cc/VsrZ0BDc/bolsa-resid-sipack-45x60.webp",
-      "BROCHE MADERA X12": "https://i.postimg.cc/VsxGqrV0/broche-madera-x12.webp",
+      "BROCHE MADERA X12": "https://i.postimg.cc/Qxh5QmTQ/Broches-madera-x12.jpg",
       "BRUJITAS X UNID": "https://i.postimg.cc/3xBtQLJ2/brujitas-x-unid.png",
       "CABO BARRENDERO": "https://i.postimg.cc/QMd08pHw/cabo-barrendero.jpg",
       "CABO LARGO 2,00MTS": "https://i.postimg.cc/vH5P3YJq/cabo-largo-2-00mts.webp",
       "CABO MEDIANO 1,50CM": "https://i.postimg.cc/8zDZ38D1/cabo-mediano-1-50cm.webp",
       "CARRITO COMPRA": "https://i.postimg.cc/76pVndmr/carrito-compra.jpg",
-      "CEPILLO LAVACAMION SALZANO": "https://i.postimg.cc/bJGgbp0R/cepillo-lavacamion-salzano.webp",
       "CEPILLO LAVA AUTO": "https://i.postimg.cc/tJWzSkMZ/cepillo-lava-auto-jpg-crdownload.webp",
       "CEP. LAVACAMION ECO": "https://i.postimg.cc/0NXZbbSQ/cep-lavacamion-eco.webp",
       "COLONIA ALGABO X500ML": "https://i.postimg.cc/rF2j06DS/colonia-algabo-x500ml.webp",
@@ -722,12 +718,6 @@
       p.includes("ROLLO COC") ||
       p.includes("R.C. INST") ||
       p.includes("CARTABELLA")
-    );
-
-    // ✅ OTROS PAPELES
-    const otrosPapeles = productos.filter(p =>
-      (p.includes("PAÑUELOS") || p.includes("FELPITA") || p.includes("MAXISEC")) &&
-      !p.includes("P.H.")
     );
 
     // ✅ ESCOBAS Y ESCOBILLONES (ampliado)
@@ -966,6 +956,7 @@
   </script>
 </body>
 </html>
+
 
 
 

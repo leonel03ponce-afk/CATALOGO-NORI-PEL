@@ -287,7 +287,7 @@
       "ESP.INOX.MAKE 15G X 1UNID", "REJILLA PABILO DON BOSCO ECO", "ALCOHOL EN GEL ALGABO X300ML", "ESP.INOX.MAKE 30G X 1UNID",
       "ALCOHOL EN GEL HOLDER ALGABO X30ML", "ESPIRAL FUYI X12", "ROLLO COCINA DESNUDO X200 PAÑOS",
       "ALCOHOL EN GEL X300 REPUESTO", "ESPONJA BAÑO COMUN", "ALCOHOL ETILICO SAN IGINIO X500CC",
-      "FIBRA ESPONJA OK X24UNID", "ROLLO COC. CARTABELLA X3X10", "ALCOHOL QUEMAR", "FIBRA PLATEADA ECOOO", "ROLLO COC. FELPITA X12 X200PAÑOS",
+      "FIBRA ESPONJA OK X24UNID", "ALCOHOL QUEMAR", "FIBRA PLATEADA ECOOO", "ROLLO COC. FELPITA X12 X200PAÑOS",
       "ROCIADOR MAKE", "FOSFORO 3 PATITOS X222", "ROLLO COC. MAXISEC X4X3 X120PAÑOS", "AZUFRE X20X5 GONZALITO", "FIBRA SANITARIO",
       "SECAD, DOBLE GOMA PLASTHOUSE", "AZUFRE X50 C/SEPARADOR", "FIBRA VERDE ABRASIVA", "SECAD. SECAMAX 40CM X12UNID", "BABOSIL- CEBO X 200 GRS",
       "BALDE QUECHUA 11LTS", "FOLEX-SEPAR.FIAMBRE-", "BALDE PLAST M.ALAMB 11LTS", "FRANELAS", "SECAD.DOBLE GOMA GAUCHITA ECO",
@@ -587,7 +587,6 @@
       "REJILLA PAVILO DON BOSCO SUPER": "https://i.postimg.cc/JndgVpxp/rejilla-pavilo-don-bosco-super.webp",
       "REPASADOR PICO DULCE X 12": "https://i.postimg.cc/7LzssH3t/REPASADOR-PICO-DULCE-X12.jpg",
       "REPASADOR TOALLA FIBRAN": "https://i.postimg.cc/CMRMZt3L/repasador-toalla-fibran.webp",
-      "ROLLO COC. CARTABELLA X3X10": "https://i.postimg.cc/J4J1xX7f/rollo-coc-cartabella-x3x10.webp",
       "SECADOR DOBLE GOMA 4-R X12UNID": "https://i.postimg.cc/FHpXCgMB/secador-doble-goma-4-r-x12unid.webp",
       "SECAD.DOBLE GOMA GAUCHITA ECO": "https://i.postimg.cc/NjcQz055/secad-doble-goma-gauchita-eco.webp",
       "SECAD, DOBLE GOMA PLASTHOUSE": "https://i.postimg.cc/jS4R0r7v/secad-doble-goma-plasthouse.webp",
@@ -703,6 +702,7 @@
     const nuestrasMarcas = productos.filter(p =>
       p.includes("P.H.") ||
       p.includes("ZENIN") ||
+       p.includes("P.H INST") ||
       p.includes("INSTITUCIONAL") ||
       (p.includes("PURO") && p.includes("BCO"))
     );
@@ -711,6 +711,7 @@
     const rollosCocina = productos.filter(p =>
       p.includes("ROLLO COC") ||
       p.includes("R.C. INST") ||
+      p.includes("BOB TOALLA") ||
       p.includes("CARTABELLA")
     );
 
@@ -947,6 +948,7 @@
   </script>
 </body>
 </html>
+
 
 
 

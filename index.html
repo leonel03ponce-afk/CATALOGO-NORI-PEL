@@ -1311,6 +1311,18 @@
     // ✅ Resto: productos no clasificados
     const otros = productos.filter(p => !todosAgrupados.includes(p));
 
+    // 📷 FOTOS EXTRA: productos de la lista que usan una foto subida con otro nombre.
+    // Formato: "NOMBRE EXACTO DEL PRODUCTO": "NOMBRE EXACTO DE LA FOTO YA SUBIDA"
+    const fotosExtra = {
+      "REJILLA PAVILO DON BOSCO": "REJILLA PAVILO DON BOSCO SUPER",
+      "REPELENTE MAX AROMA": "AROMATIZANTE MAX AROMA",
+    };
+    for (const prod in fotosExtra) {
+      const url = imagenesMapRaw[fotosExtra[prod]];
+      const clave = normalizarClave(prod);
+      if (url && !imagenesMap[clave]) imagenesMap[clave] = url;
+    }
+
     // Iconos
     const getIcon = (nombre) => {
       if (nombre.includes("P.H.") || nombre.includes("Papel")) return "🧻";

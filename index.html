@@ -259,6 +259,7 @@
     main { padding-bottom: 40px; scroll-margin-top: calc(var(--toolbar-h) - 20px); }
     .seccion { padding-top: 40px; scroll-margin-top: calc(var(--toolbar-h) + 8px); }
     .seccion.oculta { display: none; }
+    .cargando { text-align: center; color: var(--muted); padding: 60px 0; font-weight: 500; animation: latido 1.6s ease-in-out infinite; }
     .seccion-head { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
     .seccion-emoji {
       width: 54px; height: 54px; flex: 0 0 54px; border-radius: 16px; display: grid; place-items: center; font-size: 28px;
@@ -668,7 +669,7 @@
           <p><a href="#" id="imprimir">🖨️ Imprimir / guardar catálogo en PDF</a></p>
         </div>
       </div>
-      <div class="foot-copy">NORI-PEL © <span id="anio">2025</span> | <span class="js-dir-corta">Av. Perón 217, Villa de Mayo</span> | WhatsApp: <span class="js-tel">+54 9 11 6423-3586</span></div>
+      <div class="foot-copy">NORI-PEL © <span id="anio">2025</span> | <span class="js-dir-corta">Av. Perón 217, Villa de Mayo</span> | WhatsApp: <span class="js-tel">+54 9 11 6423-3586</span><span id="fuente-datos"></span></div>
     </div>
   </footer>
 
@@ -741,6 +742,9 @@
       },
       // Los productos que todavía no tienen foto aparecen solo cuando el cliente los busca
       mostrarSinFotoAlBuscar: true,
+      // 📋 Planilla de Google con los productos (link de la planilla, compartida "cualquiera con el link").
+      // Vacío = se usan los productos escritos en este archivo.
+      planilla: "https://docs.google.com/spreadsheets/d/143ymDJawHPQegHPXRa0PLyBRhiOK5JGcDwPaHxwdIhA/edit",
     };
 
     // ✅ Lista COMPLETA de productos (tal como la pasaste)
@@ -1311,6 +1315,287 @@
     // ✅ Resto: productos no clasificados
     const otros = productos.filter(p => !todosAgrupados.includes(p));
 
+    // 📷 FOTOS EXTRA: productos de la lista que usan una foto subida con otro nombre.
+    // Formato: "NOMBRE EXACTO DEL PRODUCTO": "NOMBRE EXACTO DE LA FOTO YA SUBIDA"
+    const fotosExtra = {
+      "REJILLA PAVILO DON BOSCO": "REJILLA PAVILO DON BOSCO SUPER",
+      "REPELENTE MAX AROMA": "AROMATIZANTE MAX AROMA",
+    };
+    for (const prod in fotosExtra) {
+      const url = imagenesMapRaw[fotosExtra[prod]];
+      const clave = normalizarClave(prod);
+      if (url && !imagenesMap[clave]) imagenesMap[clave] = url;
+    }
+
+
+    // ================== PLANILLA DE GOOGLE ==================
+    // Las mismas reglas de categorías de arriba, como función para usarlas con la planilla.
+    // (Recibe la lista con el nombre "productos" para que las reglas queden idénticas.)
+    function clasificar(productos) {
+         // ✅ NUESTRAS MARCAS: todos los P.H., ZENIN, INSTITUCIONAL y variantes
+      const nuestrasMarcas = productos.filter(p =>
+        p.includes("P.H.") ||
+        p.includes("ZENIN") ||
+         p.includes("P.H INST") ||
+        p.includes("INSTITUCIONAL") ||
+        (p.includes("PURO") && p.includes("BCO"))
+      );
+
+      // ✅ ROLLOS DE COCINA
+      const rollosCocina = productos.filter(p =>
+        p.includes("ROLLO COC") ||
+        p.includes("R.C. INST") ||
+        p.includes("R.C.") ||
+        p.includes("ROLLO COCINA DESNUDO") ||
+        p.includes("BOB TOALLA") ||
+        p.includes("CARTABELLA")
+      );
+
+      // ✅ ESCOBAS Y ESCOBILLONES (ampliado)
+      const escobas = productos.filter(p =>
+        p.includes("ESCOBA") ||
+        p.includes("ESCOBILLON") ||
+        p.includes("BARRE HOJAS") ||
+        p.includes("BARREHOJAS") ||
+        p.includes("PALA PLASTICA") || // palas y palitas
+        p.includes("PALIT") ||
+        p.includes("ESC INDUSTRIAL") ||
+        p.includes("ESCOB BARRENDERO") ||
+        p.includes("ESCOB LAQUEADO")
+      );
+
+      // ✅ SECADORES, TRAPEADORES, REJILLAS
+      const secadores = productos.filter(p =>
+        p.includes("SECAD") ||
+        p.includes("TRAPO") ||
+        p.includes("REJILLA") ||
+        p.includes("LAMPAZO") ||
+        p.includes("PAÑO") ||
+        p.includes("MOPA") ||
+        (p.includes("ESPONJA") && !p.includes("LAVAAUTO"))
+      );
+
+      // ✅ PLÁSTICOS (nueva categoría)
+      const plasticos = productos.filter(p =>
+        p.includes("DISPENSER") ||
+        p.includes("ESCURRIDOR DE VAJILLA") ||
+        p.includes("PELELA") ||
+        p.includes("BAÑERA PARA BEBE") ||
+        p.includes("PALANGANA") ||
+        p.includes("SILLON INFANTIL")
+      );
+
+      // ✅ BAZAR (sin los plásticos ya extraídos)
+      const bazar = productos.filter(p =>
+        (p.includes("BALDE") ||
+        p.includes("FUENTON") ||
+        p.includes("PALANGANA") ||
+        p.includes("MACETA") ||
+        p.includes("BOLSA") ||
+        p.includes("BOLS") ||
+        p.includes("CANASTO") ||
+        p.includes("PORTA") ||
+        p.includes("HERMETICO") ||
+        p.includes("ORGANIZADOR") ||
+        p.includes("MANTEL") ||
+        p.includes("TIERRA") ||
+        p.includes("REGADERA") ||
+        p.includes("TERM") ||
+        p.includes("LAMP") ||
+        p.includes("CORTINA") ||
+        p.includes("ALFOMBRA") ||
+        p.includes("CUBETA") ||
+        p.includes("ENSALADERA") ||
+        p.includes("BANDEJA") ||
+        p.includes("COMBO")) &&
+        !plasticos.includes(p) // evita duplicados
+      );
+
+      // ✅ LIMPIEZA
+      const limpieza = productos.filter(p =>
+        p.includes("LIMPIA") ||
+        p.includes("DETERG") ||
+        p.includes("CLORO") ||
+        p.includes("DESENGRASANTE") ||
+        p.includes("ACIDO") ||
+        p.includes("POLVO") ||
+        p.includes("ESPONJA LAVAAUTO") ||
+        p.includes("QUITASARRO") ||
+        p.includes("DESINF") ||
+        p.includes("LAVAND") ||
+        p.includes("SUAVIZANTE") ||
+        p.includes("JABON") ||
+        p.includes("CERA") ||
+        p.includes("ALCOHOL") ||
+        p.includes("DESOD") ||
+        p.includes("LISOFORM") ||
+        p.includes("PEGAMENTO") ||
+        p.includes("SILICONA") ||
+        p.includes("LUBRICANTE")
+      );
+
+      // ✅ AROMATIZANTES
+      const aromatizantes = productos.filter(p =>
+        p.includes("AROMATIZANTE") ||
+        p.includes("PERFUMINA") ||
+        p.includes("WALKER") ||
+        p.includes("DESOD") ||
+        p.includes("DIFUSOR") ||
+        p.includes("NAFTALINA") ||
+        p.includes("VELA") ||
+        p.includes("ESPIRAL") ||
+        p.includes("REPELENTE") ||
+        p.includes("OFF") ||
+        p.includes("VAPE")
+      );
+
+      // ✅ Agrupar todos los clasificados
+      const todosAgrupados = [
+        ...nuestrasMarcas,
+        ...rollosCocina,
+        ...escobas,
+        ...secadores,
+        ...plasticos,
+        ...bazar,
+        ...limpieza,
+        ...aromatizantes
+      ];
+
+      // ✅ Resto: productos no clasificados
+      const otros = productos.filter(p => !todosAgrupados.includes(p));
+      return { nuestrasMarcas, rollosCocina, escobas, secadores, plasticos, bazar, limpieza, aromatizantes, otros };
+    }
+
+    // Catálogo activo: arranca con los datos de este archivo y se reemplaza si carga la planilla
+    let catalogo = {
+      fuente: "archivo",
+      productos: productos,
+      ofertas: productosOferta,
+      grupos: { nuestrasMarcas, rollosCocina, escobas, secadores, plasticos, bazar, limpieza, aromatizantes, otros },
+      extras: [],   // categorías nuevas escritas en la planilla
+    };
+
+    // Lector de CSV (respeta comillas y comas dentro de los nombres, ej: "3,5kg")
+    function leerCSV(texto) {
+      const filas = [];
+      let fila = [], campo = "", comillas = false;
+      for (let i = 0; i < texto.length; i++) {
+        const c = texto[i];
+        if (comillas) {
+          if (c === '"' && texto[i + 1] === '"') { campo += '"'; i++; }
+          else if (c === '"') comillas = false;
+          else campo += c;
+        } else if (c === '"') comillas = true;
+        else if (c === ",") { fila.push(campo); campo = ""; }
+        else if (c === "\n" || c === "\r") {
+          if (c === "\r" && texto[i + 1] === "\n") i++;
+          fila.push(campo); filas.push(fila); fila = []; campo = "";
+        } else campo += c;
+      }
+      if (campo !== "" || fila.length) { fila.push(campo); filas.push(fila); }
+      return filas.filter(f => f.some(v => v.trim() !== ""));
+    }
+
+    // Link de la planilla → link de descarga CSV (la planilla tiene que estar compartida "cualquiera con el link")
+    function urlCSV(link) {
+      const m = String(link || "").match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/);
+      if (!m) return link;
+      const gid = (String(link).match(/[#&?]gid=(\d+)/) || [])[1];
+      return `https://docs.google.com/spreadsheets/d/${m[1]}/gviz/tq?tqx=out:csv&headers=1${gid ? "&gid=" + gid : ""}`;
+    }
+
+    // Fotos de Google Drive → link que se puede mostrar directo
+    function urlFoto(link) {
+      const s = String(link || "").trim();
+      const m = s.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=)([a-zA-Z0-9_-]+)/);
+      return m ? `https://lh3.googleusercontent.com/d/${m[1]}` : s;
+    }
+
+    const esSi = (v) => /^(si|sí|s|x|1|true|verdadero|✓|✔)$/i.test(String(v || "").trim());
+    const esNo = (v) => /^(no|n|0|false|falso)$/i.test(String(v || "").trim());
+
+    // Palabras de la columna "Categoría" → sección existente (si no coincide, se crea una nueva)
+    const CATEGORIAS_PLANILLA = [
+      [/marca|noripel|nori-pel|higienico/, "nuestrasMarcas"],
+      [/cocina|rollo/, "rollosCocina"],
+      [/escob|pala/, "escobas"],
+      [/secad|trape|rejilla|trapo|lampazo/, "secadores"],
+      [/plastic/, "plasticos"],
+      [/bazar/, "bazar"],
+      [/limpieza|deterg|quimic/, "limpieza"],
+      [/aromat|perfum|insect|repelen/, "aromatizantes"],
+      [/^otro/, "otros"],
+    ];
+
+    function catalogoDesdeCSV(texto) {
+      const filas = leerCSV(texto);
+      if (filas.length < 2) throw new Error("La planilla está vacía");
+      const cab = filas[0].map(h => normalizarBusqueda(h).trim());
+      const col = (...nombres) => cab.findIndex(h => nombres.some(n => h.startsWith(n)));
+      const iProd = col("producto", "nombre"), iFoto = col("foto", "imagen"), iOferta = col("oferta"),
+            iCat = col("categoria", "seccion"), iMostrar = col("mostrar", "visible", "activo");
+      if (iProd < 0) throw new Error("Falta la columna Producto");
+
+      const lista = [], ofertas = [], fijos = {}, extras = [];
+      Object.keys(imagenesMap).forEach(k => delete imagenesMap[k]);
+      filas.slice(1).forEach(f => {
+        const prod = (f[iProd] || "").trim();
+        if (!prod || (iMostrar >= 0 && esNo(f[iMostrar]))) return;
+        if (lista.includes(prod)) return;
+        lista.push(prod);
+        const foto = iFoto >= 0 ? urlFoto(f[iFoto]) : "";
+        if (foto) imagenesMap[normalizarClave(prod)] = foto;
+        if (iOferta >= 0 && esSi(f[iOferta])) ofertas.push(prod);
+        const cat = iCat >= 0 ? (f[iCat] || "").trim() : "";
+        if (cat) {
+          const n = normalizarBusqueda(cat);
+          const regla = CATEGORIAS_PLANILLA.find(([re]) => re.test(n));
+          const clave = regla ? regla[1] : "extra:" + cat;
+          if (!regla && !extras.includes(cat)) extras.push(cat);
+          (fijos[clave] = fijos[clave] || []).push(prod);
+        }
+      });
+      if (!lista.length) throw new Error("La planilla no tiene productos");
+
+      // Sin categoría escrita → se clasifica solo, con las reglas de siempre
+      const asignados = new Set(Object.values(fijos).flat());
+      const grupos = clasificar(lista.filter(p => !asignados.has(p)));
+      Object.keys(grupos).forEach(k => { if (fijos[k]) grupos[k] = [...grupos[k], ...fijos[k]]; });
+      extras.forEach(cat => { grupos["extra:" + cat] = fijos["extra:" + cat]; });
+      return { fuente: "planilla", productos: lista, ofertas, grupos, extras };
+    }
+
+    const CLAVE_PLANILLA = "noripel-planilla";
+    async function cargarCatalogo() {
+      if (!NEGOCIO.planilla) return;
+      const usar = (texto, fuente) => { catalogo = catalogoDesdeCSV(texto); catalogo.fuente = fuente; };
+      try {
+        const ctrl = new AbortController();
+        const corte = setTimeout(() => ctrl.abort(), 7000);
+        const r = await fetch(urlCSV(NEGOCIO.planilla), { signal: ctrl.signal, cache: "no-store" });
+        clearTimeout(corte);
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        const texto = await r.text();
+        if (/^\s*</.test(texto)) throw new Error("La planilla no está compartida como pública");
+        usar(texto, "planilla");
+        try { localStorage.setItem(CLAVE_PLANILLA, texto); } catch (e) {}
+      } catch (err) {
+        console.warn("No se pudo leer la planilla, se usa la copia de respaldo:", err.message);
+        // Datos originales del archivo como respaldo
+        Object.keys(imagenesMap).forEach(k => delete imagenesMap[k]);
+        respaldoImagenes.forEach(([k, v]) => imagenesMap[k] = v);
+        try {
+          const guardada = localStorage.getItem(CLAVE_PLANILLA);
+          if (guardada) usar(guardada, "copia guardada");
+        } catch (e) {
+          Object.keys(imagenesMap).forEach(k => delete imagenesMap[k]);
+          respaldoImagenes.forEach(([k, v]) => imagenesMap[k] = v);
+        }
+      }
+    }
+    const respaldoImagenes = Object.entries(imagenesMap);
+    // ========================================================
+
     // Iconos
     const getIcon = (nombre) => {
       if (nombre.includes("P.H.") || nombre.includes("Papel")) return "🧻";
@@ -1330,20 +1615,24 @@
     };
 
     // ✅ Secciones del catálogo (mismo orden que antes)
-    const secciones = [
-      { id: "nuestras-marcas", emoji: "✨", titulo: "Nuestras Marcas", sub: "Calidad Nori-Pel", lista: nuestrasMarcas, destacada: true },
-      { id: "cocina", emoji: "🍽️", titulo: "Rollos de Cocina", lista: rollosCocina },
-      { id: "escobas", emoji: "🧹", titulo: "Escobas y Escobillones", lista: escobas },
-      { id: "secadores", emoji: "🧽", titulo: "Secadores, Trapeadores y Rejillas", lista: secadores },
-      { id: "bazar", emoji: "🪣", titulo: "Bazar", sub: "Baldes, Macetas, Bolsas, Herméticos...", lista: bazar },
-      { id: "limpieza", emoji: "🧴", titulo: "Limpieza", sub: "Detergentes, Cloro, Ácidos...", lista: limpieza },
-      { id: "aromatizantes", emoji: "🌸", titulo: "Aromatizantes y Perfumes", lista: aromatizantes },
-      { id: "plasticos", emoji: "🧺", titulo: "Plásticos", sub: "Dispensers, Bañeras, Pelelas...", lista: plasticos },
-      { id: "otros", emoji: "📦", titulo: "Otros Productos", lista: otros },
-    ];
+    function armarSecciones(g, extras) {
+      return [
+        { id: "nuestras-marcas", emoji: "✨", titulo: "Nuestras Marcas", sub: "Calidad Nori-Pel", lista: g.nuestrasMarcas, destacada: true },
+        { id: "cocina", emoji: "🍽️", titulo: "Rollos de Cocina", lista: g.rollosCocina },
+        { id: "escobas", emoji: "🧹", titulo: "Escobas y Escobillones", lista: g.escobas },
+        { id: "secadores", emoji: "🧽", titulo: "Secadores, Trapeadores y Rejillas", lista: g.secadores },
+        { id: "bazar", emoji: "🪣", titulo: "Bazar", sub: "Baldes, Macetas, Bolsas, Herméticos...", lista: g.bazar },
+        { id: "limpieza", emoji: "🧴", titulo: "Limpieza", sub: "Detergentes, Cloro, Ácidos...", lista: g.limpieza },
+        { id: "aromatizantes", emoji: "🌸", titulo: "Aromatizantes y Perfumes", lista: g.aromatizantes },
+        { id: "plasticos", emoji: "🧺", titulo: "Plásticos", sub: "Dispensers, Bañeras, Pelelas...", lista: g.plasticos },
+        // Categorías nuevas escritas en la planilla
+        ...extras.map((cat, i) => ({ id: "extra-" + i, emoji: "🏷️", titulo: cat, lista: g["extra:" + cat] })),
+        { id: "otros", emoji: "📦", titulo: "Otros Productos", lista: g.otros },
+      ];
+    }
 
     const linkWhatsApp = (texto) => `https://wa.me/${NEGOCIO.whatsapp}?text=${encodeURIComponent(texto)}`;
-    const todosLosProductos = new Set(productos);
+    let todosLosProductos = new Set(productos);
 
     // Solo se usan URLs reales (si la imagen no es un link, no se muestra rota)
     function imagenDe(prod) {
@@ -1591,7 +1880,7 @@
     // ---------- Ofertas ----------
     function renderOfertas() {
       const cont = $("#offers-container");
-      const lista = conImagen(productosOferta);
+      const lista = conImagen(catalogo.ofertas);
       if (!lista.length) { $("#ofertas").style.display = "none"; return; }
       lista.forEach(prod => {
         const of = crear("div", "oferta");
@@ -1669,8 +1958,8 @@
 
     function renderSecciones() {
       const chips = $("#chips");
-      secciones.forEach(sec => {
-        const lista = conImagen(sec.lista);
+      armarSecciones(catalogo.grupos, catalogo.extras).forEach(sec => {
+        const lista = conImagen(sec.lista || []);
         if (!lista.length) return;
         const s = crearSeccion(sec, lista);
         const chip = crear("a", "chip");
@@ -1762,7 +2051,7 @@
     let pedido = new Map();
     try {
       const guardado = JSON.parse(localStorage.getItem(CLAVE_PEDIDO) || "[]");
-      if (Array.isArray(guardado)) guardado.forEach(([n, c]) => { if (todosLosProductos.has(n) && c > 0) pedido.set(n, c); });
+      if (Array.isArray(guardado)) guardado.forEach(([n, c]) => { if (typeof n === "string" && c > 0) pedido.set(n, c); });
     } catch (e) { /* sin almacenamiento: el pedido vive solo en esta visita */ }
 
     function guardarPedido() {
@@ -1872,23 +2161,22 @@
         const lineas = [...pedido].map(([p, c], i) => `${i + 1}) ${c} x ${p}`).join("\n");
         const comentario = $("#cli-comentario").value.trim();
         const msg = [
-          "¡Hola NORI-PEL! 🛒 Quiero hacer este pedido:",
+          "¡Hola NORI-PEL! Quiero hacer este pedido:",
           "",
           lineas,
           "",
           `Total: ${unidades} ${unidades === 1 ? "unidad" : "unidades"} (${pedido.size} ${pedido.size === 1 ? "producto" : "productos"})`,
           "",
-          `👤 Nombre: ${nombre.value.trim()}`,
-          `📦 Entrega: ${entrega}`,
-          envio ? `📍 Dirección: ${dir.value.trim()}` : null,
-          comentario ? `📝 Comentarios: ${comentario}` : null,
+          `Nombre: ${nombre.value.trim()}`,
+          `Entrega: ${entrega}`,
+          envio ? `Dirección: ${dir.value.trim()}` : null,
+          comentario ? `Comentarios: ${comentario}` : null,
           "",
           "(Pedido hecho desde el catálogo web)",
         ].filter(l => l !== null).join("\n");
         guardarCliente();
         const url = linkWhatsApp(msg);
-        const w = window.open(url, "_blank");
-        if (!w) location.href = url;
+        abrirLink(url);
         avisar("📲 Abriendo WhatsApp para enviar tu pedido…");
       });
     }
@@ -1913,6 +2201,17 @@
       if (cerroVisor || limpiarHash) sacarHash();
       limpiarHash = false;
     });
+
+    // Abre WhatsApp con un link común: es lo que mejor conserva el texto en todos los celulares
+    function abrirLink(url) {
+      const a = document.createElement("a");
+      a.href = url;
+      a.target = "_blank";
+      a.rel = "noopener";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
 
     function abrirPanel(abrir) {
       const panel = $("#panel");
@@ -1961,7 +2260,7 @@
         try { await navigator.share({ title: "NORI-PEL", text: prod, url }); return; } catch (e) { if (e.name === "AbortError") return; }
       }
       try { await navigator.clipboard.writeText(url); avisar("🔗 Link copiado. ¡Pegalo donde quieras!"); }
-      catch (e) { window.open("https://wa.me/?text=" + encodeURIComponent(`${prod} - NORI-PEL\n${url}`), "_blank"); }
+      catch (e) { abrirLink("https://wa.me/?text=" + encodeURIComponent(`${prod} - NORI-PEL\n${url}`)); }
     }
     // Abrir un producto compartido (link con #p=NOMBRE)
     function abrirDesdeLink() {
@@ -2047,8 +2346,20 @@
     }
 
     // ✅ Inicializar
-    window.addEventListener("DOMContentLoaded", () => {
+    window.addEventListener("DOMContentLoaded", async () => {
       aplicarDatosNegocio();
+      crearBurbujas();
+      actualizarEstado();
+      setInterval(actualizarEstado, 60000);
+      if (NEGOCIO.planilla) {
+        $("#secciones").append(crear("p", "cargando", "Cargando productos…"));
+        await cargarCatalogo();
+        $("#secciones").textContent = "";
+      }
+      todosLosProductos = new Set(catalogo.productos);
+      [...pedido.keys()].forEach(n => { if (!todosLosProductos.has(n)) pedido.delete(n); });
+      document.documentElement.dataset.fuente = catalogo.fuente;
+      if (catalogo.fuente !== "archivo") $("#fuente-datos").textContent = " · Lista de productos actualizada ✓";
       renderOfertas();
       renderSecciones();
       actualizarConteos(false);
@@ -2056,9 +2367,6 @@
       iniciarFormulario();
       iniciarReveal();
       iniciarScrollSpy();
-      crearBurbujas();
-      actualizarEstado();
-      setInterval(actualizarEstado, 60000);
       medirToolbar();
       window.addEventListener("resize", medirToolbar);
 

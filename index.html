@@ -6,6 +6,12 @@
   <meta name="description" content="NORI-PEL: productos de limpieza, bazar y más en Villa de Mayo. Mirá el catálogo y hacé tu pedido por WhatsApp.">
   <meta name="theme-color" content="#e91e63">
   <title>NORI-PEL - Productos de Limpieza y Bazar</title>
+  <!-- Vista previa cuando se comparte el link por WhatsApp / redes -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="NORI-PEL · Productos de Limpieza y Bazar">
+  <meta property="og:description" content="Mirá el catálogo y hacé tu pedido por WhatsApp. Av. Perón 217, Villa de Mayo.">
+  <meta property="og:image" content="https://i.postimg.cc/B6JRpxqQ/P-H-NORIPEL-X4-BCOX120mtx12.jpg">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧻</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -182,6 +188,7 @@
       outline: none; transition: border-color .2s, box-shadow .2s;
       box-shadow: var(--shadow-sm);
     }
+    .search input::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
     .search input::placeholder { color: #b49aa7; }
     .search input:focus { border-color: var(--primary); box-shadow: 0 0 0 5px rgba(233,30,99,.14); }
     .search .limpiar {
@@ -386,6 +393,7 @@
     .item { display: flex; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px dashed var(--line); animation: entrar .35s ease; }
     @keyframes entrar { from { opacity: 0; transform: translateX(20px); } }
     .item img { width: 56px; height: 56px; object-fit: contain; border: 1px solid var(--line); border-radius: 12px; padding: 4px; background: #fff; flex: 0 0 56px; }
+    .item-emoji { width: 56px; height: 56px; flex: 0 0 56px; display: grid; place-items: center; font-size: 28px; background: var(--blush); border-radius: 12px; }
     .item-nombre { flex: 1; font-size: 13px; font-weight: 600; overflow-wrap: anywhere; }
     .qty { display: flex; align-items: center; gap: 6px; }
     .qty button { width: 30px; height: 30px; border-radius: 10px; background: var(--blush); color: var(--primary-dark); font-weight: 700; font-size: 16px; }
@@ -435,6 +443,73 @@
     footer p, footer a { font-size: 14px; opacity: .9; }
     .foot-copy { border-top: 1px solid rgba(255,255,255,.12); padding-top: 18px; font-size: 13px; text-align: center; opacity: .8; }
 
+    /* ---------- CANTIDAD EN LA TARJETA ---------- */
+    .stepper { display: none; align-items: center; gap: 6px; }
+    .en-pedido > .card-actions, .en-pedido .oferta-inner > .card-actions { display: none; }
+    .en-pedido .stepper { display: flex; }
+    .stepper button {
+      width: 38px; height: 38px; flex: 0 0 38px; border-radius: 12px; font-size: 20px; font-weight: 700;
+      background: var(--blush); color: var(--primary-dark); transition: transform .15s;
+    }
+    .stepper button:active { transform: scale(.9); }
+    .stepper .mas { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #fff; }
+    .stepper .cant {
+      flex: 1; text-align: center; font-size: 12px; font-weight: 600; color: var(--green-dark);
+      background: #eafaf1; border: 1px solid #c6efd8; border-radius: 12px; padding: 9px 2px; line-height: 1.1;
+    }
+    .stepper .cant b { font-size: 14px; }
+
+    /* ---------- SUGERENCIAS DE BÚSQUEDA ---------- */
+    .sugerencias { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; font-size: 12.5px; color: var(--muted); padding: 0 2px 4px; }
+    .sugerencias button { color: var(--primary-dark); background: #fff; border: 1px dashed var(--primary-light); padding: 3px 10px; border-radius: 999px; font-size: 12.5px; }
+    .sugerencias button:hover { background: var(--blush); }
+    .sugerencias.oculta { display: none; }
+
+    /* ---------- PRODUCTOS SIN FOTO ---------- */
+    .seccion.sin-foto .card-media { cursor: default; animation: none; background: var(--blush); }
+    .seccion.sin-foto .card-media .fallback { display: grid; }
+    .aviso-sin-foto { font-size: 13px; color: var(--muted); margin: -8px 0 14px; }
+
+    /* ---------- FORMULARIO DEL PEDIDO ---------- */
+    .form-pedido { display: grid; gap: 10px; }
+    .form-pedido label { font-size: 12.5px; font-weight: 600; color: var(--muted); display: grid; gap: 4px; }
+    .form-pedido input, .form-pedido textarea {
+      font: inherit; font-size: 15px; color: var(--ink); width: 100%;
+      padding: 10px 12px; border: 2px solid var(--line); border-radius: 12px; outline: none; background: #fff;
+    }
+    .form-pedido textarea { resize: vertical; min-height: 44px; }
+    .form-pedido input:focus, .form-pedido textarea:focus { border-color: var(--primary); }
+    .form-pedido .invalido { border-color: #e53935; animation: sacudir .35s; }
+    @keyframes sacudir { 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+    .entrega { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .entrega input { position: absolute; opacity: 0; pointer-events: none; }
+    .entrega span {
+      display: block; text-align: center; padding: 10px 6px; border-radius: 12px; border: 2px solid var(--line);
+      font-size: 13.5px; font-weight: 600; color: var(--ink); cursor: pointer; transition: all .2s;
+    }
+    .entrega input:checked + span { border-color: var(--primary); background: var(--blush); color: var(--primary-dark); }
+    .entrega input:focus-visible + span { box-shadow: 0 0 0 4px rgba(233,30,99,.2); }
+    .resumen { display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; }
+    .nota-cerrado { font-size: 12.5px; background: #fff8e1; border: 1px solid #ffe082; color: #7a5b00; padding: 8px 10px; border-radius: 10px; }
+    .nota-cerrado:empty { display: none; }
+    .panel-pie { max-height: 62vh; overflow-y: auto; }
+    .btn-compartir { background: var(--blush); color: var(--primary-dark); }
+
+    /* ---------- IMPRIMIR / PDF ---------- */
+    @media print {
+      .hero, .toolbar, .fab, .arriba, .panel, .velo, .aviso, .card-actions, .stepper, .puntos, .card-tag, .vacio, footer .foot-grid, .seccion.sin-foto { display: none !important; }
+      body { background: #fff; }
+      .reveal { opacity: 1 !important; transform: none !important; }
+      .grid { grid-template-columns: repeat(4, 1fr) !important; gap: 8px; }
+      .card, .oferta { box-shadow: none; break-inside: avoid; }
+      .card-media { animation: none; }
+      .card-media img { opacity: 1; transform: none; }
+      .seccion { padding-top: 16px; break-before: auto; }
+      .seccion.oculta:not(.sin-foto) { display: block !important; }
+      .card.oculta { display: flex !important; }
+      footer { background: none; color: #000; margin: 0; padding: 10px 0; }
+    }
+
     /* ---------- RESPONSIVE ---------- */
     @media (max-width: 860px) {
       .hero-grid { grid-template-columns: 1fr; gap: 24px; }
@@ -473,7 +548,7 @@
           <span class="logo-icon">🧻</span>
           <span class="logo-text">NORI-PEL</span>
         </a>
-        <a href="https://wa.me/5491164233586" class="pill-ws" target="_blank" rel="noopener">💬 <span class="txt">+54 9 11 6423-3586</span></a>
+        <a href="https://wa.me/5491164233586" class="pill-ws js-ws" target="_blank" rel="noopener">💬 <span class="txt js-tel">+54 9 11 6423-3586</span></a>
       </div>
 
       <div class="hero-grid">
@@ -482,8 +557,9 @@
           <h1><span class="shine">NORI-PEL</span></h1>
           <p class="tagline">Productos de limpieza, bazar y más. Elegí lo que necesitás y pedilo por WhatsApp en un toque.</p>
           <div class="cta-row">
-            <a href="https://wa.me/5491164233586" class="btn btn-green" target="_blank" rel="noopener">💬 Contactar por WhatsApp</a>
+            <a href="https://wa.me/5491164233586" class="btn btn-green js-ws" target="_blank" rel="noopener">💬 Contactar por WhatsApp</a>
             <a href="#catalogo" class="btn btn-ghost">🛍️ Ver catálogo</a>
+            <a href="tel:+5491164233586" class="btn btn-ghost js-llamar">📞 Llamar</a>
           </div>
           <div class="stats">
             <div class="stat"><b data-contar="0" id="stat-productos">0</b><span>productos</span></div>
@@ -497,15 +573,15 @@
             <div class="ic">📍</div>
             <div>
               <h3>Dónde estamos</h3>
-              <p>Av. Juan Domingo Perón 201, Villa de Mayo, Provincia de Buenos Aires</p>
-              <a href="https://www.google.com/maps/search/?api=1&query=Av.+Juan+Domingo+Per%C3%B3n+201%2C+Villa+de+Mayo%2C+Buenos+Aires" target="_blank" rel="noopener">Cómo llegar →</a>
+              <p class="js-direccion">Av. Juan Domingo Perón 217, Villa de Mayo, Provincia de Buenos Aires</p>
+              <a class="js-mapa" href="https://www.google.com/maps/search/?api=1&query=Av.+Juan+Domingo+Per%C3%B3n+217%2C+Villa+de+Mayo%2C+Buenos+Aires" target="_blank" rel="noopener">Cómo llegar →</a>
             </div>
           </div>
           <div class="info-card">
             <div class="ic">🕒</div>
             <div>
               <h3>Horarios</h3>
-              <p><strong>Lunes a viernes:</strong> 08:00 a 13:00 y 14:00 a 18:00<br><strong>Sábado:</strong> 08:00 a 13:00</p>
+              <p class="js-horarios"><strong>Lunes a viernes:</strong> 08:00 a 13:00 y 14:00 a 18:00<br><strong>Sábado:</strong> 08:00 a 13:00</p>
               <span class="estado" id="estado"><span class="dot"></span><span id="estado-txt">Consultando horario…</span></span>
             </div>
           </div>
@@ -527,6 +603,15 @@
           <input type="search" id="buscador" placeholder="Buscar producto… (ej: lavandina, escoba, balde)" autocomplete="off">
           <button class="limpiar" id="limpiar" aria-label="Borrar búsqueda">✕</button>
         </div>
+      </div>
+      <div class="sugerencias" id="sugerencias">
+        <span>Más buscados:</span>
+        <button type="button">Lavandina</button>
+        <button type="button">Papel higiénico</button>
+        <button type="button">Rollo de cocina</button>
+        <button type="button">Bolsa de residuos</button>
+        <button type="button">Insecticida</button>
+        <button type="button">Detergente</button>
       </div>
       <div class="resultado-info" id="resultado-info" aria-live="polite"></div>
       <nav class="chips" id="chips" aria-label="Categorías"></nav>
@@ -562,18 +647,21 @@
         </div>
         <div>
           <h4>📍 Dirección</h4>
-          <p>Av. Juan Domingo Perón 201, Villa de Mayo, Provincia de Buenos Aires</p>
+          <p class="js-direccion">Av. Juan Domingo Perón 217, Villa de Mayo, Provincia de Buenos Aires</p>
+          <a class="js-mapa" href="https://www.google.com/maps/search/?api=1&query=Av.+Juan+Domingo+Per%C3%B3n+217%2C+Villa+de+Mayo%2C+Buenos+Aires" target="_blank" rel="noopener">Cómo llegar →</a>
         </div>
         <div>
           <h4>🕒 Horarios</h4>
-          <p>Lunes a viernes: 08:00 a 13:00 y 14:00 a 18:00<br>Sábado: 08:00 a 13:00</p>
+          <p class="js-horarios">Lunes a viernes: 08:00 a 13:00 y 14:00 a 18:00<br>Sábado: 08:00 a 13:00</p>
         </div>
         <div>
-          <h4>💬 WhatsApp</h4>
-          <a href="https://wa.me/5491164233586" target="_blank" rel="noopener">+54 9 11 6423-3586</a>
+          <h4>💬 Contacto</h4>
+          <p><a class="js-ws" href="https://wa.me/5491164233586" target="_blank" rel="noopener">WhatsApp: <span class="js-tel">+54 9 11 6423-3586</span></a></p>
+          <p><a class="js-llamar" href="tel:+5491164233586">Llamar por teléfono</a></p>
+          <p><a href="#" id="imprimir">🖨️ Imprimir / guardar catálogo en PDF</a></p>
         </div>
       </div>
-      <div class="foot-copy">NORI-PEL © 2025 | Av. Perón 217, Villa de Mayo | WhatsApp: +54 9 11 6423-3586</div>
+      <div class="foot-copy">NORI-PEL © <span id="anio">2025</span> | <span class="js-dir-corta">Av. Perón 217, Villa de Mayo</span> | WhatsApp: <span class="js-tel">+54 9 11 6423-3586</span></div>
     </div>
   </footer>
 
@@ -590,7 +678,24 @@
     </div>
     <div class="panel-lista" id="panel-lista"></div>
     <div class="panel-pie" id="panel-pie">
-      <a class="btn btn-green" id="enviar-pedido" href="#" target="_blank" rel="noopener">💬 Enviar pedido por WhatsApp</a>
+      <div class="resumen"><span>Total</span><span id="resumen-total"></span></div>
+      <form class="form-pedido" id="form-pedido" novalidate>
+        <label>Tu nombre *
+          <input type="text" id="cli-nombre" autocomplete="name" placeholder="Ej: María">
+        </label>
+        <div class="entrega" role="radiogroup" aria-label="Forma de entrega">
+          <label><input type="radio" name="entrega" value="Retiro en el local" checked><span>🏪 Retiro en el local</span></label>
+          <label><input type="radio" name="entrega" value="Envío a domicilio"><span>🚚 Envío a domicilio</span></label>
+        </div>
+        <label id="campo-direccion" hidden>Dirección de entrega *
+          <input type="text" id="cli-direccion" autocomplete="street-address" placeholder="Calle, número, localidad">
+        </label>
+        <label>Comentarios (opcional)
+          <textarea id="cli-comentario" rows="2" placeholder="Ej: marca preferida, horario para recibir…"></textarea>
+        </label>
+        <div class="nota-cerrado" id="nota-cerrado"></div>
+        <button type="submit" class="btn btn-green">💬 Enviar pedido por WhatsApp</button>
+      </form>
       <button class="vaciar" id="vaciar">Vaciar pedido</button>
     </div>
   </aside>
@@ -605,12 +710,32 @@
         <a class="btn btn-green" id="visor-ws" href="#" target="_blank" rel="noopener">💬 Consultar</a>
         <button class="btn btn-rosa" id="visor-add">＋ Agregar al pedido</button>
       </div>
+      <button class="btn btn-compartir" id="visor-compartir">🔗 Compartir este producto</button>
     </div>
   </dialog>
 
   <div class="aviso" id="aviso" role="status"></div>
 
   <script>
+    // ⚙️ DATOS DEL NEGOCIO — cambiá acá y se actualiza en toda la página
+    const NEGOCIO = {
+      whatsapp: "5491164233586",               // solo números, con código de país (54 9 ...)
+      telefonoVisible: "+54 9 11 6423-3586",
+      direccion: "Av. Juan Domingo Perón 217, Villa de Mayo, Provincia de Buenos Aires",
+      direccionCorta: "Av. Perón 217, Villa de Mayo",
+      // Horarios por día: 0 = domingo, 1 = lunes ... 6 = sábado. Día sin horario = cerrado.
+      horarios: {
+        1: [["08:00", "13:00"], ["14:00", "18:00"]],
+        2: [["08:00", "13:00"], ["14:00", "18:00"]],
+        3: [["08:00", "13:00"], ["14:00", "18:00"]],
+        4: [["08:00", "13:00"], ["14:00", "18:00"]],
+        5: [["08:00", "13:00"], ["14:00", "18:00"]],
+        6: [["08:00", "13:00"]],
+      },
+      // Los productos que todavía no tienen foto aparecen solo cuando el cliente los busca
+      mostrarSinFotoAlBuscar: true,
+    };
+
     // ✅ Lista COMPLETA de productos (tal como la pasaste)
     const productos = [
       "OFF AERO X170", "DETERG. SUELTO X5LTS", "PALA PLASTICA CON CABO ECO", "DETERGENTE X1LT MAGNUS", 
@@ -1210,10 +1335,10 @@
       { id: "otros", emoji: "📦", titulo: "Otros Productos", lista: otros },
     ];
 
-    const WHATSAPP = "5491164233586";
-    const linkWhatsApp = (texto) => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(texto)}`;
+    const linkWhatsApp = (texto) => `https://wa.me/${NEGOCIO.whatsapp}?text=${encodeURIComponent(texto)}`;
+    const todosLosProductos = new Set(productos);
 
-    // Solo se usan URLs reales (si la imagen no es un link, el producto no se muestra roto)
+    // Solo se usan URLs reales (si la imagen no es un link, no se muestra rota)
     function imagenDe(prod) {
       const url = imagenesMap[normalizarClave(prod)];
       if (typeof url !== "string") return null;
@@ -1231,7 +1356,76 @@
       return str.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
     }
 
+    // ---------- Sinónimos: los nombres están abreviados, el cliente busca con palabras comunes ----------
+    const SINONIMOS = [
+      [/\bp\.h/, "papel higienico"],
+      [/\br\.c\.|rollo coc/, "rollo de cocina papel"],
+      [/intercalad/, "toallas intercaladas papel"],
+      [/\bbob(\.|\s|ina)/, "bobina papel"],
+      [/servilleta/, "servilletas papel"],
+      [/lavand/, "lavandina cloro"],
+      [/deterg/, "detergente lavavajilla"],
+      [/suav/, "suavizante ropa"],
+      [/\bjab/, "jabon"],
+      [/desod/, "desodorante"],
+      [/desinf/, "desinfectante"],
+      [/desengras|antigrasa/, "desengrasante"],
+      [/insect|raid|fuyi|gorrion|mosquitrap|derribante/, "insecticida bichos"],
+      [/vape|espiral|repelente|\boff\b|mosquitrap/, "mosquitos repelente"],
+      [/cucarach/, "cucarachas insecticida"],
+      [/hormi/, "hormigas hormiguicida"],
+      [/raticida/, "ratas veneno"],
+      [/polilla|naftalina/, "polillas"],
+      [/pulgas|garrapat/, "pulgas garrapatas mascotas"],
+      [/secad/, "secador"],
+      [/\blamp\b|lampazo|mopa/, "lampazo mopa trapeador"],
+      [/trapo piso|pano piso/, "trapo de piso"],
+      [/rejilla|repasador|franela|pano cocina/, "trapo rejilla pano"],
+      [/\besp\b|\besp\./, "esponja"],
+      [/fibra|spugnella|lana acero/, "esponja fibra"],
+      [/\bcep\b|\bcep\./, "cepillo"],
+      [/escob/, "escoba"],
+      [/barre ?hojas|sacahojas/, "rastrillo jardin hojas"],
+      [/palit|\bpala\b/, "pala recogedor"],
+      [/\bbols/, "bolsa"],
+      [/resid/, "residuos basura"],
+      [/recipiente (p\/ residuos|cuad|red|c\/pedal)/, "tacho de basura cesto"],
+      [/canasto|cesto .*ropa/, "canasto ropa"],
+      [/fuenton|palangana/, "fuenton palangana"],
+      [/balde|baldo/, "balde"],
+      [/hermetic/, "tupper taper hermetico"],
+      [/maceta/, "maceta plantas jardin"],
+      [/tierra|resaca/, "tierra plantas jardin"],
+      [/termo/, "termo mate"],
+      [/bombilla/, "mate"],
+      [/\bpila/, "pilas baterias"],
+      [/osram|lampara|\bled\b/, "lampara foco luz"],
+      [/\bvela/, "velas"],
+      [/perfumina|difusor|walker|aromatiz|glade/, "aromatizante perfume"],
+      [/muriat/, "acido muriatico"],
+      [/clarificador|alguicida|cloro pastilla/, "pileta piscina"],
+      [/toallas (fem|nocturnas|regular)|protectores fem|toallas y/, "toallitas femeninas"],
+      [/cera|pasacera/, "cera pisos"],
+      [/limp ?vid|limp\.vidrio|limpia vidrio|limpiavidrios/, "limpiavidrios vidrios"],
+      [/encendedor|fosforo/, "fuego"],
+      [/film|aluminio|manteca/, "cocina film papel"],
+    ];
+    const PALABRAS_VACIAS = new Set(["de", "del", "la", "el", "los", "las", "para", "p", "con", "y", "x", "en", "por", "un", "una"]);
+
+    function claveBusqueda(prod) {
+      const n = normalizarBusqueda(prod);
+      const extra = SINONIMOS.filter(([re]) => re.test(n)).map(([, s]) => s);
+      return n + " " + extra.join(" ");
+    }
+    // "Escobas de jardín" → ["escoba", "jardin"]: todas las palabras tienen que estar
+    function palabrasDe(texto) {
+      return normalizarBusqueda(texto).split(/[\s,]+/)
+        .filter(w => w && !PALABRAS_VACIAS.has(w))
+        .map(w => (w.length > 4 && w.endsWith("s")) ? w.slice(0, -1) : w);
+    }
+
     const $ = (sel) => document.querySelector(sel);
+    const $$ = (sel) => document.querySelectorAll(sel);
     function crear(tag, clase, texto) {
       const el = document.createElement(tag);
       if (clase) el.className = clase;
@@ -1239,9 +1433,83 @@
       return el;
     }
 
+    // ---------- Datos del negocio en la página ----------
+    const DIAS = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+    const aMin = (h) => { const [a, b] = h.split(":").map(Number); return a * 60 + b; };
+    const turnosDe = (dia) => (NEGOCIO.horarios[dia] || []).map(([a, b]) => [aMin(a), aMin(b)]);
+    const fmtHora = (m) => String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0");
+
+    function lineasHorario() {
+      // Agrupa días seguidos con el mismo horario: "Lunes a viernes: ..."
+      const orden = [1, 2, 3, 4, 5, 6, 0];
+      const grupos = [];
+      orden.forEach(d => {
+        const t = (NEGOCIO.horarios[d] || []).map(([a, b]) => `${a} a ${b}`).join(" y ");
+        if (!t) return;
+        const ult = grupos[grupos.length - 1];
+        if (ult && ult.t === t && orden.indexOf(ult.hasta) === orden.indexOf(d) - 1) ult.hasta = d;
+        else grupos.push({ desde: d, hasta: d, t });
+      });
+      return grupos.map(g => [g.desde === g.hasta ? DIAS[g.desde] : `${DIAS[g.desde]} a ${DIAS[g.hasta].toLowerCase()}`, g.t]);
+    }
+
+    function aplicarDatosNegocio() {
+      const ws = `https://wa.me/${NEGOCIO.whatsapp}`;
+      const mapa = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(NEGOCIO.direccion);
+      $$(".js-ws").forEach(a => a.href = ws);
+      $$(".js-tel").forEach(e => e.textContent = NEGOCIO.telefonoVisible);
+      $$(".js-llamar").forEach(a => a.href = "tel:+" + NEGOCIO.whatsapp);
+      $$(".js-direccion").forEach(e => e.textContent = NEGOCIO.direccion);
+      $$(".js-dir-corta").forEach(e => e.textContent = NEGOCIO.direccionCorta);
+      $$(".js-mapa").forEach(a => a.href = mapa);
+      $$(".js-horarios").forEach(p => {
+        p.textContent = "";
+        lineasHorario().forEach(([dias, t], i) => {
+          if (i) p.append(document.createElement("br"));
+          p.append(crear("strong", null, dias + ":"), " " + t);
+        });
+      });
+      $("#anio").textContent = new Date().getFullYear();
+    }
+
+    // ---------- Abierto / cerrado (hora de Argentina) ----------
+    function estadoLocal() {
+      const partes = new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/Argentina/Buenos_Aires", weekday: "short", hour: "numeric", minute: "numeric", hourCycle: "h23"
+      }).formatToParts(new Date());
+      const get = (t) => (partes.find(p => p.type === t) || {}).value;
+      const dia = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(get("weekday"));
+      const min = (parseInt(get("hour"), 10) % 24) * 60 + parseInt(get("minute"), 10);
+      const turno = turnosDe(dia).find(([a, b]) => min >= a && min < b);
+      if (turno) return { abierto: true, texto: "Abierto ahora · cierra a las " + fmtHora(turno[1]) };
+      for (let k = 0; k < 8; k++) {
+        const d = (dia + k) % 7;
+        const t = turnosDe(d).find(([a]) => k > 0 || a > min);
+        if (t) {
+          const cuando = k === 0 ? "hoy" : k === 1 ? "mañana" : "el " + DIAS[d].toLowerCase();
+          return { abierto: false, texto: `Cerrado · abre ${cuando} a las ${fmtHora(t[0])}`, abre: `${cuando} a las ${fmtHora(t[0])}` };
+        }
+      }
+      return { abierto: false, texto: "Cerrado ahora" };
+    }
+
+    function actualizarEstado() {
+      const el = $("#estado");
+      let e;
+      try { e = estadoLocal(); } catch (err) { el.style.display = "none"; return; }
+      el.classList.toggle("abierto", e.abierto);
+      el.classList.toggle("cerrado", !e.abierto);
+      $("#estado-txt").textContent = e.texto;
+      $("#nota-cerrado").textContent = e.abierto ? "" :
+        `🕒 Ahora estamos cerrados. Mandá tu pedido igual: te respondemos ${e.abre ? e.abre : "cuando abramos"}.`;
+    }
+
     // ---------- Imagen con carga suave ----------
     function crearMedia(prod) {
-      const media = crear("button", "card-media");
+      const url = imagenDe(prod);
+      const media = crear(url ? "button" : "div", "card-media");
+      const fallback = crear("span", "fallback", getIcon(prod));
+      if (!url) { media.append(fallback); return media; }
       media.type = "button";
       media.setAttribute("aria-label", "Ver imagen de " + prod);
       const img = document.createElement("img");
@@ -1251,11 +1519,35 @@
       const listo = () => media.classList.add("cargada");
       img.addEventListener("load", listo);
       img.addEventListener("error", () => media.classList.add("error"));
-      img.src = imagenDe(prod);
+      img.src = url;
       if (img.complete && img.naturalWidth) listo();
-      media.append(img, crear("span", "fallback", getIcon(prod)));
+      media.append(img, fallback);
       media.addEventListener("click", () => { if (!media.classList.contains("error")) abrirVisor(prod); });
       return media;
+    }
+
+    // Botones "Consultar" + "+" y, una vez en el pedido, el selector de cantidad
+    function crearAcciones(prod, textoConsulta, etiqueta) {
+      const acciones = crear("div", "card-actions");
+      const ws = crear("a", "btn-consultar");
+      ws.href = linkWhatsApp(textoConsulta);
+      ws.target = "_blank"; ws.rel = "noopener";
+      ws.append("💬 ", crear("span", null, etiqueta));
+      const add = crear("button", "btn-add", "+");
+      add.type = "button";
+      add.setAttribute("aria-label", "Agregar al pedido: " + prod);
+      add.addEventListener("click", () => agregar(prod));
+      acciones.append(ws, add);
+
+      const stepper = crear("div", "stepper");
+      const menos = crear("button", "menos", "−");
+      menos.type = "button"; menos.setAttribute("aria-label", "Quitar uno");
+      menos.addEventListener("click", () => cambiar(prod, -1));
+      const mas = crear("button", "mas", "+");
+      mas.type = "button"; mas.setAttribute("aria-label", "Agregar uno");
+      mas.addEventListener("click", () => cambiar(prod, 1));
+      stepper.append(menos, crear("span", "cant"), mas);
+      return [acciones, stepper];
     }
 
     // ---------- Tarjeta de producto ----------
@@ -1264,22 +1556,10 @@
       const card = crear("article", "card reveal");
       card.style.setProperty("--d", (i % 6) * 50 + "ms");
       card.dataset.nombre = prod;
-
       const titulo = crear("h3", "card-title", prod);
-      const acciones = crear("div", "card-actions");
-      const ws = crear("a", "btn-consultar");
-      ws.href = linkWhatsApp(`¡Hola NORI-PEL! Quiero consultar por: ${prod}`);
-      ws.target = "_blank"; ws.rel = "noopener";
-      ws.innerHTML = '💬 <span>Consultar</span>';
-      const add = crear("button", "btn-add", "+");
-      add.type = "button";
-      add.dataset.nombre = prod;
-      add.setAttribute("aria-label", "Agregar al pedido: " + prod);
-      add.addEventListener("click", () => agregar(prod));
-      acciones.append(ws, add);
-
-      card.append(crearMedia(prod), crear("span", "card-tag", getIcon(prod)), titulo, acciones);
-      tarjetas.push({ card, titulo, nombre: prod, clave: normalizarBusqueda(prod) });
+      const [acciones, stepper] = crearAcciones(prod, `¡Hola NORI-PEL! Quiero consultar por: ${prod}`, "Consultar");
+      card.append(crearMedia(prod), crear("span", "card-tag", getIcon(prod)), titulo, acciones, stepper);
+      tarjetas.push({ card, titulo, nombre: prod, clave: claveBusqueda(prod), conFoto: !!imagenDe(prod) });
       return card;
     }
 
@@ -1290,19 +1570,10 @@
       if (!lista.length) { $("#ofertas").style.display = "none"; return; }
       lista.forEach(prod => {
         const of = crear("div", "oferta");
+        of.dataset.nombre = prod;
         const inner = crear("div", "oferta-inner");
-        const acciones = crear("div", "card-actions");
-        const ws = crear("a", "btn-consultar");
-        ws.href = linkWhatsApp(`¡Hola NORI-PEL! Quiero consultar por la oferta: ${prod}`);
-        ws.target = "_blank"; ws.rel = "noopener";
-        ws.innerHTML = '💬 <span>Consultar oferta</span>';
-        const add = crear("button", "btn-add", "+");
-        add.type = "button";
-        add.dataset.nombre = prod;
-        add.setAttribute("aria-label", "Agregar al pedido: " + prod);
-        add.addEventListener("click", () => agregar(prod));
-        acciones.append(ws, add);
-        inner.append(crearMedia(prod), crear("h3", "card-title", prod), acciones);
+        const [acciones, stepper] = crearAcciones(prod, `¡Hola NORI-PEL! Quiero consultar por la oferta: ${prod}`, "Consultar oferta");
+        inner.append(crearMedia(prod), crear("h3", "card-title", prod), acciones, stepper);
         of.append(crear("span", "badge-oferta", "🔥 Oferta"), inner);
         cont.appendChild(of);
       });
@@ -1350,92 +1621,123 @@
 
     // ---------- Secciones ----------
     const seccionesRender = [];
+    function crearSeccion(sec, lista) {
+      const el = crear("section", "seccion" + (sec.destacada ? " destacada" : "") + (sec.sinFoto ? " sin-foto" : ""));
+      el.id = "grupo-" + sec.id;
+      const head = crear("div", "seccion-head");
+      const textos = crear("div");
+      textos.append(crear("h2", null, sec.titulo));
+      if (sec.sub) textos.append(crear("p", null, sec.sub));
+      const count = crear("span", "count");
+      head.append(crear("div", "seccion-emoji", sec.emoji), textos, count);
+      const bloque = crear("div", "bloque");
+      const grid = crear("div", "grid");
+      const cards = lista.map((p, i) => crearTarjeta(p, i));
+      grid.append(...cards);
+      bloque.append(grid);
+      el.append(head);
+      if (sec.aviso) el.append(crear("p", "aviso-sin-foto", sec.aviso));
+      el.append(bloque);
+      $("#secciones").appendChild(el);
+      return { el, cards, count };
+    }
+
     function renderSecciones() {
-      const cont = $("#secciones");
       const chips = $("#chips");
       secciones.forEach(sec => {
         const lista = conImagen(sec.lista);
         if (!lista.length) return;
-
-        const el = crear("section", "seccion" + (sec.destacada ? " destacada" : ""));
-        el.id = "grupo-" + sec.id;
-        const head = crear("div", "seccion-head");
-        const textos = crear("div");
-        textos.append(crear("h2", null, sec.titulo));
-        if (sec.sub) textos.append(crear("p", null, sec.sub));
-        const count = crear("span", "count");
-        head.append(crear("div", "seccion-emoji", sec.emoji), textos, count);
-
-        const bloque = crear("div", "bloque");
-        const grid = crear("div", "grid");
-        const cards = lista.map((p, i) => crearTarjeta(p, i));
-        grid.append(...cards);
-        bloque.append(grid);
-        el.append(head, bloque);
-        cont.appendChild(el);
-
+        const s = crearSeccion(sec, lista);
         const chip = crear("a", "chip");
-        chip.href = "#" + el.id;
+        chip.href = "#" + s.el.id;
         chip.append(crear("span", null, sec.emoji + " " + sec.titulo), crear("span", "n"));
         chips.appendChild(chip);
-
-        seccionesRender.push({ el, cards, count, chip });
+        seccionesRender.push({ ...s, chip });
       });
+
+      // Productos sin foto: solo aparecen al buscar, para que el cliente igual los encuentre
+      if (NEGOCIO.mostrarSinFotoAlBuscar) {
+        const sinFoto = [...todosLosProductos].filter(p => !imagenDe(p));
+        if (sinFoto.length) {
+          const s = crearSeccion({
+            id: "sin-foto", emoji: "🔎", titulo: "Más productos", sinFoto: true,
+            aviso: "Todavía no tienen foto. Consultá disponibilidad o sumalos a tu pedido."
+          }, sinFoto);
+          seccionesRender.push({ ...s, chip: null, soloBusqueda: true });
+        }
+      }
     }
 
-    function actualizarConteos() {
+    function actualizarConteos(buscando) {
       seccionesRender.forEach(s => {
         const n = s.cards.filter(c => !c.classList.contains("oculta")).length;
         s.count.textContent = n + (n === 1 ? " producto" : " productos");
-        s.chip.querySelector(".n").textContent = n;
-        s.el.classList.toggle("oculta", n === 0);
-        s.chip.classList.toggle("oculto", n === 0);
+        const visible = n > 0 && (!s.soloBusqueda || buscando);
+        s.el.classList.toggle("oculta", !visible);
+        if (s.chip) {
+          s.chip.querySelector(".n").textContent = n;
+          s.chip.classList.toggle("oculto", n === 0);
+        }
       });
     }
 
     // ---------- Buscador ----------
-    function resaltar(tituloEl, nombre, q) {
+    function resaltar(tituloEl, nombre, palabras) {
       tituloEl.textContent = nombre;
-      if (!q) return;
       const norm = normalizarBusqueda(nombre);
-      const idx = norm.indexOf(q);
-      if (idx < 0 || norm.length !== nombre.length) return;
-      const mark = crear("mark", null, nombre.slice(idx, idx + q.length));
+      if (!palabras.length || norm.length !== nombre.length) return;
+      const marcas = new Array(nombre.length).fill(false);
+      palabras.forEach(w => {
+        let i = norm.indexOf(w);
+        while (i >= 0 && w) { for (let k = i; k < i + w.length; k++) marcas[k] = true; i = norm.indexOf(w, i + w.length); }
+      });
+      if (!marcas.includes(true)) return;
       tituloEl.textContent = "";
-      tituloEl.append(nombre.slice(0, idx), mark, nombre.slice(idx + q.length));
+      let i = 0;
+      while (i < nombre.length) {
+        let j = i;
+        while (j < nombre.length && marcas[j] === marcas[i]) j++;
+        const trozo = nombre.slice(i, j);
+        tituloEl.append(marcas[i] ? crear("mark", null, trozo) : trozo);
+        i = j;
+      }
     }
 
     function buscar(texto) {
-      const q = normalizarBusqueda(texto.trim());
-      const vistos = new Set();
+      const palabras = palabrasDe(texto);
+      const buscando = palabras.length > 0;
+      const vistos = new Set(), vistosSinFoto = new Set();
       tarjetas.forEach(t => {
-        const ok = !q || t.clave.includes(q);
+        const ok = !buscando || palabras.every(w => t.clave.includes(w));
         t.card.classList.toggle("oculta", !ok);
-        resaltar(t.titulo, t.nombre, q);
-        if (ok) vistos.add(t.nombre);
+        resaltar(t.titulo, t.nombre, palabras);
+        if (ok && buscando) (t.conFoto ? vistos : vistosSinFoto).add(t.nombre);
       });
-      actualizarConteos();
-      $("#ofertas").style.display = q ? "none" : "";
+      actualizarConteos(buscando);
+      $("#ofertas").style.display = buscando ? "none" : "";
       $("#search-box").classList.toggle("tiene-texto", !!texto);
-      $("#resultado-info").textContent = q
-        ? (vistos.size ? `${vistos.size} ${vistos.size === 1 ? "producto encontrado" : "productos encontrados"}` : "")
+      $("#sugerencias").classList.toggle("oculta", !!texto);
+      const total = vistos.size + vistosSinFoto.size;
+      $("#resultado-info").textContent = buscando && total
+        ? `${total} ${total === 1 ? "producto encontrado" : "productos encontrados"}` +
+          (vistosSinFoto.size ? ` (${vistosSinFoto.size} sin foto, al final)` : "")
         : "";
-      const sinResultados = q && vistos.size === 0;
-      $("#vacio").classList.toggle("visible", !!sinResultados);
+      const sinResultados = buscando && total === 0;
+      $("#vacio").classList.toggle("visible", sinResultados);
       if (sinResultados) {
         $("#vacio-q").textContent = texto.trim();
         $("#vacio-ws").href = linkWhatsApp(`¡Hola NORI-PEL! ¿Tienen ${texto.trim()}?`);
       }
-      // Mostrar de inmediato lo filtrado
       tarjetas.forEach(t => t.card.classList.add("in"));
     }
 
     // ---------- Pedido ----------
     const CLAVE_PEDIDO = "noripel-pedido";
+    const CLAVE_CLIENTE = "noripel-cliente";
     let pedido = new Map();
     try {
       const guardado = JSON.parse(localStorage.getItem(CLAVE_PEDIDO) || "[]");
-      if (Array.isArray(guardado)) guardado.forEach(([n, c]) => { if (imagenDe(n) && c > 0) pedido.set(n, c); });
+      if (Array.isArray(guardado)) guardado.forEach(([n, c]) => { if (todosLosProductos.has(n) && c > 0) pedido.set(n, c); });
     } catch (e) { /* sin almacenamiento: el pedido vive solo en esta visita */ }
 
     function guardarPedido() {
@@ -1459,15 +1761,19 @@
     }
 
     function pintarPedido() {
-      const total = [...pedido.values()].reduce((a, b) => a + b, 0);
+      const unidades = [...pedido.values()].reduce((a, b) => a + b, 0);
       const badge = $("#fab-badge");
-      badge.textContent = total;
-      badge.classList.toggle("visible", total > 0);
+      badge.textContent = unidades;
+      badge.classList.toggle("visible", unidades > 0);
 
-      document.querySelectorAll(".btn-add").forEach(b => {
-        const en = pedido.has(b.dataset.nombre);
-        b.classList.toggle("en-pedido", en);
-        b.textContent = en ? "✓" : "+";
+      $$(".card, .oferta").forEach(el => {
+        const c = pedido.get(el.dataset.nombre);
+        el.classList.toggle("en-pedido", !!c);
+        if (c) {
+          const cant = el.querySelector(".cant");
+          cant.textContent = "";
+          cant.append(crear("b", null, c), " en pedido");
+        }
       });
 
       const lista = $("#panel-lista");
@@ -1482,19 +1788,84 @@
       $("#panel-pie").style.display = "";
       pedido.forEach((cant, prod) => {
         const it = crear("div", "item");
-        const img = document.createElement("img");
-        img.src = imagenDe(prod); img.alt = ""; img.loading = "lazy";
+        const url = imagenDe(prod);
+        let foto;
+        if (url) { foto = document.createElement("img"); foto.src = url; foto.alt = ""; foto.loading = "lazy"; }
+        else foto = crear("span", "item-emoji", getIcon(prod));
         const qty = crear("div", "qty");
         const menos = crear("button", null, "−"); menos.type = "button"; menos.setAttribute("aria-label", "Quitar uno");
         const mas = crear("button", null, "+"); mas.type = "button"; mas.setAttribute("aria-label", "Agregar uno");
         menos.addEventListener("click", () => cambiar(prod, -1));
         mas.addEventListener("click", () => cambiar(prod, 1));
         qty.append(menos, crear("span", null, cant), mas);
-        it.append(img, crear("div", "item-nombre", prod), qty);
+        it.append(foto, crear("div", "item-nombre", prod), qty);
         lista.append(it);
       });
-      const lineas = [...pedido].map(([p, c]) => `• ${c} x ${p}`).join("\n");
-      $("#enviar-pedido").href = linkWhatsApp(`¡Hola NORI-PEL! Quiero hacer este pedido:\n\n${lineas}\n\n¡Gracias!`);
+      $("#resumen-total").textContent =
+        `${unidades} ${unidades === 1 ? "unidad" : "unidades"} · ${pedido.size} ${pedido.size === 1 ? "producto" : "productos"}`;
+    }
+
+    // Datos del cliente: se recuerdan para el próximo pedido
+    function leerCliente() {
+      try { return JSON.parse(localStorage.getItem(CLAVE_CLIENTE) || "{}") || {}; } catch (e) { return {}; }
+    }
+    function guardarCliente() {
+      const datos = {
+        nombre: $("#cli-nombre").value.trim(),
+        direccion: $("#cli-direccion").value.trim(),
+        entrega: (document.querySelector('input[name="entrega"]:checked') || {}).value,
+      };
+      try { localStorage.setItem(CLAVE_CLIENTE, JSON.stringify(datos)); } catch (e) {}
+    }
+    function iniciarFormulario() {
+      const c = leerCliente();
+      if (c.nombre) $("#cli-nombre").value = c.nombre;
+      if (c.direccion) $("#cli-direccion").value = c.direccion;
+      const radios = $$('input[name="entrega"]');
+      radios.forEach(r => { if (r.value === c.entrega) r.checked = true; });
+      const toggleDir = () => {
+        const envio = document.querySelector('input[name="entrega"]:checked').value === "Envío a domicilio";
+        $("#campo-direccion").hidden = !envio;
+      };
+      radios.forEach(r => r.addEventListener("change", () => { toggleDir(); guardarCliente(); }));
+      toggleDir();
+      ["#cli-nombre", "#cli-direccion"].forEach(s => $(s).addEventListener("input", (e) => { e.target.classList.remove("invalido"); guardarCliente(); }));
+
+      $("#form-pedido").addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (!pedido.size) return;
+        const nombre = $("#cli-nombre"), dir = $("#cli-direccion");
+        const entrega = document.querySelector('input[name="entrega"]:checked').value;
+        const envio = entrega === "Envío a domicilio";
+        const faltan = [];
+        if (!nombre.value.trim()) faltan.push(nombre);
+        if (envio && !dir.value.trim()) faltan.push(dir);
+        faltan.forEach(f => { f.classList.remove("invalido"); void f.offsetWidth; f.classList.add("invalido"); });
+        if (faltan.length) { faltan[0].focus(); avisar("Completá los datos marcados en rojo"); return; }
+
+        const unidades = [...pedido.values()].reduce((a, b) => a + b, 0);
+        const lineas = [...pedido].map(([p, c], i) => `${i + 1}) ${c} x ${p}`).join("\n");
+        const comentario = $("#cli-comentario").value.trim();
+        const msg = [
+          "¡Hola NORI-PEL! 🛒 Quiero hacer este pedido:",
+          "",
+          lineas,
+          "",
+          `Total: ${unidades} ${unidades === 1 ? "unidad" : "unidades"} (${pedido.size} ${pedido.size === 1 ? "producto" : "productos"})`,
+          "",
+          `👤 Nombre: ${nombre.value.trim()}`,
+          `📦 Entrega: ${entrega}`,
+          envio ? `📍 Dirección: ${dir.value.trim()}` : null,
+          comentario ? `📝 Comentarios: ${comentario}` : null,
+          "",
+          "(Pedido hecho desde el catálogo web)",
+        ].filter(l => l !== null).join("\n");
+        guardarCliente();
+        const url = linkWhatsApp(msg);
+        const w = window.open(url, "_blank");
+        if (!w) location.href = url;
+        avisar("📲 Abriendo WhatsApp para enviar tu pedido…");
+      });
     }
 
     function abrirPanel(abrir) {
@@ -1504,7 +1875,7 @@
       document.body.style.overflow = abrir ? "hidden" : "";
     }
 
-    // ---------- Visor de imagen ----------
+    // ---------- Visor de imagen + compartir ----------
     let enVisor = null;
     function abrirVisor(prod) {
       enVisor = prod;
@@ -1513,11 +1884,33 @@
       $("#visor-nombre").textContent = prod;
       $("#visor-ws").href = linkWhatsApp(`¡Hola NORI-PEL! Quiero consultar por: ${prod}`);
       const v = $("#visor");
+      if (v.open) return;
       if (typeof v.showModal === "function") v.showModal(); else v.setAttribute("open", "");
     }
     function cerrarVisor() {
       const v = $("#visor");
       if (typeof v.close === "function") v.close(); else v.removeAttribute("open");
+      if (location.hash.startsWith("#p=")) history.replaceState(null, "", location.pathname + location.search);
+    }
+    function linkProducto(prod) {
+      return location.href.split("#")[0] + "#p=" + encodeURIComponent(prod);
+    }
+    async function compartir(prod) {
+      const url = linkProducto(prod);
+      if (navigator.share) {
+        try { await navigator.share({ title: "NORI-PEL", text: prod, url }); return; } catch (e) { if (e.name === "AbortError") return; }
+      }
+      try { await navigator.clipboard.writeText(url); avisar("🔗 Link copiado. ¡Pegalo donde quieras!"); }
+      catch (e) { window.open("https://wa.me/?text=" + encodeURIComponent(`${prod} - NORI-PEL\n${url}`), "_blank"); }
+    }
+    // Abrir un producto compartido (link con #p=NOMBRE)
+    function abrirDesdeLink() {
+      if (!location.hash.startsWith("#p=")) return;
+      let prod;
+      try { prod = decodeURIComponent(location.hash.slice(3)); } catch (e) { return; }
+      if (!todosLosProductos.has(prod)) return;
+      if (imagenDe(prod)) abrirVisor(prod);
+      else { $("#buscador").value = prod; buscar(prod); }
     }
 
     // ---------- Aviso ----------
@@ -1527,33 +1920,7 @@
       a.textContent = txt;
       a.classList.add("visible");
       clearTimeout(avisoTimer);
-      avisoTimer = setTimeout(() => a.classList.remove("visible"), 1800);
-    }
-
-    // ---------- Abierto / cerrado (hora de Argentina) ----------
-    function actualizarEstado() {
-      const el = $("#estado"), txt = $("#estado-txt");
-      let partes;
-      try {
-        partes = new Intl.DateTimeFormat("en-US", {
-          timeZone: "America/Argentina/Buenos_Aires", weekday: "short", hour: "numeric", minute: "numeric", hourCycle: "h23"
-        }).formatToParts(new Date());
-      } catch (e) { el.style.display = "none"; return; }
-      const get = (t) => (partes.find(p => p.type === t) || {}).value;
-      const dia = get("weekday");
-      const min = (parseInt(get("hour"), 10) % 24) * 60 + parseInt(get("minute"), 10);
-      const turnos = ["Mon", "Tue", "Wed", "Thu", "Fri"].includes(dia) ? [[480, 780], [840, 1080]]
-                   : dia === "Sat" ? [[480, 780]] : [];
-      const turno = turnos.find(([a, b]) => min >= a && min < b);
-      const fmt = (m) => String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0");
-      el.classList.toggle("abierto", !!turno);
-      el.classList.toggle("cerrado", !turno);
-      if (turno) {
-        txt.textContent = "Abierto ahora · cierra a las " + fmt(turno[1]);
-      } else {
-        const prox = turnos.find(([a]) => min < a);
-        txt.textContent = prox ? "Cerrado · abre a las " + fmt(prox[0]) : "Cerrado ahora";
-      }
+      avisoTimer = setTimeout(() => a.classList.remove("visible"), 2000);
     }
 
     // ---------- Efectos ----------
@@ -1582,7 +1949,7 @@
     }
 
     function iniciarReveal() {
-      const cards = document.querySelectorAll(".reveal");
+      const cards = $$(".reveal");
       if (!("IntersectionObserver" in window)) { cards.forEach(c => c.classList.add("in")); return; }
       const io = new IntersectionObserver(entradas => {
         entradas.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
@@ -1593,29 +1960,40 @@
     function iniciarScrollSpy() {
       if (!("IntersectionObserver" in window)) return;
       const chips = $("#chips");
+      const conChip = seccionesRender.filter(s => s.chip);
       const io = new IntersectionObserver(entradas => {
         entradas.forEach(e => {
           if (!e.isIntersecting) return;
-          seccionesRender.forEach(s => {
+          conChip.forEach(s => {
             const activo = s.el === e.target;
             s.chip.classList.toggle("activo", activo);
             if (activo) chips.scrollTo({ left: s.chip.offsetLeft - chips.offsetLeft - 16, behavior: "smooth" });
           });
         });
       }, { rootMargin: "-40% 0px -55% 0px" });
-      seccionesRender.forEach(s => io.observe(s.el));
+      conChip.forEach(s => io.observe(s.el));
     }
 
     function medirToolbar() {
       document.documentElement.style.setProperty("--toolbar-h", $("#toolbar").offsetHeight + "px");
     }
 
+    // Imprimir / guardar en PDF: carga todas las fotos antes
+    function imprimir() {
+      $$(".card-media img").forEach(i => i.loading = "eager");
+      $$(".reveal").forEach(c => c.classList.add("in"));
+      avisar("🖨️ Preparando el catálogo…");
+      setTimeout(() => window.print(), 1200);
+    }
+
     // ✅ Inicializar
     window.addEventListener("DOMContentLoaded", () => {
+      aplicarDatosNegocio();
       renderOfertas();
       renderSecciones();
-      actualizarConteos();
+      actualizarConteos(false);
       pintarPedido();
+      iniciarFormulario();
       iniciarReveal();
       iniciarScrollSpy();
       crearBurbujas();
@@ -1624,9 +2002,8 @@
       medirToolbar();
       window.addEventListener("resize", medirToolbar);
 
-      const unicos = new Set(tarjetas.map(t => t.nombre));
-      contar($("#stat-productos"), unicos.size);
-      contar($("#stat-categorias"), seccionesRender.length);
+      contar($("#stat-productos"), new Set(tarjetas.filter(t => t.conFoto).map(t => t.nombre)).size);
+      contar($("#stat-categorias"), seccionesRender.filter(s => s.chip).length);
 
       // Buscador
       const input = $("#buscador");
@@ -1640,18 +2017,33 @@
         const top = $("#toolbar").getBoundingClientRect().top;
         if (top > 0) window.scrollBy({ top, behavior: "smooth" });
       });
+      $$("#sugerencias button").forEach(b => b.addEventListener("click", () => {
+        input.value = b.textContent;
+        buscar(input.value);
+        const top = $("#toolbar").getBoundingClientRect().top;
+        if (top > 0) window.scrollBy({ top, behavior: "smooth" });
+      }));
 
       // Pedido
       $("#fab").addEventListener("click", () => abrirPanel(true));
       $("#panel-cerrar").addEventListener("click", () => abrirPanel(false));
       $("#velo").addEventListener("click", () => abrirPanel(false));
-      $("#vaciar").addEventListener("click", () => { pedido.clear(); guardarPedido(); pintarPedido(); });
+      $("#vaciar").addEventListener("click", () => {
+        if (confirm("¿Vaciar todo el pedido?")) { pedido.clear(); guardarPedido(); pintarPedido(); }
+      });
 
       // Visor
       $("#visor-cerrar").addEventListener("click", cerrarVisor);
       $("#visor").addEventListener("click", (e) => { if (e.target.id === "visor") cerrarVisor(); });
+      $("#visor").addEventListener("close", () => {
+        if (location.hash.startsWith("#p=")) history.replaceState(null, "", location.pathname + location.search);
+      });
       $("#visor-add").addEventListener("click", () => { if (enVisor) agregar(enVisor); cerrarVisor(); });
+      $("#visor-compartir").addEventListener("click", () => { if (enVisor) compartir(enVisor); });
+      abrirDesdeLink();
+      window.addEventListener("hashchange", abrirDesdeLink);
 
+      $("#imprimir").addEventListener("click", (e) => { e.preventDefault(); imprimir(); });
       document.addEventListener("keydown", (e) => { if (e.key === "Escape") abrirPanel(false); });
 
       // Barra con sombra + botón "arriba"

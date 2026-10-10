@@ -1884,23 +1884,22 @@
         const lineas = [...pedido].map(([p, c], i) => `${i + 1}) ${c} x ${p}`).join("\n");
         const comentario = $("#cli-comentario").value.trim();
         const msg = [
-          "¡Hola NORI-PEL! 🛒 Quiero hacer este pedido:",
+          "¡Hola NORI-PEL! Quiero hacer este pedido:",
           "",
           lineas,
           "",
           `Total: ${unidades} ${unidades === 1 ? "unidad" : "unidades"} (${pedido.size} ${pedido.size === 1 ? "producto" : "productos"})`,
           "",
-          `👤 Nombre: ${nombre.value.trim()}`,
-          `📦 Entrega: ${entrega}`,
-          envio ? `📍 Dirección: ${dir.value.trim()}` : null,
-          comentario ? `📝 Comentarios: ${comentario}` : null,
+          `Nombre: ${nombre.value.trim()}`,
+          `Entrega: ${entrega}`,
+          envio ? `Dirección: ${dir.value.trim()}` : null,
+          comentario ? `Comentarios: ${comentario}` : null,
           "",
           "(Pedido hecho desde el catálogo web)",
         ].filter(l => l !== null).join("\n");
         guardarCliente();
         const url = linkWhatsApp(msg);
-        const w = window.open(url, "_blank");
-        if (!w) location.href = url;
+        abrirLink(url);
         avisar("📲 Abriendo WhatsApp para enviar tu pedido…");
       });
     }
@@ -1925,6 +1924,17 @@
       if (cerroVisor || limpiarHash) sacarHash();
       limpiarHash = false;
     });
+
+    // Abre WhatsApp con un link común: es lo que mejor conserva el texto en todos los celulares
+    function abrirLink(url) {
+      const a = document.createElement("a");
+      a.href = url;
+      a.target = "_blank";
+      a.rel = "noopener";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
 
     function abrirPanel(abrir) {
       const panel = $("#panel");
@@ -1973,7 +1983,7 @@
         try { await navigator.share({ title: "NORI-PEL", text: prod, url }); return; } catch (e) { if (e.name === "AbortError") return; }
       }
       try { await navigator.clipboard.writeText(url); avisar("🔗 Link copiado. ¡Pegalo donde quieras!"); }
-      catch (e) { window.open("https://wa.me/?text=" + encodeURIComponent(`${prod} - NORI-PEL\n${url}`), "_blank"); }
+      catch (e) { abrirLink("https://wa.me/?text=" + encodeURIComponent(`${prod} - NORI-PEL\n${url}`)); }
     }
     // Abrir un producto compartido (link con #p=NOMBRE)
     function abrirDesdeLink() {

@@ -3,260 +3,612 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="NORI-PEL: productos de limpieza, bazar y más en Villa de Mayo. Mirá el catálogo y hacé tu pedido por WhatsApp.">
+  <meta name="theme-color" content="#e91e63">
   <title>NORI-PEL - Productos de Limpieza y Bazar</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧻</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #e91e63;
-      --primary-light: #f8bbd0;
       --primary-dark: #c2185b;
+      --primary-deep: #8e0e4a;
+      --primary-light: #f8bbd0;
+      --blush: #fff0f5;
+      --bg: #fff7fa;
       --white: #ffffff;
-      --gray: #f5f5f5;
-      --text: #333;
+      --ink: #2a1720;
+      --muted: #7a6670;
+      --line: #f3dbe5;
+      --green: #25d366;
+      --green-dark: #128c4b;
+      --orange: #ff6d3a;
+      --shadow-sm: 0 2px 8px -2px rgba(142, 14, 74, .10);
+      --shadow: 0 14px 34px -14px rgba(194, 24, 91, .38);
+      --radius: 18px;
+      --toolbar-h: 128px;
     }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Arial', sans-serif;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
     body {
-      background-color: var(--gray);
-      color: var(--text);
-      line-height: 1.6;
+      font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+      background:
+        radial-gradient(1200px 600px at 100% 0%, #ffe3ee 0%, transparent 60%),
+        radial-gradient(900px 500px at 0% 40%, #fff1e8 0%, transparent 60%),
+        var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+      overflow-x: hidden;
     }
-    header {
-      background-color: var(--primary);
-      color: white;
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-    header h1 {
-      font-size: 28px;
-      margin-bottom: 5px;
-    }
-    header p {
-      font-size: 16px;
-      opacity: 0.9;
-    }
-    .contact-info {
-      background-color: var(--primary-dark);
-      padding: 12px;
-      font-size: 15px;
-      border-radius: 8px;
-      margin: 15px auto;
-      max-width: 90%;
-    }
-    .whatsapp-btn {
-      display: block;
-      background-color: #25D366;
-      color: white;
-      text-align: center;
-      padding: 14px;
-      margin: 15px 20px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 16px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-    /* Ofertas */
-    .offers {
-      padding: 20px;
-      text-align: center;
-    }
-    .offers h2 {
-      color: var(--primary-dark);
-      margin-bottom: 15px;
-      font-size: 20px;
-    }
-    .offers-container {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      flex-wrap: wrap;
-      padding: 10px;
-    }
-    .offer-item {
-      text-align: center;
-      font-size: 14px;
-      max-width: 160px;
-      background-color: white;
-      padding: 14px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    img { max-width: 100%; display: block; }
+    button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
+    a { color: inherit; }
+    .wrap { max-width: 1320px; margin: 0 auto; padding: 0 16px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+    /* ---------- HERO ---------- */
+    .hero {
       position: relative;
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 55%, var(--primary-deep) 100%);
+      overflow: hidden;
+      isolation: isolate;
+      padding-bottom: 70px;
     }
-    .offer-badge {
-      position: absolute;
-      top: -10px;
-      right: 10px;
-      background-color: #ff5722;
-      color: white;
-      font-size: 12px;
-      padding: 5px 8px;
-      border-radius: 20px;
-      font-weight: bold;
+    .blob {
+      position: absolute; border-radius: 50%; filter: blur(50px); opacity: .55; z-index: -1;
+      animation: flotar 14s ease-in-out infinite alternate;
     }
-    .offer-img,
-    .product-img {
-      width: 100%;
-      height: 190px;
-      object-fit: scale-down;
-      object-position: center;
-      background-color: #ffffff;
-      border: 1px solid #eee;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      padding: 12px;
-      box-sizing: border-box;
+    .blob.b1 { width: 380px; height: 380px; background: #ff8ab5; top: -120px; right: -80px; }
+    .blob.b2 { width: 300px; height: 300px; background: #ff9a6b; bottom: -60px; left: -100px; animation-delay: -5s; }
+    .blob.b3 { width: 220px; height: 220px; background: #b5179e; top: 40%; left: 45%; animation-delay: -9s; }
+    @keyframes flotar {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(40px, 30px) scale(1.15); }
     }
-    /* Secciones por grupo */
-    .product-group {
-      padding: 22px 16px;
-      background-color: #fff9f9;
-      margin: 18px auto;
-      border-radius: 14px;
-      box-shadow: 0 3px 10px rgba(233, 30, 99, 0.06);
-      max-width: 1400px;
+    .burbujas span {
+      position: absolute; bottom: -60px; font-size: 28px; opacity: .85; z-index: -1;
+      animation: subir linear infinite;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,.18));
     }
-    .group-title {
-      text-align: center;
-      color: white;
-      margin-bottom: 22px;
-      font-size: 23px;
-      font-weight: bold;
-      background: linear-gradient(135deg, #e91e63, #c2185b);
-      padding: 12px 20px;
-      border-radius: 50px;
-      display: inline-block;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    @keyframes subir {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+      10% { opacity: .9; }
+      90% { opacity: .9; }
+      100% { transform: translateY(-110vh) rotate(25deg); opacity: 0; }
     }
-    /* Grillas de productos */
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      padding: 16px;
-      max-width: 1400px;
-      margin: 0 auto;
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 16px 0;
     }
-    @media (max-width: 768px) {
-      .products-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-icon {
+      width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center;
+      background: rgba(255,255,255,.18); backdrop-filter: blur(6px); font-size: 24px;
+      border: 1px solid rgba(255,255,255,.3);
     }
-    @media (max-width: 360px) {
-      .products-grid {
-        grid-template-columns: 1fr;
-      }
+    .logo-text { font-weight: 800; font-size: 20px; letter-spacing: .5px; }
+    .pill-ws {
+      display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+      background: #fff; color: var(--green-dark); font-weight: 600; font-size: 14px;
+      padding: 9px 16px; border-radius: 999px; box-shadow: 0 6px 18px -6px rgba(0,0,0,.3);
+      transition: transform .2s;
     }
-    .product {
-      background-color: white;
-      padding: 18px;
-      border-radius: 12px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-      font-size: 15px;
-      text-align: center;
-      transition: transform 0.2s, box-shadow 0.2s;
+    .pill-ws:hover { transform: translateY(-2px); }
+    .hero-grid {
+      display: grid; grid-template-columns: 1.2fr 1fr; gap: 32px; align-items: center;
+      padding: 28px 0 10px;
     }
-    .product:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.28);
+      padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 500;
     }
-    .icon {
-      font-size: 26px;
-      margin-bottom: 10px;
-      color: #e91e63;
+    .hero h1 {
+      font-size: clamp(42px, 8vw, 84px); line-height: 1; font-weight: 800; letter-spacing: -1px;
+      margin: 16px 0 12px;
+      text-shadow: 0 10px 30px rgba(0,0,0,.18);
     }
+    .hero h1 .shine {
+      background: linear-gradient(90deg, #fff 0%, #ffd6e7 30%, #fff 60%, #ffd1b8 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      animation: brillo 6s linear infinite;
+    }
+    @keyframes brillo { to { background-position: 200% center; } }
+    .hero .tagline { font-size: clamp(16px, 2.2vw, 20px); opacity: .95; max-width: 520px; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 14px 22px; border-radius: 14px; font-weight: 600; font-size: 15px;
+      text-decoration: none; transition: transform .2s, box-shadow .2s, background .2s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-green { background: var(--green); color: #fff; box-shadow: 0 10px 24px -8px rgba(18,140,75,.7); }
+    .btn-green:hover { box-shadow: 0 14px 28px -8px rgba(18,140,75,.8); }
+    .btn-ghost { background: rgba(255,255,255,.14); color: #fff; border: 1px solid rgba(255,255,255,.4); }
+    .btn-ghost:hover { background: rgba(255,255,255,.24); }
+    .stats { display: flex; gap: 26px; margin-top: 28px; flex-wrap: wrap; }
+    .stat b { display: block; font-size: 28px; font-weight: 800; line-height: 1.1; }
+    .stat span { font-size: 13px; opacity: .85; }
+    .info-cards { display: grid; gap: 14px; }
+    .info-card {
+      background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.28);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border-radius: var(--radius); padding: 18px 20px;
+      display: flex; gap: 14px; align-items: flex-start;
+      transition: transform .25s, background .25s;
+    }
+    .info-card:hover { transform: translateX(-4px); background: rgba(255,255,255,.2); }
+    .info-card .ic { font-size: 26px; line-height: 1; }
+    .info-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+    .info-card p { font-size: 14px; opacity: .95; }
+    .info-card a { font-weight: 600; font-size: 13px; text-underline-offset: 3px; }
+    .estado {
+      display: inline-flex; align-items: center; gap: 6px; margin-top: 8px;
+      font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px;
+      background: rgba(0,0,0,.18);
+    }
+    .estado .dot { width: 8px; height: 8px; border-radius: 50%; background: #bbb; }
+    .estado.abierto .dot { background: #4cff9a; box-shadow: 0 0 0 0 rgba(76,255,154,.7); animation: pulso 1.8s infinite; }
+    .estado.cerrado .dot { background: #ffb4b4; }
+    @keyframes pulso {
+      0% { box-shadow: 0 0 0 0 rgba(76,255,154,.7); }
+      70% { box-shadow: 0 0 0 9px rgba(76,255,154,0); }
+      100% { box-shadow: 0 0 0 0 rgba(76,255,154,0); }
+    }
+    .ola { position: absolute; bottom: -1px; left: 0; width: 100%; height: 60px; z-index: -1; }
+
+    /* ---------- TOOLBAR (buscador + categorías) ---------- */
+    .toolbar {
+      position: sticky; top: 0; z-index: 40;
+      background: rgba(255, 247, 250, .86);
+      backdrop-filter: saturate(160%) blur(14px); -webkit-backdrop-filter: saturate(160%) blur(14px);
+      border-bottom: 1px solid var(--line);
+      transition: box-shadow .25s;
+    }
+    .toolbar.scrolled { box-shadow: 0 8px 24px -16px rgba(142,14,74,.45); }
+    .search-row { display: flex; gap: 10px; align-items: center; padding: 12px 0 8px; }
+    .search {
+      position: relative; flex: 1;
+    }
+    .search svg { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; color: var(--primary); pointer-events: none; }
+    .search input {
+      width: 100%; font: inherit; font-size: 16px;
+      padding: 13px 44px 13px 46px; border-radius: 16px;
+      border: 2px solid var(--line); background: #fff; color: var(--ink);
+      outline: none; transition: border-color .2s, box-shadow .2s;
+      box-shadow: var(--shadow-sm);
+    }
+    .search input::placeholder { color: #b49aa7; }
+    .search input:focus { border-color: var(--primary); box-shadow: 0 0 0 5px rgba(233,30,99,.14); }
+    .search .limpiar {
+      position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+      width: 30px; height: 30px; border-radius: 50%; background: var(--blush); color: var(--primary-dark);
+      font-size: 16px; font-weight: 700; display: none; place-items: center;
+    }
+    .search.tiene-texto .limpiar { display: grid; }
+    .resultado-info { font-size: 13px; color: var(--muted); padding: 0 2px 6px; min-height: 0; }
+    .resultado-info:empty { display: none; }
+    .chips {
+      display: flex; gap: 8px; overflow-x: auto; padding: 4px 0 12px;
+      scrollbar-width: none; -ms-overflow-style: none;
+      mask-image: linear-gradient(90deg, #000 92%, transparent);
+      -webkit-mask-image: linear-gradient(90deg, #000 92%, transparent);
+    }
+    .chips::-webkit-scrollbar { display: none; }
+    .chip {
+      flex: 0 0 auto; display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 14px; border-radius: 999px; font-size: 13.5px; font-weight: 500;
+      background: #fff; border: 1px solid var(--line); color: var(--ink);
+      text-decoration: none; white-space: nowrap;
+      transition: background .2s, color .2s, border-color .2s, transform .2s;
+    }
+    .chip:hover { border-color: var(--primary-light); transform: translateY(-1px); }
+    .chip .n { font-size: 11px; font-weight: 700; background: var(--blush); color: var(--primary-dark); padding: 1px 7px; border-radius: 999px; }
+    .chip.activo { background: var(--primary); border-color: var(--primary); color: #fff; box-shadow: 0 6px 16px -6px rgba(233,30,99,.7); }
+    .chip.activo .n { background: rgba(255,255,255,.25); color: #fff; }
+    .chip.oculto { display: none; }
+
+    /* ---------- OFERTAS ---------- */
+    .ofertas { padding: 36px 0 8px; }
+    .ofertas-head { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+    .ofertas-head h2 { font-size: clamp(22px, 3.4vw, 30px); font-weight: 800; }
+    .fuego { display: inline-block; animation: latido 1.4s ease-in-out infinite; }
+    @keyframes latido { 0%, 100% { transform: scale(1) rotate(-4deg); } 50% { transform: scale(1.2) rotate(6deg); } }
+    .ofertas-track {
+      display: grid; grid-auto-flow: column; grid-auto-columns: minmax(250px, 1fr);
+      gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 14px 4px 18px;
+      scrollbar-width: none;
+    }
+    .ofertas-track::-webkit-scrollbar { display: none; }
+    .oferta {
+      scroll-snap-align: start; position: relative; border-radius: 22px; padding: 3px;
+      background: linear-gradient(135deg, var(--orange), var(--primary), #9c27b0, var(--orange));
+      background-size: 300% 300%; animation: borde 6s ease infinite;
+      box-shadow: var(--shadow);
+      transition: transform .3s;
+    }
+    .oferta:hover { transform: translateY(-6px) rotate(-.4deg); }
+    @keyframes borde { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+    .oferta-inner { background: #fff; border-radius: 19px; padding: 16px; height: 100%; display: flex; flex-direction: column; gap: 12px; }
+    .oferta .card-media { aspect-ratio: 4 / 3; }
+    .badge-oferta {
+      position: absolute; top: -10px; right: 16px; z-index: 2;
+      background: linear-gradient(135deg, var(--orange), #ff2d55); color: #fff;
+      font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: 999px;
+      box-shadow: 0 8px 18px -6px rgba(255,45,85,.8);
+      animation: balanceo 2.4s ease-in-out infinite;
+    }
+    @keyframes balanceo { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg) scale(1.06); } }
+    .oferta .card-title { font-size: 15px; }
+    .puntos { display: flex; justify-content: center; gap: 6px; }
+    .puntos button { width: 8px; height: 8px; border-radius: 999px; background: var(--primary-light); transition: width .3s, background .3s; }
+    .puntos button.activo { width: 24px; background: var(--primary); }
+
+    /* ---------- SECCIONES ---------- */
+    main { padding-bottom: 40px; }
+    .seccion { padding-top: 40px; scroll-margin-top: calc(var(--toolbar-h) + 8px); }
+    .seccion.oculta { display: none; }
+    .seccion-head { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .seccion-emoji {
+      width: 54px; height: 54px; flex: 0 0 54px; border-radius: 16px; display: grid; place-items: center; font-size: 28px;
+      background: linear-gradient(135deg, #fff, var(--blush));
+      border: 1px solid var(--line); box-shadow: var(--shadow-sm);
+    }
+    .seccion-head h2 { font-size: clamp(19px, 2.8vw, 26px); font-weight: 700; line-height: 1.2; }
+    .seccion-head p { font-size: 13.5px; color: var(--muted); }
+    .seccion-head .count {
+      margin-left: auto; font-size: 12.5px; font-weight: 600; color: var(--primary-dark);
+      background: #fff; border: 1px solid var(--line); padding: 5px 12px; border-radius: 999px; white-space: nowrap;
+    }
+    .seccion.destacada .seccion-emoji { background: linear-gradient(135deg, var(--primary), var(--orange)); border: 0; }
+    .seccion.destacada .bloque {
+      background: linear-gradient(135deg, rgba(233,30,99,.08), rgba(255,109,58,.08));
+      border: 1px solid var(--line); border-radius: 26px; padding: 16px;
+    }
+    .grid {
+      display: grid; gap: 16px;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    /* ---------- TARJETA ---------- */
+    .card {
+      background: var(--white); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 12px; display: flex; flex-direction: column; gap: 10px;
+      box-shadow: var(--shadow-sm);
+      transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s, border-color .3s;
+    }
+    .card:hover { transform: translateY(-6px); box-shadow: var(--shadow); border-color: var(--primary-light); }
+    .card.oculta { display: none; }
+    .card-media {
+      position: relative; width: 100%; aspect-ratio: 1 / 1; border-radius: 14px; overflow: hidden;
+      background: linear-gradient(110deg, #fbf3f6 30%, #fff 50%, #fbf3f6 70%);
+      background-size: 200% 100%; animation: shimmer 1.3s linear infinite;
+      cursor: zoom-in; display: block;
+    }
+    .card-media.cargada { animation: none; background: #fff; }
+    .card-media img {
+      width: 100%; height: 100%; object-fit: contain; padding: 10px;
+      opacity: 0; transform: scale(.96); transition: opacity .45s ease, transform .5s cubic-bezier(.2,.8,.2,1);
+    }
+    .card-media.cargada img { opacity: 1; transform: scale(1); }
+    .card:hover .card-media.cargada img, .oferta:hover .card-media.cargada img { transform: scale(1.07); }
+    .card-media .fallback { position: absolute; inset: 0; display: none; place-items: center; font-size: 46px; }
+    .card-media.error { animation: none; background: var(--blush); cursor: default; }
+    .card-media.error img { display: none; }
+    .card-media.error .fallback { display: grid; }
+    @keyframes shimmer { to { background-position: -200% 0; } }
+    .card-tag { font-size: 18px; line-height: 1; }
+    .card-title {
+      font-size: 13.5px; font-weight: 600; line-height: 1.35; color: var(--ink);
+      overflow-wrap: anywhere; flex: 1;
+    }
+    .card-title mark { background: #ffe082; color: inherit; border-radius: 4px; padding: 0 2px; }
+    .card-actions { display: flex; gap: 8px; align-items: center; }
+    .btn-consultar {
+      flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      font-size: 13px; font-weight: 600; text-decoration: none;
+      color: var(--green-dark); background: #eafaf1; border: 1px solid #c6efd8;
+      padding: 9px 8px; border-radius: 12px; transition: background .2s, color .2s;
+    }
+    .btn-consultar:hover { background: var(--green); color: #fff; border-color: var(--green); }
+    .btn-add {
+      width: 40px; height: 40px; flex: 0 0 40px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #fff;
+      font-size: 22px; font-weight: 600; line-height: 1; display: grid; place-items: center;
+      box-shadow: 0 8px 16px -8px rgba(233,30,99,.9);
+      transition: transform .2s;
+    }
+    .btn-add:hover { transform: scale(1.08) rotate(90deg); }
+    .btn-add.en-pedido { background: linear-gradient(135deg, #2ecc71, var(--green-dark)); font-size: 18px; }
+    .btn-add.en-pedido:hover { transform: scale(1.08); }
+
+    /* Animación de aparición */
+    .reveal { opacity: 0; transform: translateY(22px); }
+    .reveal.in { opacity: 1; transform: none; transition: opacity .6s ease var(--d, 0ms), transform .6s cubic-bezier(.2,.8,.2,1) var(--d, 0ms); }
+
+    /* ---------- SIN RESULTADOS ---------- */
+    .vacio { display: none; text-align: center; padding: 60px 16px; }
+    .vacio.visible { display: block; }
+    .vacio .grande { font-size: 64px; animation: latido 2s ease-in-out infinite; display: inline-block; }
+    .vacio h3 { font-size: 20px; margin: 10px 0 6px; }
+    .vacio p { color: var(--muted); margin-bottom: 18px; }
+
+    /* ---------- BOTONES FLOTANTES ---------- */
+    .fab {
+      position: fixed; right: 18px; bottom: 18px; z-index: 50;
+      width: 62px; height: 62px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-deep)); color: #fff;
+      font-size: 26px; display: grid; place-items: center;
+      box-shadow: 0 14px 30px -10px rgba(142,14,74,.8);
+      transition: transform .25s;
+    }
+    .fab:hover { transform: scale(1.06); }
+    .fab .badge {
+      position: absolute; top: -4px; right: -4px; min-width: 24px; height: 24px; padding: 0 6px;
+      border-radius: 999px; background: var(--orange); color: #fff; font-size: 12px; font-weight: 700;
+      display: grid; place-items: center; border: 2px solid #fff;
+      transform: scale(0); transition: transform .3s cubic-bezier(.3,1.6,.5,1);
+    }
+    .fab .badge.visible { transform: scale(1); }
+    .fab.salto { animation: salto .5s cubic-bezier(.3,1.6,.5,1); }
+    @keyframes salto { 0% { transform: scale(1); } 40% { transform: scale(1.22) rotate(-8deg); } 100% { transform: scale(1); } }
+    .arriba {
+      position: fixed; right: 26px; bottom: 92px; z-index: 49;
+      width: 46px; height: 46px; border-radius: 50%; background: #fff; color: var(--primary-dark);
+      border: 1px solid var(--line); box-shadow: var(--shadow-sm); font-size: 20px; font-weight: 700;
+      display: grid; place-items: center;
+      opacity: 0; transform: translateY(16px); pointer-events: none; transition: opacity .3s, transform .3s;
+    }
+    .arriba.visible { opacity: 1; transform: none; pointer-events: auto; }
+
+    /* ---------- PANEL DE PEDIDO ---------- */
+    .velo {
+      position: fixed; inset: 0; background: rgba(42,23,32,.45); z-index: 60;
+      opacity: 0; pointer-events: none; transition: opacity .3s;
+      backdrop-filter: blur(2px);
+    }
+    .velo.abierto { opacity: 1; pointer-events: auto; }
+    .panel {
+      position: fixed; top: 0; right: 0; height: 100%; width: min(420px, 100%); z-index: 61;
+      background: #fff; display: flex; flex-direction: column;
+      transform: translateX(105%); transition: transform .4s cubic-bezier(.2,.8,.2,1);
+      box-shadow: -20px 0 50px -20px rgba(42,23,32,.4);
+    }
+    .panel.abierto { transform: none; }
+    .panel-head { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px; border-bottom: 1px solid var(--line); }
+    .panel-head h3 { font-size: 19px; }
+    .cerrar { width: 38px; height: 38px; border-radius: 12px; background: var(--blush); color: var(--primary-dark); font-size: 18px; font-weight: 700; }
+    .panel-lista { flex: 1; overflow-y: auto; padding: 12px 20px; }
+    .item { display: flex; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px dashed var(--line); animation: entrar .35s ease; }
+    @keyframes entrar { from { opacity: 0; transform: translateX(20px); } }
+    .item img { width: 56px; height: 56px; object-fit: contain; border: 1px solid var(--line); border-radius: 12px; padding: 4px; background: #fff; flex: 0 0 56px; }
+    .item-nombre { flex: 1; font-size: 13px; font-weight: 600; overflow-wrap: anywhere; }
+    .qty { display: flex; align-items: center; gap: 6px; }
+    .qty button { width: 30px; height: 30px; border-radius: 10px; background: var(--blush); color: var(--primary-dark); font-weight: 700; font-size: 16px; }
+    .qty span { min-width: 22px; text-align: center; font-weight: 700; }
+    .panel-vacio { text-align: center; color: var(--muted); padding: 50px 10px; }
+    .panel-vacio div { font-size: 54px; margin-bottom: 8px; }
+    .panel-pie { padding: 16px 20px 20px; border-top: 1px solid var(--line); display: grid; gap: 10px; }
+    .panel-pie .btn { width: 100%; }
+    .vaciar { font-size: 13px; color: var(--muted); text-decoration: underline; justify-self: center; }
+
+    /* ---------- VISOR DE IMAGEN ---------- */
+    .visor {
+      border: 0; padding: 0; background: transparent; max-width: 100vw; max-height: 100vh;
+      margin: auto;
+    }
+    .visor::backdrop { background: rgba(42,23,32,.75); backdrop-filter: blur(4px); }
+    .visor-caja {
+      background: #fff; border-radius: 24px; padding: 18px; width: min(560px, calc(100vw - 32px));
+      display: grid; gap: 14px; position: relative; animation: zoom .3s cubic-bezier(.2,.8,.2,1);
+    }
+    @keyframes zoom { from { opacity: 0; transform: scale(.92); } }
+    .visor-caja img { width: 100%; max-height: 62vh; object-fit: contain; border-radius: 14px; background: #fff; }
+    .visor-caja h3 { font-size: 16px; overflow-wrap: anywhere; padding-right: 40px; }
+    .visor-caja .cerrar { position: absolute; top: 12px; right: 12px; }
+    .visor-acciones { display: flex; gap: 10px; }
+    .visor-acciones .btn { flex: 1; padding: 12px; }
+    .btn-rosa { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #fff; }
+
+    /* ---------- AVISO ---------- */
+    .aviso {
+      position: fixed; left: 50%; bottom: 96px; z-index: 70;
+      transform: translate(-50%, 30px); opacity: 0; pointer-events: none;
+      background: var(--ink); color: #fff; padding: 12px 18px; border-radius: 14px;
+      font-size: 14px; font-weight: 500; box-shadow: 0 14px 30px -10px rgba(0,0,0,.5);
+      transition: opacity .3s, transform .3s; max-width: calc(100vw - 32px); text-align: center;
+    }
+    .aviso.visible { opacity: 1; transform: translate(-50%, 0); }
+
+    /* ---------- FOOTER ---------- */
     footer {
-      text-align: center;
-      padding: 20px;
-      background-color: var(--primary);
-      color: white;
-      margin-top: 30px;
-      font-size: 14px;
+      margin-top: 40px; color: #fbe3ec;
+      background: linear-gradient(160deg, #3a1027, #1f0a15);
+      padding: 44px 0 26px;
+    }
+    .foot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 26px; margin-bottom: 26px; }
+    footer h4 { color: #fff; font-size: 15px; margin-bottom: 8px; }
+    footer p, footer a { font-size: 14px; opacity: .9; }
+    .foot-copy { border-top: 1px solid rgba(255,255,255,.12); padding-top: 18px; font-size: 13px; text-align: center; opacity: .8; }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 860px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 24px; }
+      .info-card:hover { transform: none; }
+    }
+    @media (max-width: 600px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+      .card { padding: 10px; gap: 8px; }
+      .card-title { font-size: 12.5px; }
+      .btn-consultar { font-size: 12px; padding: 8px 4px; }
+      .btn-consultar .txt-largo { display: none; }
+      .btn-add { width: 36px; height: 36px; flex-basis: 36px; font-size: 20px; }
+      .seccion-head .count { display: none; }
+      .seccion.destacada .bloque { padding: 10px; border-radius: 20px; }
+      .ofertas-track { grid-auto-columns: 78%; }
+      .pill-ws .txt { display: none; }
+      .stats { gap: 18px; }
+      .stat b { font-size: 24px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; }
+      .burbujas { display: none; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>🧻 NORI-PEL</h1>
-    <p>Productos de limpieza, bazar y más</p>
-    <div class="contact-info">
-      📍 Av. Juan Domingo Perón 201, Villa de Mayo, Provincia de Buenos Aires<br>
-      🕒 <strong>Lunes a viernes:</strong> 08:00 a 13:00 y 14:00 a 18:00<br>
-      <strong>Sábado:</strong> 08:00 a 13:00
+  <!-- ENCABEZADO -->
+  <header class="hero">
+    <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+    <div class="burbujas" aria-hidden="true" id="burbujas"></div>
+    <div class="wrap">
+      <div class="topbar">
+        <a href="#" class="logo" aria-label="NORI-PEL inicio">
+          <span class="logo-icon">🧻</span>
+          <span class="logo-text">NORI-PEL</span>
+        </a>
+        <a href="https://wa.me/5491164233586" class="pill-ws" target="_blank" rel="noopener">💬 <span class="txt">+54 9 11 6423-3586</span></a>
+      </div>
+
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">✨ Villa de Mayo · Buenos Aires</span>
+          <h1><span class="shine">NORI-PEL</span></h1>
+          <p class="tagline">Productos de limpieza, bazar y más. Elegí lo que necesitás y pedilo por WhatsApp en un toque.</p>
+          <div class="cta-row">
+            <a href="https://wa.me/5491164233586" class="btn btn-green" target="_blank" rel="noopener">💬 Contactar por WhatsApp</a>
+            <a href="#catalogo" class="btn btn-ghost">🛍️ Ver catálogo</a>
+          </div>
+          <div class="stats">
+            <div class="stat"><b data-contar="0" id="stat-productos">0</b><span>productos</span></div>
+            <div class="stat"><b data-contar="0" id="stat-categorias">0</b><span>categorías</span></div>
+            <div class="stat"><b>🚚</b><span>pedidos por WhatsApp</span></div>
+          </div>
+        </div>
+
+        <div class="info-cards">
+          <div class="info-card">
+            <div class="ic">📍</div>
+            <div>
+              <h3>Dónde estamos</h3>
+              <p>Av. Juan Domingo Perón 201, Villa de Mayo, Provincia de Buenos Aires</p>
+              <a href="https://www.google.com/maps/search/?api=1&query=Av.+Juan+Domingo+Per%C3%B3n+201%2C+Villa+de+Mayo%2C+Buenos+Aires" target="_blank" rel="noopener">Cómo llegar →</a>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="ic">🕒</div>
+            <div>
+              <h3>Horarios</h3>
+              <p><strong>Lunes a viernes:</strong> 08:00 a 13:00 y 14:00 a 18:00<br><strong>Sábado:</strong> 08:00 a 13:00</p>
+              <span class="estado" id="estado"><span class="dot"></span><span id="estado-txt">Consultando horario…</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <a href="https://wa.me/5491164233586" class="whatsapp-btn">💬 Contactar por WhatsApp</a>
+    <svg class="ola" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
+      <path fill="#fff7fa" d="M0,32 C240,64 480,0 720,24 C960,48 1200,8 1440,30 L1440,60 L0,60 Z"/>
+    </svg>
   </header>
-  <!-- BUSCADOR -->
-  <div style="text-align: center; padding: 15px; background-color: white; margin: 15px auto; max-width: 600px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-    <input type="text" id="buscador" placeholder="🔍 Buscar producto..." style="width: 90%; padding: 12px; font-size: 16px; border: 2px solid #e91e63; border-radius: 8px; outline: none;">
+
+  <!-- BUSCADOR + CATEGORÍAS -->
+  <div class="toolbar" id="toolbar">
+    <div class="wrap">
+      <div class="search-row">
+        <div class="search" id="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <label for="buscador" class="sr-only">Buscar producto</label>
+          <input type="search" id="buscador" placeholder="Buscar producto… (ej: lavandina, escoba, balde)" autocomplete="off">
+          <button class="limpiar" id="limpiar" aria-label="Borrar búsqueda">✕</button>
+        </div>
+      </div>
+      <div class="resultado-info" id="resultado-info" aria-live="polite"></div>
+      <nav class="chips" id="chips" aria-label="Categorías"></nav>
+    </div>
   </div>
-  <!-- OFERTAS DE LA SEMANA -->
-  <section class="offers">
-    <h2>🔥 OFERTAS DE LA SEMANA</h2>
-    <div class="offers-container" id="offers-container"></div>
-  </section>
 
-  <!-- NUESTRAS MARCAS -->
-  <section class="product-group">
-    <h2 class="group-title">✨ Nuestras Marcas – Calidad Nori-Pel</h2>
-    <div class="products-grid" id="grupo-nuestras-marcas"></div>
-  </section>
+  <main id="catalogo">
+    <!-- OFERTAS DE LA SEMANA -->
+    <section class="ofertas wrap" id="ofertas">
+      <div class="ofertas-head">
+        <h2><span class="fuego">🔥</span> Ofertas de la semana</h2>
+      </div>
+      <div class="ofertas-track" id="offers-container"></div>
+      <div class="puntos" id="puntos"></div>
+    </section>
 
-  <!-- ROLLOS DE COCINA -->
-  <section class="product-group">
-    <h2 class="group-title">🍽️ Rollos de Cocina</h2>
-    <div class="products-grid" id="grupo-cocina"></div>
-  </section>
+    <div class="wrap" id="secciones"></div>
 
-  <!-- ESCOBAS Y ESCOBILLONES -->
-  <section class="product-group">
-    <h2 class="group-title">🧹 Escobas y Escobillones</h2>
-    <div class="products-grid" id="grupo-escobas"></div>
-  </section>
-
-  <!-- SECADORES, TRAPEADORES, REJILLAS -->
-  <section class="product-group">
-    <h2 class="group-title">🧽 Secadores, Trapeadores y Rejillas</h2>
-    <div class="products-grid" id="grupo-secadores"></div>
-  </section>
-
-  <!-- BAZAR -->
-  <section class="product-group">
-    <h2 class="group-title">🪣 Bazar (Baldes, Macetas, Bolsas, Herméticos...)</h2>
-    <div class="products-grid" id="grupo-bazar"></div>
-  </section>
-
-  <!-- LIMPIEZA -->
-  <section class="product-group">
-    <h2 class="group-title">🧴 Limpieza (Detergentes, Cloro, Ácidos...)</h2>
-    <div class="products-grid" id="grupo-limpieza"></div>
-  </section>
-
-  <!-- AROMATIZANTES -->
-  <section class="product-group">
-    <h2 class="group-title">🌸 Aromatizantes y Perfumes</h2>
-    <div class="products-grid" id="grupo-aromatizantes"></div>
-  </section>
-  
-    <!-- PLÁSTICOS -->
-  <section class="product-group">
-    <h2 class="group-title">🧴 Plásticos (Dispensers, Bañeras, Pelelas...)</h2>
-    <div class="products-grid" id="grupo-plasticos"></div>
-  </section>
-
-  <!-- OTROS -->
-  <section class="product-group">
-    <h2 class="group-title">📦 Otros Productos</h2>
-    <div class="products-grid" id="grupo-otros"></div>
-  </section>
+    <div class="vacio wrap" id="vacio">
+      <span class="grande">🔍</span>
+      <h3>No encontramos “<span id="vacio-q"></span>”</h3>
+      <p>Probá con otra palabra o consultanos: seguro lo conseguimos.</p>
+      <a class="btn btn-green" id="vacio-ws" href="https://wa.me/5491164233586" target="_blank" rel="noopener">💬 Preguntar por WhatsApp</a>
+    </div>
+  </main>
 
   <footer>
-    NORI-PEL © 2025 | Av. Perón 217, Villa de Mayo | WhatsApp: +54 9 11 6423-3586
+    <div class="wrap">
+      <div class="foot-grid">
+        <div>
+          <h4>🧻 NORI-PEL</h4>
+          <p>Productos de limpieza, bazar y más.</p>
+        </div>
+        <div>
+          <h4>📍 Dirección</h4>
+          <p>Av. Juan Domingo Perón 201, Villa de Mayo, Provincia de Buenos Aires</p>
+        </div>
+        <div>
+          <h4>🕒 Horarios</h4>
+          <p>Lunes a viernes: 08:00 a 13:00 y 14:00 a 18:00<br>Sábado: 08:00 a 13:00</p>
+        </div>
+        <div>
+          <h4>💬 WhatsApp</h4>
+          <a href="https://wa.me/5491164233586" target="_blank" rel="noopener">+54 9 11 6423-3586</a>
+        </div>
+      </div>
+      <div class="foot-copy">NORI-PEL © 2025 | Av. Perón 217, Villa de Mayo | WhatsApp: +54 9 11 6423-3586</div>
+    </div>
   </footer>
+
+  <!-- FLOTANTES -->
+  <button class="arriba" id="arriba" aria-label="Volver arriba">↑</button>
+  <button class="fab" id="fab" aria-label="Ver mi pedido">🛒<span class="badge" id="fab-badge">0</span></button>
+
+  <!-- PANEL DE PEDIDO -->
+  <div class="velo" id="velo"></div>
+  <aside class="panel" id="panel" aria-label="Mi pedido" aria-hidden="true">
+    <div class="panel-head">
+      <h3>🛒 Mi pedido</h3>
+      <button class="cerrar" id="panel-cerrar" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="panel-lista" id="panel-lista"></div>
+    <div class="panel-pie" id="panel-pie">
+      <a class="btn btn-green" id="enviar-pedido" href="#" target="_blank" rel="noopener">💬 Enviar pedido por WhatsApp</a>
+      <button class="vaciar" id="vaciar">Vaciar pedido</button>
+    </div>
+  </aside>
+
+  <!-- VISOR DE IMAGEN -->
+  <dialog class="visor" id="visor">
+    <div class="visor-caja">
+      <button class="cerrar" id="visor-cerrar" aria-label="Cerrar">✕</button>
+      <img id="visor-img" alt="">
+      <h3 id="visor-nombre"></h3>
+      <div class="visor-acciones">
+        <a class="btn btn-green" id="visor-ws" href="#" target="_blank" rel="noopener">💬 Consultar</a>
+        <button class="btn btn-rosa" id="visor-add">＋ Agregar al pedido</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div class="aviso" id="aviso" role="status"></div>
 
   <script>
     // ✅ Lista COMPLETA de productos (tal como la pasaste)
@@ -845,123 +1197,473 @@
       return "📦";
     };
 
-    // ✅ NUEVA: variable global para búsqueda
-    let busquedaActual = "";
+    // ✅ Secciones del catálogo (mismo orden que antes)
+    const secciones = [
+      { id: "nuestras-marcas", emoji: "✨", titulo: "Nuestras Marcas", sub: "Calidad Nori-Pel", lista: nuestrasMarcas, destacada: true },
+      { id: "cocina", emoji: "🍽️", titulo: "Rollos de Cocina", lista: rollosCocina },
+      { id: "escobas", emoji: "🧹", titulo: "Escobas y Escobillones", lista: escobas },
+      { id: "secadores", emoji: "🧽", titulo: "Secadores, Trapeadores y Rejillas", lista: secadores },
+      { id: "bazar", emoji: "🪣", titulo: "Bazar", sub: "Baldes, Macetas, Bolsas, Herméticos...", lista: bazar },
+      { id: "limpieza", emoji: "🧴", titulo: "Limpieza", sub: "Detergentes, Cloro, Ácidos...", lista: limpieza },
+      { id: "aromatizantes", emoji: "🌸", titulo: "Aromatizantes y Perfumes", lista: aromatizantes },
+      { id: "plasticos", emoji: "🧺", titulo: "Plásticos", sub: "Dispensers, Bañeras, Pelelas...", lista: plasticos },
+      { id: "otros", emoji: "📦", titulo: "Otros Productos", lista: otros },
+    ];
 
-    // ✅ NUEVA: función para normalizar texto de búsqueda
-    function normalizarBusqueda(str) {
-      return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const WHATSAPP = "5491164233586";
+    const linkWhatsApp = (texto) => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(texto)}`;
+
+    // Solo se usan URLs reales (si la imagen no es un link, el producto no se muestra roto)
+    function imagenDe(prod) {
+      const url = imagenesMap[normalizarClave(prod)];
+      if (typeof url !== "string") return null;
+      const limpia = url.trim();
+      return /^https?:\/\//i.test(limpia) ? limpia : null;
     }
 
-    // ✅ Renderizar un grupo (solo productos con imagen + respetando búsqueda)
-    function renderGrupo(productosLista, contenedorId) {
-      const contenedor = document.getElementById(contenedorId);
-      if (!contenedor) return;
+    // Quita repetidos dentro de una lista y deja solo los que tienen imagen
+    function conImagen(lista) {
+      return [...new Set(lista)].filter(p => imagenDe(p));
+    }
 
-      contenedor.innerHTML = "";
-      let hayCoincidencias = false;
+    // ✅ Búsqueda sin acentos ni mayúsculas
+    function normalizarBusqueda(str) {
+      return str.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+    }
 
-      productosLista.forEach(prod => {
-        const claveNormalizada = normalizarClave(prod);
-        const img = imagenesMap[claveNormalizada];
+    const $ = (sel) => document.querySelector(sel);
+    function crear(tag, clase, texto) {
+      const el = document.createElement(tag);
+      if (clase) el.className = clase;
+      if (texto != null) el.textContent = texto;
+      return el;
+    }
 
-        // Solo mostrar si tiene imagen
-        if (!img || img.trim() === "") return;
+    // ---------- Imagen con carga suave ----------
+    function crearMedia(prod) {
+      const media = crear("button", "card-media");
+      media.type = "button";
+      media.setAttribute("aria-label", "Ver imagen de " + prod);
+      const img = document.createElement("img");
+      img.alt = prod;
+      img.loading = "lazy";
+      img.decoding = "async";
+      const listo = () => media.classList.add("cargada");
+      img.addEventListener("load", listo);
+      img.addEventListener("error", () => media.classList.add("error"));
+      img.src = imagenDe(prod);
+      if (img.complete && img.naturalWidth) listo();
+      media.append(img, crear("span", "fallback", getIcon(prod)));
+      media.addEventListener("click", () => { if (!media.classList.contains("error")) abrirVisor(prod); });
+      return media;
+    }
 
-        // Si hay búsqueda, filtrar
-        if (busquedaActual && !normalizarBusqueda(prod).includes(normalizarBusqueda(busquedaActual))) {
-          return;
-        }
+    // ---------- Tarjeta de producto ----------
+    const tarjetas = [];
+    function crearTarjeta(prod, i) {
+      const card = crear("article", "card reveal");
+      card.style.setProperty("--d", (i % 6) * 50 + "ms");
+      card.dataset.nombre = prod;
 
-        hayCoincidencias = true;
-        const div = document.createElement("div");
-        div.className = "product";
-        div.innerHTML = `
-          <img src="${img}" alt="${prod}" class="product-img">
-          ${prod}
-        `;
-        contenedor.appendChild(div);
+      const titulo = crear("h3", "card-title", prod);
+      const acciones = crear("div", "card-actions");
+      const ws = crear("a", "btn-consultar");
+      ws.href = linkWhatsApp(`¡Hola NORI-PEL! Quiero consultar por: ${prod}`);
+      ws.target = "_blank"; ws.rel = "noopener";
+      ws.innerHTML = '💬 <span>Consultar</span>';
+      const add = crear("button", "btn-add", "+");
+      add.type = "button";
+      add.dataset.nombre = prod;
+      add.setAttribute("aria-label", "Agregar al pedido: " + prod);
+      add.addEventListener("click", () => agregar(prod));
+      acciones.append(ws, add);
+
+      card.append(crearMedia(prod), crear("span", "card-tag", getIcon(prod)), titulo, acciones);
+      tarjetas.push({ card, titulo, nombre: prod, clave: normalizarBusqueda(prod) });
+      return card;
+    }
+
+    // ---------- Ofertas ----------
+    function renderOfertas() {
+      const cont = $("#offers-container");
+      const lista = conImagen(productosOferta);
+      if (!lista.length) { $("#ofertas").style.display = "none"; return; }
+      lista.forEach(prod => {
+        const of = crear("div", "oferta");
+        const inner = crear("div", "oferta-inner");
+        const acciones = crear("div", "card-actions");
+        const ws = crear("a", "btn-consultar");
+        ws.href = linkWhatsApp(`¡Hola NORI-PEL! Quiero consultar por la oferta: ${prod}`);
+        ws.target = "_blank"; ws.rel = "noopener";
+        ws.innerHTML = '💬 <span>Consultar oferta</span>';
+        const add = crear("button", "btn-add", "+");
+        add.type = "button";
+        add.dataset.nombre = prod;
+        add.setAttribute("aria-label", "Agregar al pedido: " + prod);
+        add.addEventListener("click", () => agregar(prod));
+        acciones.append(ws, add);
+        inner.append(crearMedia(prod), crear("h3", "card-title", prod), acciones);
+        of.append(crear("span", "badge-oferta", "🔥 Oferta"), inner);
+        cont.appendChild(of);
+      });
+      iniciarCarrusel(cont);
+    }
+
+    function iniciarCarrusel(track) {
+      const puntos = $("#puntos");
+      const items = [...track.children];
+      const desborda = () => track.scrollWidth > track.clientWidth + 4;
+      items.forEach((it, i) => {
+        const b = crear("button");
+        b.type = "button";
+        b.setAttribute("aria-label", "Oferta " + (i + 1));
+        b.addEventListener("click", () => track.scrollTo({ left: it.offsetLeft - track.offsetLeft, behavior: "smooth" }));
+        puntos.appendChild(b);
+      });
+      const actual = () => {
+        let mejor = 0, dist = Infinity;
+        items.forEach((it, i) => {
+          const d = Math.abs(it.offsetLeft - track.offsetLeft - track.scrollLeft);
+          if (d < dist) { dist = d; mejor = i; }
+        });
+        return mejor;
+      };
+      const pintar = () => {
+        puntos.style.display = desborda() ? "flex" : "none";
+        [...puntos.children].forEach((p, i) => p.classList.toggle("activo", i === actual()));
+      };
+      track.addEventListener("scroll", () => requestAnimationFrame(pintar), { passive: true });
+      window.addEventListener("resize", pintar);
+      pintar();
+
+      // Avance automático (se pausa si el usuario está tocando)
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      let pausa = false;
+      ["pointerenter", "touchstart", "focusin"].forEach(e => track.addEventListener(e, () => pausa = true, { passive: true }));
+      ["pointerleave", "touchend", "focusout"].forEach(e => track.addEventListener(e, () => setTimeout(() => pausa = false, 2500), { passive: true }));
+      setInterval(() => {
+        if (pausa || !desborda() || document.hidden) return;
+        const sig = (actual() + 1) % items.length;
+        track.scrollTo({ left: items[sig].offsetLeft - track.offsetLeft, behavior: "smooth" });
+      }, 3800);
+    }
+
+    // ---------- Secciones ----------
+    const seccionesRender = [];
+    function renderSecciones() {
+      const cont = $("#secciones");
+      const chips = $("#chips");
+      secciones.forEach(sec => {
+        const lista = conImagen(sec.lista);
+        if (!lista.length) return;
+
+        const el = crear("section", "seccion" + (sec.destacada ? " destacada" : ""));
+        el.id = "grupo-" + sec.id;
+        const head = crear("div", "seccion-head");
+        const textos = crear("div");
+        textos.append(crear("h2", null, sec.titulo));
+        if (sec.sub) textos.append(crear("p", null, sec.sub));
+        const count = crear("span", "count");
+        head.append(crear("div", "seccion-emoji", sec.emoji), textos, count);
+
+        const bloque = crear("div", "bloque");
+        const grid = crear("div", "grid");
+        const cards = lista.map((p, i) => crearTarjeta(p, i));
+        grid.append(...cards);
+        bloque.append(grid);
+        el.append(head, bloque);
+        cont.appendChild(el);
+
+        const chip = crear("a", "chip");
+        chip.href = "#" + el.id;
+        chip.append(crear("span", null, sec.emoji + " " + sec.titulo), crear("span", "n"));
+        chips.appendChild(chip);
+
+        seccionesRender.push({ el, cards, count, chip });
+      });
+    }
+
+    function actualizarConteos() {
+      seccionesRender.forEach(s => {
+        const n = s.cards.filter(c => !c.classList.contains("oculta")).length;
+        s.count.textContent = n + (n === 1 ? " producto" : " productos");
+        s.chip.querySelector(".n").textContent = n;
+        s.el.classList.toggle("oculta", n === 0);
+        s.chip.classList.toggle("oculto", n === 0);
+      });
+    }
+
+    // ---------- Buscador ----------
+    function resaltar(tituloEl, nombre, q) {
+      tituloEl.textContent = nombre;
+      if (!q) return;
+      const norm = normalizarBusqueda(nombre);
+      const idx = norm.indexOf(q);
+      if (idx < 0 || norm.length !== nombre.length) return;
+      const mark = crear("mark", null, nombre.slice(idx, idx + q.length));
+      tituloEl.textContent = "";
+      tituloEl.append(nombre.slice(0, idx), mark, nombre.slice(idx + q.length));
+    }
+
+    function buscar(texto) {
+      const q = normalizarBusqueda(texto.trim());
+      const vistos = new Set();
+      tarjetas.forEach(t => {
+        const ok = !q || t.clave.includes(q);
+        t.card.classList.toggle("oculta", !ok);
+        resaltar(t.titulo, t.nombre, q);
+        if (ok) vistos.add(t.nombre);
+      });
+      actualizarConteos();
+      $("#ofertas").style.display = q ? "none" : "";
+      $("#search-box").classList.toggle("tiene-texto", !!texto);
+      $("#resultado-info").textContent = q
+        ? (vistos.size ? `${vistos.size} ${vistos.size === 1 ? "producto encontrado" : "productos encontrados"}` : "")
+        : "";
+      const sinResultados = q && vistos.size === 0;
+      $("#vacio").classList.toggle("visible", !!sinResultados);
+      if (sinResultados) {
+        $("#vacio-q").textContent = texto.trim();
+        $("#vacio-ws").href = linkWhatsApp(`¡Hola NORI-PEL! ¿Tienen ${texto.trim()}?`);
+      }
+      // Mostrar de inmediato lo filtrado
+      tarjetas.forEach(t => t.card.classList.add("in"));
+    }
+
+    // ---------- Pedido ----------
+    const CLAVE_PEDIDO = "noripel-pedido";
+    let pedido = new Map();
+    try {
+      const guardado = JSON.parse(localStorage.getItem(CLAVE_PEDIDO) || "[]");
+      if (Array.isArray(guardado)) guardado.forEach(([n, c]) => { if (imagenDe(n) && c > 0) pedido.set(n, c); });
+    } catch (e) { /* sin almacenamiento: el pedido vive solo en esta visita */ }
+
+    function guardarPedido() {
+      try { localStorage.setItem(CLAVE_PEDIDO, JSON.stringify([...pedido])); } catch (e) {}
+    }
+
+    function agregar(prod) {
+      pedido.set(prod, (pedido.get(prod) || 0) + 1);
+      guardarPedido();
+      pintarPedido();
+      const fab = $("#fab");
+      fab.classList.remove("salto"); void fab.offsetWidth; fab.classList.add("salto");
+      avisar("✅ Agregado: " + prod);
+    }
+
+    function cambiar(prod, delta) {
+      const n = (pedido.get(prod) || 0) + delta;
+      if (n <= 0) pedido.delete(prod); else pedido.set(prod, n);
+      guardarPedido();
+      pintarPedido();
+    }
+
+    function pintarPedido() {
+      const total = [...pedido.values()].reduce((a, b) => a + b, 0);
+      const badge = $("#fab-badge");
+      badge.textContent = total;
+      badge.classList.toggle("visible", total > 0);
+
+      document.querySelectorAll(".btn-add").forEach(b => {
+        const en = pedido.has(b.dataset.nombre);
+        b.classList.toggle("en-pedido", en);
+        b.textContent = en ? "✓" : "+";
       });
 
-      // Opcional: ocultar sección si no hay resultados
-      const section = contenedor.closest('.product-group');
-      if (section) {
-        section.style.display = hayCoincidencias ? 'block' : 'none';
+      const lista = $("#panel-lista");
+      lista.textContent = "";
+      if (!pedido.size) {
+        const v = crear("div", "panel-vacio");
+        v.append(crear("div", null, "🛒"), crear("p", null, "Tu pedido está vacío. Tocá “+” en los productos para sumarlos."));
+        lista.append(v);
+        $("#panel-pie").style.display = "none";
+        return;
+      }
+      $("#panel-pie").style.display = "";
+      pedido.forEach((cant, prod) => {
+        const it = crear("div", "item");
+        const img = document.createElement("img");
+        img.src = imagenDe(prod); img.alt = ""; img.loading = "lazy";
+        const qty = crear("div", "qty");
+        const menos = crear("button", null, "−"); menos.type = "button"; menos.setAttribute("aria-label", "Quitar uno");
+        const mas = crear("button", null, "+"); mas.type = "button"; mas.setAttribute("aria-label", "Agregar uno");
+        menos.addEventListener("click", () => cambiar(prod, -1));
+        mas.addEventListener("click", () => cambiar(prod, 1));
+        qty.append(menos, crear("span", null, cant), mas);
+        it.append(img, crear("div", "item-nombre", prod), qty);
+        lista.append(it);
+      });
+      const lineas = [...pedido].map(([p, c]) => `• ${c} x ${p}`).join("\n");
+      $("#enviar-pedido").href = linkWhatsApp(`¡Hola NORI-PEL! Quiero hacer este pedido:\n\n${lineas}\n\n¡Gracias!`);
+    }
+
+    function abrirPanel(abrir) {
+      $("#panel").classList.toggle("abierto", abrir);
+      $("#velo").classList.toggle("abierto", abrir);
+      $("#panel").setAttribute("aria-hidden", abrir ? "false" : "true");
+      document.body.style.overflow = abrir ? "hidden" : "";
+    }
+
+    // ---------- Visor de imagen ----------
+    let enVisor = null;
+    function abrirVisor(prod) {
+      enVisor = prod;
+      $("#visor-img").src = imagenDe(prod);
+      $("#visor-img").alt = prod;
+      $("#visor-nombre").textContent = prod;
+      $("#visor-ws").href = linkWhatsApp(`¡Hola NORI-PEL! Quiero consultar por: ${prod}`);
+      const v = $("#visor");
+      if (typeof v.showModal === "function") v.showModal(); else v.setAttribute("open", "");
+    }
+    function cerrarVisor() {
+      const v = $("#visor");
+      if (typeof v.close === "function") v.close(); else v.removeAttribute("open");
+    }
+
+    // ---------- Aviso ----------
+    let avisoTimer;
+    function avisar(txt) {
+      const a = $("#aviso");
+      a.textContent = txt;
+      a.classList.add("visible");
+      clearTimeout(avisoTimer);
+      avisoTimer = setTimeout(() => a.classList.remove("visible"), 1800);
+    }
+
+    // ---------- Abierto / cerrado (hora de Argentina) ----------
+    function actualizarEstado() {
+      const el = $("#estado"), txt = $("#estado-txt");
+      let partes;
+      try {
+        partes = new Intl.DateTimeFormat("en-US", {
+          timeZone: "America/Argentina/Buenos_Aires", weekday: "short", hour: "numeric", minute: "numeric", hourCycle: "h23"
+        }).formatToParts(new Date());
+      } catch (e) { el.style.display = "none"; return; }
+      const get = (t) => (partes.find(p => p.type === t) || {}).value;
+      const dia = get("weekday");
+      const min = (parseInt(get("hour"), 10) % 24) * 60 + parseInt(get("minute"), 10);
+      const turnos = ["Mon", "Tue", "Wed", "Thu", "Fri"].includes(dia) ? [[480, 780], [840, 1080]]
+                   : dia === "Sat" ? [[480, 780]] : [];
+      const turno = turnos.find(([a, b]) => min >= a && min < b);
+      const fmt = (m) => String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0");
+      el.classList.toggle("abierto", !!turno);
+      el.classList.toggle("cerrado", !turno);
+      if (turno) {
+        txt.textContent = "Abierto ahora · cierra a las " + fmt(turno[1]);
+      } else {
+        const prox = turnos.find(([a]) => min < a);
+        txt.textContent = prox ? "Cerrado · abre a las " + fmt(prox[0]) : "Cerrado ahora";
       }
     }
 
-    // ✅ Renderizar ofertas (solo con imagen, sin filtro de búsqueda)
-    function renderOfertas() {
-      const container = document.getElementById("offers-container");
-      container.innerHTML = "";
-      productosOferta.forEach(prod => {
-        const claveNormalizada = normalizarClave(prod);
-        const img = imagenesMap[claveNormalizada];
-        if (!img || img.trim() === "") return;
+    // ---------- Efectos ----------
+    function contar(el, hasta) {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { el.textContent = hasta; return; }
+      const t0 = performance.now(), dur = 1400;
+      const paso = (t) => {
+        const k = Math.min(1, (t - t0) / dur);
+        el.textContent = Math.round(hasta * (1 - Math.pow(1 - k, 3)));
+        if (k < 1) requestAnimationFrame(paso);
+      };
+      requestAnimationFrame(paso);
+    }
 
-        const item = document.createElement("div");
-        item.className = "offer-item";
-        item.innerHTML = `
-          <div class="offer-badge">🔥 Oferta</div>
-          <img src="${img}" alt="${prod}" class="offer-img">
-          ${prod}
-        `;
-        container.appendChild(item);
+    function crearBurbujas() {
+      const cont = $("#burbujas");
+      const iconos = ["🧻", "🧹", "🧴", "🫧", "🧽", "🪣", "🌸", "🫧"];
+      iconos.forEach((ic, i) => {
+        const s = crear("span", null, ic);
+        s.style.left = (6 + i * 12 + Math.random() * 6) + "%";
+        s.style.animationDuration = (12 + Math.random() * 10) + "s";
+        s.style.animationDelay = (-Math.random() * 20) + "s";
+        s.style.fontSize = (20 + Math.random() * 18) + "px";
+        cont.appendChild(s);
       });
     }
 
-    // ✅ Función para aplicar búsqueda con debounce
-    let debounceTimer;
-    function manejarBusqueda() {
-      clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => {
-        busquedaActual = document.getElementById("buscador").value.trim();
-        renderOfertas();
-        renderGrupo(nuestrasMarcas, "grupo-nuestras-marcas");
-        renderGrupo(rollosCocina, "grupo-cocina");
-        renderGrupo(escobas, "grupo-escobas");
-        renderGrupo(secadores, "grupo-secadores");
-        renderGrupo(bazar, "grupo-bazar");
-        renderGrupo(limpieza, "grupo-limpieza");
-        renderGrupo(aromatizantes, "grupo-aromatizantes");
-        renderGrupo(otros, "grupo-otros");
-      }, 200);
+    function iniciarReveal() {
+      const cards = document.querySelectorAll(".reveal");
+      if (!("IntersectionObserver" in window)) { cards.forEach(c => c.classList.add("in")); return; }
+      const io = new IntersectionObserver(entradas => {
+        entradas.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+      }, { rootMargin: "0px 0px -40px 0px" });
+      cards.forEach(c => io.observe(c));
+    }
+
+    function iniciarScrollSpy() {
+      if (!("IntersectionObserver" in window)) return;
+      const chips = $("#chips");
+      const io = new IntersectionObserver(entradas => {
+        entradas.forEach(e => {
+          if (!e.isIntersecting) return;
+          seccionesRender.forEach(s => {
+            const activo = s.el === e.target;
+            s.chip.classList.toggle("activo", activo);
+            if (activo) chips.scrollTo({ left: s.chip.offsetLeft - chips.offsetLeft - 16, behavior: "smooth" });
+          });
+        });
+      }, { rootMargin: "-40% 0px -55% 0px" });
+      seccionesRender.forEach(s => io.observe(s.el));
+    }
+
+    function medirToolbar() {
+      document.documentElement.style.setProperty("--toolbar-h", $("#toolbar").offsetHeight + "px");
     }
 
     // ✅ Inicializar
-    window.onload = () => {
+    window.addEventListener("DOMContentLoaded", () => {
       renderOfertas();
-      renderGrupo(nuestrasMarcas, "grupo-nuestras-marcas");
-      renderGrupo(rollosCocina, "grupo-cocina");
-      renderGrupo(escobas, "grupo-escobas");
-      renderGrupo(secadores, "grupo-secadores");
-      renderGrupo(plasticos, "grupo-plasticos"); // ← NUEVA LÍNEA
-      renderGrupo(bazar, "grupo-bazar");
-      renderGrupo(limpieza, "grupo-limpieza");
-      renderGrupo(aromatizantes, "grupo-aromatizantes");
-      renderGrupo(otros, "grupo-otros");
-      // Conectar el buscador
-      const inputBuscador = document.getElementById("buscador");
-      if (inputBuscador) {
-        inputBuscador.addEventListener("input", manejarBusqueda);
-      }
-    };
+      renderSecciones();
+      actualizarConteos();
+      pintarPedido();
+      iniciarReveal();
+      iniciarScrollSpy();
+      crearBurbujas();
+      actualizarEstado();
+      setInterval(actualizarEstado, 60000);
+      medirToolbar();
+      window.addEventListener("resize", medirToolbar);
+
+      const unicos = new Set(tarjetas.map(t => t.nombre));
+      contar($("#stat-productos"), unicos.size);
+      contar($("#stat-categorias"), seccionesRender.length);
+
+      // Buscador
+      const input = $("#buscador");
+      let debounceTimer;
+      input.addEventListener("input", () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => buscar(input.value), 150);
+      });
+      $("#limpiar").addEventListener("click", () => { input.value = ""; buscar(""); input.focus(); });
+      input.addEventListener("focus", () => {
+        const top = $("#toolbar").getBoundingClientRect().top;
+        if (top > 0) window.scrollBy({ top, behavior: "smooth" });
+      });
+
+      // Pedido
+      $("#fab").addEventListener("click", () => abrirPanel(true));
+      $("#panel-cerrar").addEventListener("click", () => abrirPanel(false));
+      $("#velo").addEventListener("click", () => abrirPanel(false));
+      $("#vaciar").addEventListener("click", () => { pedido.clear(); guardarPedido(); pintarPedido(); });
+
+      // Visor
+      $("#visor-cerrar").addEventListener("click", cerrarVisor);
+      $("#visor").addEventListener("click", (e) => { if (e.target.id === "visor") cerrarVisor(); });
+      $("#visor-add").addEventListener("click", () => { if (enVisor) agregar(enVisor); cerrarVisor(); });
+
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape") abrirPanel(false); });
+
+      // Barra con sombra + botón "arriba"
+      const toolbar = $("#toolbar"), arriba = $("#arriba");
+      const alScroll = () => {
+        toolbar.classList.toggle("scrolled", toolbar.getBoundingClientRect().top <= 0);
+        arriba.classList.toggle("visible", window.scrollY > 900);
+      };
+      window.addEventListener("scroll", alScroll, { passive: true });
+      alScroll();
+      arriba.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+    });
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

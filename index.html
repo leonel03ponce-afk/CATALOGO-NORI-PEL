@@ -256,7 +256,7 @@
     .puntos button.activo { width: 24px; background: var(--primary); }
 
     /* ---------- SECCIONES ---------- */
-    main { padding-bottom: 40px; }
+    main { padding-bottom: 40px; scroll-margin-top: calc(var(--toolbar-h) - 20px); }
     .seccion { padding-top: 40px; scroll-margin-top: calc(var(--toolbar-h) + 8px); }
     .seccion.oculta { display: none; }
     .seccion-head { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
@@ -431,6 +431,7 @@
       transition: opacity .3s, transform .3s; max-width: calc(100vw - 32px); text-align: center;
     }
     .aviso.visible { opacity: 1; transform: translate(-50%, 0); }
+    body.panel-abierto .aviso { bottom: auto; top: 80px; }
 
     /* ---------- FOOTER ---------- */
     footer {
@@ -460,7 +461,9 @@
     .stepper .cant b { font-size: 14px; }
 
     /* ---------- SUGERENCIAS DE BÚSQUEDA ---------- */
-    .sugerencias { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; font-size: 12.5px; color: var(--muted); padding: 0 2px 4px; }
+    .sugerencias { display: flex; gap: 6px; align-items: center; font-size: 12.5px; color: var(--muted); padding: 0 2px 4px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+    .sugerencias::-webkit-scrollbar { display: none; }
+    .sugerencias > * { flex: 0 0 auto; }
     .sugerencias button { color: var(--primary-dark); background: #fff; border: 1px dashed var(--primary-light); padding: 3px 10px; border-radius: 999px; font-size: 12.5px; }
     .sugerencias button:hover { background: var(--blush); }
     .sugerencias.oculta { display: none; }
@@ -511,6 +514,9 @@
     }
 
     /* ---------- RESPONSIVE ---------- */
+    @media (min-width: 1024px) {
+      .chips { flex-wrap: wrap; overflow: visible; mask-image: none; -webkit-mask-image: none; }
+    }
     @media (max-width: 860px) {
       .hero-grid { grid-template-columns: 1fr; gap: 24px; }
       .info-card:hover { transform: none; }
@@ -523,6 +529,7 @@
       .btn-consultar .txt-largo { display: none; }
       .btn-add { width: 36px; height: 36px; flex-basis: 36px; font-size: 20px; }
       .seccion-head .count { display: none; }
+      .toolbar.scrolled .sugerencias { display: none; }
       .seccion.destacada .bloque { padding: 10px; border-radius: 20px; }
       .ofertas-track { grid-auto-columns: 78%; }
       .pill-ws .txt { display: none; }
@@ -671,7 +678,7 @@
 
   <!-- PANEL DE PEDIDO -->
   <div class="velo" id="velo"></div>
-  <aside class="panel" id="panel" aria-label="Mi pedido" aria-hidden="true">
+  <aside class="panel" id="panel" aria-label="Mi pedido" aria-hidden="true" inert>
     <div class="panel-head">
       <h3>🛒 Mi pedido</h3>
       <button class="cerrar" id="panel-cerrar" aria-label="Cerrar">✕</button>
@@ -1470,6 +1477,24 @@
         });
       });
       $("#anio").textContent = new Date().getFullYear();
+
+      // Ficha de negocio local para Google (dirección, teléfono y horarios)
+      const DIAS_EN = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      const horas = [];
+      Object.keys(NEGOCIO.horarios).forEach(d => NEGOCIO.horarios[d].forEach(([a, b]) =>
+        horas.push({ "@type": "OpeningHoursSpecification", dayOfWeek: DIAS_EN[d], opens: a, closes: b })));
+      const ld = document.createElement("script");
+      ld.type = "application/ld+json";
+      ld.textContent = JSON.stringify({
+        "@context": "https://schema.org", "@type": "Store", name: "NORI-PEL",
+        description: "Productos de limpieza, bazar y más",
+        telephone: "+" + NEGOCIO.whatsapp,
+        address: { "@type": "PostalAddress", streetAddress: NEGOCIO.direccion.split(",")[0],
+                   addressLocality: "Villa de Mayo", addressRegion: "Buenos Aires", addressCountry: "AR" },
+        openingHoursSpecification: horas,
+        url: location.href.split("#")[0],
+      });
+      document.head.appendChild(ld);
     }
 
     // ---------- Abierto / cerrado (hora de Argentina) ----------
@@ -1868,11 +1893,39 @@
       });
     }
 
+    // ---------- Botón "atrás" del celular: cierra el panel o la foto en vez de salir ----------
+    let porHistorial = false;
+    function empujar(capa) { try { history.pushState({ capa }, ""); } catch (e) {} }
+    function soltar(capa) {
+      if (!porHistorial && history.state && history.state.capa === capa) history.back();
+    }
+    let limpiarHash = false;
+    const sacarHash = () => {
+      if (location.hash.startsWith("#p=")) history.replaceState(history.state, "", location.pathname + location.search);
+    };
+    window.addEventListener("popstate", () => {
+      const cerroVisor = $("#visor").open;
+      porHistorial = true;
+      abrirPanel(false);
+      if (cerroVisor) cerrarVisor();
+      porHistorial = false;
+      // Solo se limpia el #p= si se cerró la foto (no si se está abriendo un link compartido)
+      if (cerroVisor || limpiarHash) sacarHash();
+      limpiarHash = false;
+    });
+
     function abrirPanel(abrir) {
-      $("#panel").classList.toggle("abierto", abrir);
+      const panel = $("#panel");
+      const estaba = panel.classList.contains("abierto");
+      if (abrir === estaba) return;
+      panel.classList.toggle("abierto", abrir);
       $("#velo").classList.toggle("abierto", abrir);
-      $("#panel").setAttribute("aria-hidden", abrir ? "false" : "true");
+      panel.setAttribute("aria-hidden", abrir ? "false" : "true");
+      panel.inert = !abrir;
       document.body.style.overflow = abrir ? "hidden" : "";
+      document.body.classList.toggle("panel-abierto", abrir);
+      if (abrir) { empujar("panel"); setTimeout(() => $("#panel-cerrar").focus({ preventScroll: true }), 50); }
+      else { soltar("panel"); $("#fab").focus({ preventScroll: true }); }
     }
 
     // ---------- Visor de imagen + compartir ----------
@@ -1886,11 +1939,18 @@
       const v = $("#visor");
       if (v.open) return;
       if (typeof v.showModal === "function") v.showModal(); else v.setAttribute("open", "");
+      empujar("visor");
     }
     function cerrarVisor() {
       const v = $("#visor");
-      if (typeof v.close === "function") v.close(); else v.removeAttribute("open");
-      if (location.hash.startsWith("#p=")) history.replaceState(null, "", location.pathname + location.search);
+      if (!v.open) return;
+      if (typeof v.close === "function") v.close();
+      else { v.removeAttribute("open"); alCerrarVisor(); }
+    }
+    function alCerrarVisor() {
+      // Quita el #p=PRODUCTO del link una vez cerrado
+      if (!porHistorial && history.state && history.state.capa === "visor") { limpiarHash = true; history.back(); }
+      else sacarHash();
     }
     function linkProducto(prod) {
       return location.href.split("#")[0] + "#p=" + encodeURIComponent(prod);
@@ -2008,10 +2068,18 @@
       // Buscador
       const input = $("#buscador");
       let debounceTimer;
+      // Si el usuario está más abajo, lo lleva al comienzo de los resultados
+      const irAResultados = () => {
+        const toolbar = $("#toolbar");
+        if (toolbar.getBoundingClientRect().top > 0) return;
+        const destino = $("#catalogo").getBoundingClientRect().top + window.scrollY - toolbar.offsetHeight + 4;
+        if (window.scrollY > destino) window.scrollTo({ top: destino });
+      };
       input.addEventListener("input", () => {
         clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => buscar(input.value), 150);
+        debounceTimer = setTimeout(() => { buscar(input.value); irAResultados(); }, 150);
       });
+      input.addEventListener("keydown", (e) => { if (e.key === "Enter") input.blur(); });
       $("#limpiar").addEventListener("click", () => { input.value = ""; buscar(""); input.focus(); });
       input.addEventListener("focus", () => {
         const top = $("#toolbar").getBoundingClientRect().top;
@@ -2035,9 +2103,7 @@
       // Visor
       $("#visor-cerrar").addEventListener("click", cerrarVisor);
       $("#visor").addEventListener("click", (e) => { if (e.target.id === "visor") cerrarVisor(); });
-      $("#visor").addEventListener("close", () => {
-        if (location.hash.startsWith("#p=")) history.replaceState(null, "", location.pathname + location.search);
-      });
+      $("#visor").addEventListener("close", alCerrarVisor);
       $("#visor-add").addEventListener("click", () => { if (enVisor) agregar(enVisor); cerrarVisor(); });
       $("#visor-compartir").addEventListener("click", () => { if (enVisor) compartir(enVisor); });
       abrirDesdeLink();
@@ -2049,7 +2115,11 @@
       // Barra con sombra + botón "arriba"
       const toolbar = $("#toolbar"), arriba = $("#arriba");
       const alScroll = () => {
-        toolbar.classList.toggle("scrolled", toolbar.getBoundingClientRect().top <= 0);
+        const pegada = toolbar.getBoundingClientRect().top <= 0;
+        if (pegada !== toolbar.classList.contains("scrolled")) {
+          toolbar.classList.toggle("scrolled", pegada);
+          medirToolbar();
+        }
         arriba.classList.toggle("visible", window.scrollY > 900);
       };
       window.addEventListener("scroll", alScroll, { passive: true });
